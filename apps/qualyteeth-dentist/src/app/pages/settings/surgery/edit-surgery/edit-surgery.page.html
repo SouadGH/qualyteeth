@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Cabinet - Définition</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <button mat-fab color="primary" (click)="add()" style="position: absolute; right: 16px; bottom: 32px;">
+    <mat-icon>done</mat-icon>
+  </button>
+
+  <ion-grid fixed>
+
+    <ion-row>
+      <ion-col>
+        <h4>Créer / éditer un cabinet</h4>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+
+      <ion-col>
+
+        <form novalidate [formGroup]="surgeryForm" (ngSubmit)="add()">
+
+          <!-- <input type="file" hidden #imgChooser (change)="onImageChosen($event)" accept=".jpg, .png, .jpeg, .gif, .bmp">
+
+        <img *ngIf="surgery.image == null" src="assets/img/icon.svg" alt="Cabinet" width="128px" height="128px" style="cursor: pointer; object-fit: cover;" (click)="editProfileImage()" />
+        <img *ngIf="surgery.image != null" [src]="surgery.image" alt="Cabinet" width="128px" height="128px" style="cursor: pointer; object-fit: cover;" (click)="editProfileImage()" /> -->
+
+          <mat-form-field style="width: 100%;">
+            <mat-label>Nom du cabinet</mat-label>
+            <input matInput formControlName="name">
+            <mat-error *ngIf="surgeryForm.controls['name'].hasError('required')">
+              Veuillez entrer un <strong>nom</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field style="width: 100%;">
+            <mat-label>Rue</mat-label>
+            <input matInput formControlName="addressLine1">
+            <mat-error *ngIf="surgeryForm.controls['addressLine1'].hasError('required')">
+              Veuillez entrer une <strong>adresse</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field style="width: 100%;">
+            <mat-label>Supplément d'adresse</mat-label>
+            <input matInput formControlName="addressLine2">
+          </mat-form-field>
+
+          <mat-form-field style="width: 100%;">
+            <mat-label>NPA</mat-label>
+            <input type="number" matInput formControlName="postalCode">
+            <mat-error *ngIf="surgeryForm.controls['postalCode'].hasError('required')">
+              Veuillez entrer un <strong>code postal</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field style="width: 100%;">
+            <mat-label>Ville</mat-label>
+            <input matInput formControlName="city">
+            <mat-error *ngIf="surgeryForm.controls['city'].hasError('required')">
+              Veuillez entrer une <strong>ville</strong>
+            </mat-error>
+          </mat-form-field>
+
+        </form>
+
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

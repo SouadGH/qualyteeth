@@ -1,0 +1,101 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <toolbar-title></toolbar-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="pop($event)">
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" slot="fixed">
+
+  <!-- <ion-fab vertical="bottom" horizontal="end" edge="true" slot="fixed" style="bottom: 16px;" (click)="add()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab> -->
+
+  <button mat-fab color="primary" (click)="add()" style="position: absolute; right: 16px; bottom: 64px;">
+    <mat-icon>add</mat-icon>
+  </button>
+
+  <ion-grid fixed *ngIf="calendars != null">
+    <ion-row class="ion-align-items-center ion-justify-content-center" class="ion-text-center">
+      <ion-col>
+
+        <mat-tab-group mat-align-tabs="center">
+          <mat-tab label="Futurs">
+
+            <div style="display: flex; justify-content: space-between; margin-top: 24px;">
+              <mat-form-field style="width: 45%;">
+                <mat-label>Filtrer par</mat-label>
+                <mat-select [(value)]="filter" (selectionChange)="onFilterChanged($event)">
+                  <mat-option value="all">Tous</mat-option>
+                  <mat-option value="accepted">Acceptés</mat-option>
+                  <mat-option value="rejected">Rejetés</mat-option>
+                  <mat-option value="deleted">Supprimés</mat-option>
+                  <mat-option value="requested">En attente</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field style="width: 45%;">
+                <mat-label>Trier par</mat-label>
+                <mat-select [(value)]="sort" (selectionChange)="onSortChanged($event)">
+                  <mat-option value="meetingDate">Date du rdv</mat-option>
+                  <mat-option value="creationDate">Date de création</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <ion-item *ngIf="calendars.length === 0" style="margin-top: 32px;" lines="none">
+              <ion-label>
+                <h3>Aucun rendez-vous à venir</h3>
+              </ion-label>
+            </ion-item>
+
+            <ion-list lines="none" class="meetings-list" *ngIf="calendars.length > 0">
+              <ion-item button *ngFor="let c of calendars" (click)="details(c)" class="meetings-list-item">
+                <ion-label>
+                  <h6 style="margin-bottom: 8px;">{{ c.startDate | date : "dd MMM yyyy • HH:mm" }}</h6>
+                  <!-- <h6 style="margin-bottom: 8px;">{{ c.createdOn | date : "dd MMM yyyy • HH:mm" }}</h6> -->
+                  <h2>{{ c.serviceName }}</h2>
+                  <!-- <h4 [ngClass]="{'status-requested': c.status === 'REQUESTED', 'status-rejected': c.status === 'REJECTED', 'status-validated': c.status === 'VALIDATED'}">{{ getCalendarStatusStr(c) }}</h4> -->
+                  <p *ngIf="c.notes" style="white-space: pre;">{{ c.notes }}</p>
+                  <p *ngIf="c.dentistId" style="font-size: 0.8em;">Praticien: {{ c.dentistFirstname }} {{ c.dentistLastname }}</p>
+                </ion-label>
+                <ion-icon name="share-outline" *ngIf="c.status === 'REQUESTED'" color="primary" slot="end" style="width: 24px; height: 24px;" #tooltip="matTooltip" [matTooltip]="getCalendarStatusStr(c)" matTooltipPosition="before"></ion-icon>
+                <ion-icon name="close-circle-outline" *ngIf="c.status === 'REJECTED'" color="danger" slot="end" style="width: 24px; height: 24px;" #tooltip="matTooltip" [matTooltip]="getCalendarStatusStr(c)" matTooltipPosition="before"></ion-icon>
+                <ion-icon name="checkbox-outline" *ngIf="c.status === 'VALIDATED'" color="success" slot="end" style="width: 24px; height: 24px;" #tooltip="matTooltip" [matTooltip]="getCalendarStatusStr(c)" matTooltipPosition="before"></ion-icon>
+                <ion-icon name="trash-bin-outline" *ngIf="c.status === 'CANCELLED'" color="danger" slot="end" style="width: 24px; height: 24px;" #tooltip="matTooltip" [matTooltip]="getCalendarStatusStr(c)" matTooltipPosition="before"></ion-icon>
+              </ion-item>
+            </ion-list>
+          </mat-tab>
+
+          <mat-tab label="Passés">
+            <ion-item *ngIf="oldCalendars.length === 0" style="margin-top: 32px;" lines="none">
+              <ion-label>
+                <h3>Aucun rendez-vous passé</h3>
+              </ion-label>
+            </ion-item>
+            <ion-list lines="none" style="margin-top: 24px;" class="meetings-list" *ngIf="oldCalendars.length > 0">
+              <ion-item *ngFor="let c of oldCalendars" class="meetings-list-item">
+                <ion-label>
+                  <h6 style="margin-bottom: 8px;">{{ c.startDate | date : "dd.MM.yyyy • HH:mm" }}</h6>
+                  <h3>{{ c.serviceName }}</h3>
+                  <p *ngIf="c.dentistId" style="font-size: 0.8em;">{{ c.dentistFirstname }} {{ c.dentistLastname }}</p>
+                  <p *ngIf="c.notes" style="white-space: pre;">{{ c.notes }}</p>
+                </ion-label>
+                <ion-icon name="share-outline" *ngIf="c.status === 'REQUESTED'" color="primary" slot="end" style="width: 24px; height: 24px;" #tooltip="matTooltip" [matTooltip]="getCalendarStatusStr(c)" matTooltipPosition="before"></ion-icon>
+                <ion-icon name="close-circle-outline" *ngIf="c.status === 'REJECTED'" color="danger" slot="end" style="width: 24px; height: 24px;" #tooltip="matTooltip" [matTooltip]="getCalendarStatusStr(c)" matTooltipPosition="before"></ion-icon>
+                <ion-icon name="checkbox-outline" *ngIf="c.status === 'VALIDATED'" color="success" slot="end" style="width: 24px; height: 24px;" #tooltip="matTooltip" [matTooltip]="getCalendarStatusStr(c)" matTooltipPosition="before"></ion-icon>
+              </ion-item>
+            </ion-list>
+          </mat-tab>
+        </mat-tab-group>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

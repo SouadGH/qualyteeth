@@ -1,0 +1,64 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+p {
+    color: #666;
+}
+
+a {
+    transition: .3s;
+    color: #333;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+footer {
+    background: #3a3838;
+    padding: 100px 0 0;
+}
+
+ul {
+    list-style: none;
+}
+
+ion-icon {
+    width: 24px;
+    height: 24px;
+}
+
+blockquote {
+    color: #f2f4fa;
+}
+
+ion-slide {
+    padding-bottom: 64px;
+}

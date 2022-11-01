@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title *ngIf="patient != null">
+      <ion-item lines="none">
+        <ion-avatar slot="start">
+          <img *ngIf="patient.image == null" src="/assets/img/profile.png">
+          <img *ngIf="patient.image != null" [src]="patient.image">
+        </ion-avatar>
+        <ion-label>
+          <h3>{{ patient.firstname }} {{ patient.lastname }}</h3>
+        </ion-label>
+      </ion-item>
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-grid fixed>
+  <ion-row>
+    <ion-col>
+
+      <!-- <ion-item *ngIf="patient != null" lines="none">
+        <ion-avatar slot="start">
+          <img *ngIf="patient.image == null" src="/assets/img/profile.png">
+          <img *ngIf="patient.image != null" [src]="patient.image">
+        </ion-avatar>
+        <ion-label>
+          <h3>{{ patient.firstname }} {{ patient.lastname }}</h3>
+        </ion-label>
+      </ion-item> -->
+
+      <ion-list lines="none">
+
+        <ion-item *ngIf="calendarEvent != null && calendarEvent.status === 'REQUESTED'">
+          <ion-icon name="alert-circle-outline" slot="start" color="danger"></ion-icon>
+          <ion-label>Requête de Rendez-Vous</ion-label>
+          <ion-button (click)="validate()" fill="clear" color="success">
+            <ion-icon slot="icon-only" name="checkmark-circle-outline"></ion-icon>
+          </ion-button>
+          <ion-button (click)="reject()" fill="clear" color="danger">
+            <ion-icon slot="icon-only" name="close-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+
+        <ion-item *ngIf="calendarEvent != null">
+          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          <ion-label>{{ getDateStr() }}</ion-label>
+        </ion-item>
+
+        <ion-item *ngIf="calendarEvent != null">
+          <ion-icon name="time-outline" slot="start"></ion-icon>
+          <ion-label>
+            {{ getTimeStr() }}
+            <p>{{ getDurationStr() }}</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item *ngIf="service != null">
+          <ion-icon name="bandage-outline" slot="start"></ion-icon>
+          <ion-label>{{ service.name }}</ion-label>
+        </ion-item>
+
+        <ion-item *ngIf="dentist != null">
+          <ion-icon name="medkit-outline" slot="start"></ion-icon>
+          <ion-label>{{ dentist.firstname }} {{ dentist.lastname }}</ion-label>
+        </ion-item>
+
+      </ion-list>
+
+
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<ion-footer>
+  <ion-toolbar>
+    <!-- <ion-title>Footer</ion-title> -->
+    <ion-buttons slot="end">
+      <ion-button color="danger" (click)="delete()">Supprimer</ion-button>
+      <ion-button color="primary" (click)="edit()">Editer</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

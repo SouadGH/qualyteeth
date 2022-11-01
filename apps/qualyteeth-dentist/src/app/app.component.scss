@@ -1,0 +1,39 @@
+.active-menu {
+    font-weight: 700;
+    --background: #dddddd;
+}
+
+ion-split-pane {
+    --border: solid 1px #cccccc;
+    --side-max-width: 296px;
+}
+
+// ion-toolbar {
+//     // --background: url('http://www.brooksidedental.com/wp-content/uploads/great-smile.jpg');
+//     --min-height: 240px;
+//     // --background-size: cover !important;
+// }
+
+// ion-toolbar .toolbar-background {
+//     background-repeat: no-repeat;
+//     background-size: cover;
+//     background-position: center center;
+// }
+
+.menu-header {
+    position: relative;
+    // background: url('http://www.brooksidedental.com/wp-content/uploads/great-smile.jpg');
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sub-menu {
+    margin-left: 16px;
+    font-size: 0.88em;
+}

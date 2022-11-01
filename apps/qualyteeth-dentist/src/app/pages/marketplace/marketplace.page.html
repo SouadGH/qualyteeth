@@ -1,0 +1,108 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <toolbar-title [imgName]="'banner-mp.svg'"></toolbar-title>
+    </ion-title>
+    <ion-buttons slot="end">
+      <!-- <ion-button>
+        <ion-icon slot="icon-only" name="heart-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon slot="icon-only" name="cart-outline"></ion-icon>
+      </ion-button> -->
+      <ion-button (click)="pop($event)">
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-grid fixed>
+
+    <ion-row>
+      <ion-col>
+        <ion-searchbar showCancelButton="never" debounce="200" animated (ionChange)="search($event)"></ion-searchbar>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col style="display: flex; justify-content: center;" size-xs="6" size-sm="3">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+          <ion-button shape="round" fill="outline" style="width: 64px; height: 64px;" (click)="toCategories()">
+            <ion-icon name="grid-outline" style="min-width: 24px; min-height: 24px;"></ion-icon>
+          </ion-button>
+          <div style="margin-top: 8px;">Catégories</div>
+        </div>
+      </ion-col>
+
+      <ion-col style="display: flex; justify-content: center;" size-xs="6" size-sm="3">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+          <ion-button shape="round" fill="outline" style="width: 64px; height: 64px;">
+            <ion-icon name="flash-outline" style="min-width: 24px; min-height: 24px;"></ion-icon>
+          </ion-button>
+          <div style="margin-top: 8px;">Tendances</div>
+        </div>
+      </ion-col>
+
+      <ion-col style="display: flex; justify-content: center;" size-xs="6" size-sm="3">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+          <ion-button shape="round" fill="outline" style="width: 64px; height: 64px;">
+            <ion-icon name="heart-outline" style="min-width: 24px; min-height: 24px;"></ion-icon>
+          </ion-button>
+          <div style="margin-top: 8px;">Favoris</div>
+        </div>
+      </ion-col>
+
+      <ion-col style="display: flex; justify-content: center;" size-xs="6" size-sm="3">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+          <ion-button shape="round" fill="outline" style="width: 64px; height: 64px;">
+            <ion-icon name="cart-outline" style="min-width: 24px; min-height: 24px;"></ion-icon>
+          </ion-button>
+          <div style="margin-top: 8px;">Panier</div>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="margin-top: 32px;">
+      <ion-col>
+        <div style="padding: 8px; display: flex; justify-content: space-between; align-items: center;">
+          <div>{{ items.length}} produits </div>
+          <div>
+            <ion-select multiple="true" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="Type">
+              <ion-select-option value="cannule">Cannule</ion-select-option>
+              <ion-select-option value="cucchiai">Cucchiai</ion-select-option>
+              <ion-select-option value="divaricatory">Divaricatory</ion-select-option>
+              <ion-select-option value="divaricatory">Divaricatory</ion-select-option>
+            </ion-select>
+          </div>
+        </div>
+
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="6" size-md="4" size-lg="3" *ngFor="let item of items">
+        <ion-card style="position: relative;">
+          <div style="position: absolute; top: 8px; right: 8px;">
+            <ion-button fill="clear" size="small" color="medium">
+              <ion-icon slot="icon-only" name="heart-outline"></ion-icon>
+            </ion-button>
+          </div>
+          <img src="assets/img/qualyteeth.jpg" />
+          <ion-card-header>
+            <ion-card-subtitle>{{ item.category }}</ion-card-subtitle>
+            <!-- <ion-card-title style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ item.name }}</ion-card-title> -->
+            <ion-card-title class="ion-text-wrap">{{ item.name }}</ion-card-title>
+          </ion-card-header>
+
+          <!-- <ion-card-content>{{ item.description }}</ion-card-content> -->
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

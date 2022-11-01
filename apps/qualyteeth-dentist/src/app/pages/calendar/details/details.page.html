@@ -1,0 +1,175 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!-- <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons> -->
+    <ion-title>
+      Calendrier - Détails
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-grid fixed>
+
+    <ion-row>
+      <ion-col>
+        <mat-form-field *ngIf="surgeries != null" style="margin-top: 16px; margin-bottom: 16px; width: 50%">
+          <mat-label>Cabinet</mat-label>
+          <mat-select [(value)]="activeSurgery" (selectionChange)="initEvents()">
+            <mat-option value="">Mon calendrier</mat-option>
+            <mat-option [value]="s" *ngFor="let s of surgeries">{{ s.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+
+        <mat-tab-group mat-align-tabs="center">
+
+          <!-- REQUESTS -->
+          <mat-tab label="Requêtes de RDV">
+            <table mat-table [dataSource]="requestsCalendarEvents" class="mat-elevation-z1" *ngIf="requestsCalendarEvents != null && requestsCalendarEvents.length > 0">
+
+              <ng-container matColumnDef="startDate">
+                <th mat-header-cell *matHeaderCellDef style="width: 148px;"> Date du Rendez-vous </th>
+                <td mat-cell *matCellDef="let element"> {{ element.startDate | date : "dd.MM.yyyy • HH:mm" }} </td>
+              </ng-container>
+    
+              <ng-container matColumnDef="patient">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Patient </th>
+                <td mat-cell *matCellDef="let element" style="text-align: center;">
+                  <div *ngIf="element.patient != null">{{ element.patient.firstname }} {{ element.patient.lastname }}</div>
+                </td>
+              </ng-container>
+    
+              <ng-container matColumnDef="service">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Service </th>
+                <td mat-cell *matCellDef="let element" style="text-align: center;">
+                  <div *ngIf="element.service != null">{{ element.service.name }}</div>
+                </td>
+              </ng-container>
+    
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Action </th>
+                <td mat-cell *matCellDef="let element" style="text-align: center;">
+                  <button mat-icon-button (click)="action($event, element)">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+    
+              <tr mat-header-row *matHeaderRowDef="requestsDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: requestsDisplayedColumns;"></tr>
+            </table>
+    
+            <div *ngIf="requestsCalendarEvents != null && requestsCalendarEvents.length === 0" style="margin-top: 32px;">
+              Aucune requête de rendez-vous
+            </div>
+          </mat-tab>
+
+          <!-- CANCELLED -->
+          <mat-tab label="RDVs annulés">
+            <table mat-table [dataSource]="cancelledCalendarEvents" class="mat-elevation-z1" *ngIf="cancelledCalendarEvents != null && cancelledCalendarEvents.length > 0">
+
+              <ng-container matColumnDef="startDate">
+                <th mat-header-cell *matHeaderCellDef style="width: 148px;"> Date du Rendez-vous </th>
+                <td mat-cell *matCellDef="let element"> {{ element.startDate | date : "dd.MM.yyyy • HH:mm" }} </td>
+              </ng-container>
+    
+              <ng-container matColumnDef="patient">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Patient </th>
+                <td mat-cell *matCellDef="let element" style="text-align: center;">
+                  <div *ngIf="element.patient != null">{{ element.patient.firstname }} {{ element.patient.lastname }}</div>
+                </td>
+              </ng-container>
+    
+              <ng-container matColumnDef="service">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Service </th>
+                <td mat-cell *matCellDef="let element" style="text-align: center;">
+                  <div *ngIf="element.service != null">{{ element.service.name }}</div>
+                </td>
+              </ng-container>
+    
+              <ng-container matColumnDef="notes">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Raison </th>
+                <td mat-cell *matCellDef="let element" style="text-align: center;"> {{ element.notes || 'N/A' }} </td>
+              </ng-container>
+    
+              <ng-container matColumnDef="history">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Historique </th>
+                <td mat-cell *matCellDef="let element" style="text-align: center;">
+                  <button mat-icon-button (click)="history(element)">
+                    <mat-icon>history</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+    
+              <tr mat-header-row *matHeaderRowDef="cancelledDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: cancelledDisplayedColumns;"></tr>
+            </table>
+    
+            <div *ngIf="cancelledCalendarEvents != null && cancelledCalendarEvents.length === 0" style="margin-top: 32px;">
+              Aucun rendez-vous annulé
+            </div>
+          </mat-tab>
+
+          <!-- MISSED -->
+          <mat-tab label="RDVs non honorés">
+            <table mat-table [dataSource]="missedCalendarEvents" class="mat-elevation-z1" *ngIf="missedCalendarEvents != null && missedCalendarEvents.length > 0">
+
+              <ng-container matColumnDef="startDate">
+                <th mat-header-cell *matHeaderCellDef style="width: 148px;"> Date du Rendez-vous </th>
+                <td mat-cell *matCellDef="let element"> {{ element.startDate | date : "dd.MM.yyyy • HH:mm" }} </td>
+              </ng-container>
+    
+              <ng-container matColumnDef="patient">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Patient </th>
+                <td mat-cell *matCellDef="let element" style="text-align: center;">
+                  <div *ngIf="element.patient != null">{{ element.patient.firstname }} {{ element.patient.lastname }}</div>
+                </td>
+              </ng-container>
+    
+              <ng-container matColumnDef="service">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Service </th>
+                <td mat-cell *matCellDef="let element" style="text-align: center;">
+                  <div *ngIf="element.service != null">{{ element.service.name }}</div>
+                </td>
+              </ng-container>
+    
+              <ng-container matColumnDef="notes">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Raison </th>
+                <td mat-cell *matCellDef="let element" style="text-align: center;"> {{ element.notes || 'N/A' }} </td>
+              </ng-container>
+    
+              <ng-container matColumnDef="history">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Historique </th>
+                <td mat-cell *matCellDef="let element" style="text-align: center;">
+                  <button mat-icon-button (click)="history(element)">
+                    <mat-icon>history</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+    
+              <tr mat-header-row *matHeaderRowDef="missedDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: missedDisplayedColumns;"></tr>
+            </table>
+    
+            <div *ngIf="missedCalendarEvents != null && missedCalendarEvents.length === 0" style="margin-top: 32px;">
+              Aucun rendez-vous manqué
+            </div>
+          </mat-tab>
+
+        </mat-tab-group>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

@@ -1,0 +1,32 @@
+.odontogram-textarea {
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: solid 1px lightgray;
+    text-align: left;
+    min-height: 78px;
+}
+
+.truncate {
+    width: 200px;
+    max-width: 200px;
+    padding-right: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.speech-section-text-active {
+    color: red;
+}
+
+.speech-section-text-inactive {
+    color: darkgrey;
+}
+
+.speech-icon-started {
+    color: red;
+}
+
+.speech-icon-ended {
+    color: grey;
+}

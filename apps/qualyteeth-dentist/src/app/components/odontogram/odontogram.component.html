@@ -1,0 +1,88 @@
+<div style="border: solid 1px lightgrey; border-radius: 8px; padding: 16px; background-color: #fefefe;">
+
+  <!-- Odontogramme -->
+  <div class="odontogram">
+
+    <!-- Left panel -->
+    <div class="quadrants-container">
+
+      <!-- Left top -->
+      <div class="quadrant quadrant-top quadrant-left">
+        <div *ngFor="let t of quadrants['top-left']" class="tooth" (mouseover)="editable == true && focusedTooth = t.fdiNumber" (mouseleave)="editable == true && focusedTooth = null" [class.focused-tooth]="editable == true && focusedTooth == t.fdiNumber"
+          (click)="editable == true && select($event, t)" [class.tooth-selected]="editable == true && t.selectedParts.includes('z')" [class.cursor]="editable == true">
+
+          <div class="tooth-img">
+            <app-odontogram-tooth #t [tooth]="t" [editable]="editable"></app-odontogram-tooth>
+          </div>
+
+          <div class="tooth-area">
+            <app-odontogram-tooth-area [tooth]="t" [editable]="editable"></app-odontogram-tooth-area>
+          </div>
+
+          <div class="tooth-number">{{ t.fdiNumber }}</div>
+        </div>
+      </div>
+
+      <!-- Left bottom -->
+      <div class="quadrant quadrant-left">
+        <div *ngFor="let t of quadrants['bottom-left']" class="tooth tooth-bottom" (mouseover)="editable == true && focusedTooth = t.fdiNumber" (mouseleave)="editable == true && focusedTooth = null" [class.focused-tooth]="editable == true && focusedTooth == t.fdiNumber"
+          (click)="editable == true && select($event, t)" [class.tooth-selected]="editable == true && t.selectedParts.includes('z')" [class.cursor]="editable == true">
+
+          <div class="tooth-img tooth-reversed">
+            <app-odontogram-tooth [tooth]="t" [editable]="editable"></app-odontogram-tooth>
+          </div>
+
+          <div class="tooth-area">
+            <app-odontogram-tooth-area [tooth]="t" [editable]="editable"></app-odontogram-tooth-area>
+          </div>
+
+          <div class="tooth-number">{{ t.fdiNumber }}</div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+    <!-- Right panel -->
+    <div class="quadrants-container">
+
+      <!-- Right top -->
+      <div class="quadrant quadrant-top">
+        <div *ngFor="let t of quadrants['top-right']" class="tooth" (mouseover)="editable == true && focusedTooth = t.fdiNumber" (mouseleave)="editable == true && focusedTooth = null" [class.focused-tooth]="editable == true && focusedTooth == t.fdiNumber"
+          (click)="editable == true && select($event, t)" [class.tooth-selected]="editable == true && t.selectedParts.includes('z')" [class.cursor]="editable == true">
+
+          <div class="tooth-img">
+            <app-odontogram-tooth [tooth]="t" [editable]="editable"></app-odontogram-tooth>
+          </div>
+
+          <div class="tooth-area">
+            <app-odontogram-tooth-area [tooth]="t" [editable]="editable"></app-odontogram-tooth-area>
+          </div>
+
+          <div class="tooth-number">{{ t.fdiNumber }}</div>
+        </div>
+      </div>
+
+      <!-- Right bottom -->
+      <div class="quadrant">
+        <div *ngFor="let t of quadrants['bottom-right']" class="tooth tooth-bottom" (mouseover)="editable == true && focusedTooth = t.fdiNumber" (mouseleave)="editable == true && focusedTooth = null" [class.focused-tooth]="editable == true && focusedTooth == t.fdiNumber"
+          (click)="editable == true && select($event, t)" [class.tooth-selected]="editable == true && t.selectedParts.includes('z')" [class.cursor]="editable == true">
+
+          <div class="tooth-img tooth-reversed">
+            <app-odontogram-tooth [tooth]="t" [editable]="editable"></app-odontogram-tooth>
+          </div>
+
+          <div class="tooth-area">
+            <app-odontogram-tooth-area [tooth]="t" [editable]="editable"></app-odontogram-tooth-area>
+          </div>
+
+          <div class="tooth-number">{{ t.fdiNumber }}</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

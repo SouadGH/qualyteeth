@@ -1,0 +1,72 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Calendrier
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" slot="fixed" #content>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="add()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div style="display: flex; justify-content: space-between;">
+
+    <form [formGroup]="calendarForm" style="display: flex; justify-content: flex-start; margin-bottom: 32px;">
+      <mat-form-field *ngIf="surgeries != null">
+        <mat-label>Cabinets</mat-label>
+        <mat-select formControlName="surgery" (selectionChange)="onSurgerySelectionChanged($event)">
+          <!-- <mat-select-trigger>
+            {{ calendarForm.controls['surgery'].value.length > 0 ? calendarForm.controls['surgery'].value[0].name : '' }}
+            <span *ngIf="calendarForm.controls['surgery'].value?.length > 1" style="opacity: 0.75; font-size: 0.75em;">
+              (+{{calendarForm.controls['surgery'].value.length - 1}} {{calendarForm.controls['surgery'].value?.length === 2 ? 'autre' : 'autres'}})
+            </span>
+          </mat-select-trigger> -->
+          <mat-option value="">Mon calendrier</mat-option>
+          <mat-option [value]="s" *ngFor="let s of surgeries">{{ s.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="dentists != null" style="margin-left: 16px;">
+        <mat-label>Dentistes</mat-label>
+        <mat-select formControlName="dentist" multiple (selectionChange)="onDentistSelectionChanged($event)" required>
+          <mat-select-trigger>
+            {{ calendarForm.controls['dentist'].value.length > 0 ? calendarForm.controls['dentist'].value[0].firstname + " " + calendarForm.controls['dentist'].value[0].lastname : '' }}
+            <span *ngIf="calendarForm.controls['dentist'].value?.length > 1" style="opacity: 0.75; font-size: 0.75em;">
+              (+{{calendarForm.controls['dentist'].value.length - 1}} {{calendarForm.controls['dentist'].value?.length === 2 ? 'autre' : 'autres'}})
+            </span>
+          </mat-select-trigger>
+          <mat-option [value]="d" *ngFor="let d of dentists">{{ d.firstname }} {{ d.lastname }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="calendarForm.controls['dentist'].hasError('required')">Veuillez sélectionner un dentiste</mat-error>
+      </mat-form-field>
+
+      <mat-form-field style="margin-left: 16px;">
+        <mat-label>Rendez-vous</mat-label>
+        <mat-select formControlName="meeting" multiple (selectionChange)="onMeetingSelectionChanged($event)">
+          <mat-option value="VALIDATED">Confirmés</mat-option>
+          <mat-option value="REQUESTED">Requêtes</mat-option>
+          <mat-option value="CANCELLED">Supprimés</mat-option>
+          <mat-option value="REJECTED">Rejetés</mat-option>
+          <mat-option value="MISSED">Non honorés</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+
+    <div>
+      <button mat-mini-fab color="primary" (click)="toList()">
+        <mat-icon>list</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- <p-fullCalendar *ngIf="calendarOptions != null" [events]="calendarEvents" [options]="calendarOptions" #calendar></p-fullCalendar> -->
+  <full-calendar *ngIf="calendarOptions != null" [deepChangeDetection]="true" [options]="calendarOptions" #calendar></full-calendar>
+</ion-content>

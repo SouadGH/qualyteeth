@@ -1,0 +1,81 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <toolbar-title></toolbar-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="pop($event)">
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <!-- <ion-fab vertical="bottom" horizontal="end" edge="true" slot="fixed" style="bottom: 16px;" (click)="newDocument()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab> -->
+
+  <button mat-fab color="primary" (click)="newDocument()" style="position: absolute; right: 16px; bottom: 64px;">
+    <mat-icon>add</mat-icon>
+  </button>
+
+  <!-- <input type="file" hidden #imgChooser (change)="onImageChosen($event, agendaItem)" accept=".jpg, .png, .jpeg, .gif, .bmp, .pdf"> -->
+  <input type="file" hidden #imgChooser (change)="onImageChosen($event)">
+
+  <div *ngIf="progressInfo != null">
+    <mat-progress-bar mode="determinate" [value]="progressInfo.value"></mat-progress-bar>
+  </div>
+
+  <ion-grid fixed>
+    <ion-row class="ion-align-items-center ion-justify-content-center" class="ion-text-center">
+      <ion-col>
+
+        <div *ngIf="documents != null">
+          <div *ngIf="documents.length > 0" style="display: flex; justify-content: space-between;">
+            <div>
+              <mat-form-field>
+                <mat-label>Filtre</mat-label>
+                <mat-select (selectionChange)="filterBy($event)" [(ngModel)]="filteredBy">
+                  <mat-option value="all">Tous les documents</mat-option>
+                  <mat-option value="image">Images uniquement</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div>
+
+            </div>
+          </div>
+
+          <ion-item *ngIf="documents.length === 0">
+            <ion-label>
+              <h3>Aucun document</h3>
+            </ion-label>
+          </ion-item>
+          <ion-list lines="full">
+            <ion-item button *ngFor="let doc of documents" (click)="download(doc)">
+              <ion-icon [name]="doc.icon" slot="start"></ion-icon>
+              <ion-label>
+                <h3>{{ doc.filename }}</h3>
+                <p>{{ doc.uploadTime | date: 'dd.MM.yyyy' }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- <div *ngIf="documents != null">
+    <div *ngIf="documents.length === 0">
+      Aucun document trouvé
+    </div>
+
+    <div *ngFor="let doc of documents">
+      <a style="cursor: pointer;" (click)="download(doc)">{{ doc.filename }}</a>
+    </div>
+  </div> -->
+
+</ion-content>

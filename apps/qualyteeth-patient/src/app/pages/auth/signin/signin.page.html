@@ -1,0 +1,68 @@
+<ion-content [fullscreen]="true">
+
+  <ion-grid style="width: 100%; max-width: 540px; margin: 0 auto; margin-top: 64px;" class="ion-text-center">
+
+    <ion-row>
+      <ion-col>
+        <img src="/assets/img/icon.svg" alt="QualyTeeth" style="width: 120px;">
+        <h2>Enregistrez-vous</h2>
+        ou <a (click)="login()" style="cursor: pointer;">Connectez-vous ici !</a>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="margin-top: 32px;">
+      <ion-col>
+        <form novalidate [formGroup]="signinForm" (ngSubmit)="signin()">
+          <ion-item>
+            <ion-label position="floating">Nom</ion-label>
+            <ion-input type="text" formControlName="lastname" required></ion-input>
+          </ion-item>
+          <div class="error" *ngIf="isSubmitted && signinForm.controls['lastname']['errors']['required']">
+            Veuillez entrer un nom
+          </div>
+          <ion-item>
+            <ion-label position="floating">Prénom</ion-label>
+            <ion-input type="text" formControlName="firstname" required></ion-input>
+          </ion-item>
+          <div class="error" *ngIf="isSubmitted && signinForm.controls['firstname']['errors']['required']">
+            Veuillez entrer un prénom
+          </div>
+          <ion-item>
+            <ion-label position="floating">Adresse e-mail</ion-label>
+            <ion-input type="text" formControlName="email" required></ion-input>
+          </ion-item>
+          <div class="error" *ngIf="isSubmitted && signinForm.controls['email']['errors']['email']">
+            Email invalide
+          </div>
+          <div class="error" *ngIf="isSubmitted && signinForm.controls['email']['errors']['required']">
+            Veuillez entrer un email
+          </div>
+          <ion-item>
+            <ion-label position="floating">Mot de passe</ion-label>
+            <ion-input type="password" formControlName="password" required></ion-input>
+          </ion-item>
+          <div class="error" *ngIf="isSubmitted && signinForm.controls['password']['errors']['required']">
+            Veuillez entrer un mot de passe
+          </div>
+          <div class="error" *ngIf="isSubmitted && signinForm.controls['password']['errors']['minlength']">
+            8 caractères minimum
+          </div>
+          <!-- <ion-item>
+            <ion-label position="floating">Répétez le mot de passe</ion-label>
+            <ion-input type="password" formControlName="password2" required></ion-input>
+          </ion-item>
+          <div class="error" *ngIf="isSubmitted && signinForm.controls.password2.errors?.notsame">
+            Les mots de passe ne sont pas identiques
+          </div> -->
+        </form>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="margin-top: 16px;">
+      <ion-col>
+        <ion-button (click)="signin()" expand="block" [disabled]="!signinForm.valid">Sign in</ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

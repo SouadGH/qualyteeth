@@ -1,0 +1,200 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title *ngIf="patient != null">
+      {{ patient.firstname }} {{ patient.lastname }}
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-grid fixed *ngIf="patient != null">
+    <ion-row>
+      <ion-col>
+
+        <mat-horizontal-stepper linear #stepper style="border: solid 1px lightgray; border-radius: 8px;">
+          <!-- <mat-step [stepControl]="visitStep">
+            <ng-template matStepLabel>Visite</ng-template>
+
+            <ion-grid>
+
+              <ion-row>
+                <ion-col>
+                  <h4>Raison de la visite?</h4>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col>
+                  <mat-card>
+                    <mat-card-header>
+                      <mat-card-title>Urgence</mat-card-title>
+                      <mat-card-subtitle>Urgence</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Gravida in fermentum et sollicitudin ac orci phasellus egestas. Volutpat consequat mauris nunc congue nisi.
+                      </p>
+                    </mat-card-content>
+                  </mat-card>
+                </ion-col>
+
+                <ion-col>
+                  <mat-card matRipple (click)="stepper.selectedIndex = 1" style="cursor: pointer;">
+                    <mat-card-header>
+                      <mat-card-title>Diagnostics</mat-card-title>
+                      <mat-card-subtitle>Diagnostics</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Gravida in fermentum et sollicitudin ac orci phasellus egestas. Volutpat consequat mauris nunc congue nisi.
+                      </p>
+                    </mat-card-content>
+                  </mat-card>
+                </ion-col>
+
+                <ion-col>
+                  <mat-card>
+                    <mat-card-header>
+                      <mat-card-title>Traitement</mat-card-title>
+                      <mat-card-subtitle>Traitement</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Gravida in fermentum et sollicitudin ac orci phasellus egestas. Volutpat consequat mauris nunc congue nisi.
+                      </p>
+                    </mat-card-content>
+                  </mat-card>
+                </ion-col>
+
+              </ion-row>
+            </ion-grid>
+
+            <!- <div style="display: flex; justify-content: flex-end;">
+              <button mat-raised-button matStepperNext>Next</button>
+            </div> ->
+          </mat-step> -->
+
+          <!-- ################################## -->
+
+          <!-- <mat-step [stepControl]="controlStep">
+            <ng-template matStepLabel>Diagnostique</ng-template>
+
+            <ion-grid>
+
+              <ion-row>
+                <ion-col>
+                  <h4>Diagnostics</h4>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col>
+                  <app-odontogram [teeth]="teeth" [editable]="true"></app-odontogram>
+                </ion-col>
+              </ion-row>
+
+              <ion-row style="margin-top: 32px;">
+                <ion-col>
+                  <h4>Historique</h4>
+                  <table mat-table [dataSource]="diagnostics" class="mat-elevation-z1" *ngIf="diagnostics != null && diagnostics.length > 0">
+
+                    <ng-container matColumnDef="lastname">
+                      <th mat-header-cell *matHeaderCellDef> Nom </th>
+                      <td mat-cell *matCellDef="let element"> {{ element.lastname }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="firstname">
+                      <th mat-header-cell *matHeaderCellDef> Prénom </th>
+                      <td mat-cell *matCellDef="let element"> {{ element.firstname }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="email">
+                      <th mat-header-cell *matHeaderCellDef> E-mail </th>
+                      <td mat-cell *matCellDef="let element"> {{ element.email }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="phoneNb">
+                      <th mat-header-cell *matHeaderCellDef> Tél </th>
+                      <td mat-cell *matCellDef="let element"> {{ element.phoneNb || 'N/A' }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="calendar">
+                      <th mat-header-cell *matHeaderCellDef style="text-align: right; width: 56px;"> </th>
+                      <td mat-cell *matCellDef="let element" style="text-align: right;">
+                        <button mat-icon-button (click)="calendar($event, element)">
+                          <mat-icon>calendar_today</mat-icon>
+                        </button>
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="control">
+                      <th mat-header-cell *matHeaderCellDef style="text-align: right; width: 56px;"> </th>
+                      <td mat-cell *matCellDef="let element" style="text-align: right;">
+                        <button mat-icon-button (click)="control($event, element)">
+                          <mat-icon>medical_services</mat-icon>
+                        </button>
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action">
+                      <th mat-header-cell *matHeaderCellDef style="text-align: right; width: 56px;"> </th>
+                      <td mat-cell *matCellDef="let element" style="text-align: right;">
+                        <button mat-icon-button (click)="action($event, element)">
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                      </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+                  </table>
+
+                  <div *ngIf="diagnostics != null && diagnostics.length === 0">
+                    Aucun diagnostic
+                  </div>
+                </ion-col>
+              </ion-row>
+
+              <!- <ion-row style="margin-top: 32px;">
+                <ion-col style="display: flex; justify-content: flex-end;">
+                  <button mat-fab color="primary" (click)="toDiagnostic()">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                </ion-col>
+              </ion-row> ->
+            </ion-grid>
+
+          </mat-step> -->
+
+          <!-- ################################## -->
+
+          <!-- <mat-step [stepControl]="treatmentStep">
+            <ng-template matStepLabel>Traitement</ng-template>
+
+            <ion-grid>
+
+              <ion-row>
+                <ion-col>
+                  <h4>Traitement</h4>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+          </mat-step> -->
+
+        </mat-horizontal-stepper>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

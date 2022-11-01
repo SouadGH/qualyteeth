@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <toolbar-title></toolbar-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-grid fixed>
+    <h4>Rerchercher un Cabinet</h4>
+
+    <form novalidate [formGroup]="searchSurgeryForm" (ngSubmit)="search()">
+      <ion-row style="margin-top: 32px;">
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Nom <sup>*</sup></ion-label>
+            <ion-input type="text" formControlName="name" required></ion-input>
+          </ion-item>
+          <div class="error" *ngIf="isSubmitted && searchSurgeryForm.controls.name.errors?.required">
+            Veuillez entrer le nom du cabinet
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" size-sm>
+          <ion-item>
+            <ion-label position="floating">NPA <sup>*</sup></ion-label>
+            <ion-input type="number" formControlName="postalCode" required></ion-input>
+          </ion-item>
+          <div class="error" *ngIf="isSubmitted && searchSurgeryForm.controls.postalCode.errors?.required">
+            Veuillez indiquer un code postal
+          </div>
+        </ion-col>
+      </ion-row>
+    </form>
+
+    <ion-row style="margin-top: 16px;">
+      <ion-col>
+        <ion-button (click)="search()" expand="block" [disabled]="!searchSurgeryForm.valid">Rechercher</ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

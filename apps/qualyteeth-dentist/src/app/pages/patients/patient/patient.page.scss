@@ -1,0 +1,28 @@
+::ng-deep .mat-tab-label {
+    width: 33% !important;
+}
+
+::ng-deep .mat-tab-body-content {
+    padding-top: 16px !important;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+}
+
+.truncate {
+    width: 200px;
+    max-width: 200px;
+    padding-right: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.speech-icon-started {
+    color: red;
+}
+
+.speech-icon-ended {
+    color: grey;
+}

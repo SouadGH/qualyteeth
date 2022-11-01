@@ -1,0 +1,89 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <toolbar-title></toolbar-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <input type="file" hidden #imgChooser (change)="onImageChosen($event)" accept=".jpg, .png, .jpeg, .gif, .bmp">
+
+  <ion-grid fixed>
+    <ion-row class="ion-justify-content-center" *ngIf="user != null">
+      <ion-col size="auto">
+        <img *ngIf="user.image == null" src="assets/img/profile.png" alt="Profile" width="120px" height="120px" style="border-radius: 50%; border: solid 1px lightgray; cursor: pointer; object-fit: cover;" (click)="editProfileImage()" />
+        <img *ngIf="user.image != null" [src]="user.image" alt="Profile" width="120px" height="120px" style="border-radius: 50%; border: solid 1px lightgray; cursor: pointer; object-fit: cover;" (click)="editProfileImage()" />
+      </ion-col>
+    </ion-row>
+
+    <form novalidate [formGroup]="profileForm" (ngSubmit)="update()">
+      <ion-row>
+        <ion-col>
+
+          <ion-list>
+            <ion-list-header>
+              <ion-label>Compte</ion-label>
+            </ion-list-header>
+            <ion-item>
+              <ion-label position="floating">Prénom</ion-label>
+              <ion-input type="text" formControlName="firstname"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Nom</ion-label>
+              <ion-input type="text" formControlName="lastname"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Email</ion-label>
+              <ion-input type="email" formControlName="email"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Phone</ion-label>
+              <ion-input type="tel" formControlName="phoneNumber"></ion-input>
+            </ion-item>
+          </ion-list>
+          <!-- <ion-list style="margin-top: 32px;">
+            <ion-list-header>
+              <ion-label>Mot de passe</ion-label>
+            </ion-list-header>
+            <ion-item>
+              <ion-label position="floating">Mot de passe actuel</ion-label>
+              <ion-input type="password" formControlName="password" (keyup)="onPasswordKey($event)"></ion-input>
+            </ion-item>
+            <div class="error" *ngIf="isSubmitted && profileForm.controls.password.errors?.invalidPwd">
+              Mot de passe invalide
+            </div>
+            <ion-item>
+              <ion-label position="floating">Nouveau mot de passe</ion-label>
+              <ion-input type="password" formControlName="newPassword"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Confirmer mot de passe</ion-label>
+              <ion-input type="password" formControlName="newPassword2"></ion-input>
+            </ion-item>
+            <div class="error" *ngIf="isSubmitted && profileForm.controls.newPassword2.errors?.notsame">
+              Les mots de passe ne sont pas identiques
+            </div>
+          </ion-list> -->
+
+        </ion-col>
+      </ion-row>
+      <ion-row style="margin-top: 16px;">
+        <ion-col>
+          <ion-button (click)="update()" expand="block" [disabled]="!profileForm.dirty && !userImgChanged">Mettre à jour</ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+
+    <!-- <ion-row>
+      <ion-col>
+        <ion-button (click)="logout()" expand="block" color="success">Log out</ion-button>
+      </ion-col>
+    </ion-row> -->
+  </ion-grid>
+
+</ion-content>

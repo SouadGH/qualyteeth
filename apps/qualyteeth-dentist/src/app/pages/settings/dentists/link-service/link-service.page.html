@@ -1,0 +1,86 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <toolbar-title></toolbar-title>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid fixed *ngIf="dentist != null">
+
+    <ion-row>
+      <ion-col>
+        <h4>Ajouter / supprimer service pour {{ dentist.firstname }} {{ dentist.lastname }}</h4>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <form novalidate [formGroup]="addServiceForm">
+
+          <ion-row>
+            <ion-col size-xs="12" size-sm="8">
+
+              <mat-form-field style="width: 100%;">
+                <mat-label>Ajouter un service</mat-label>
+                <input type="text" matInput formControlName="name" [matAutocomplete]="serviceAuto" required>
+                <mat-autocomplete autoActiveFirstOption #serviceAuto="matAutocomplete" [displayWith]="display">
+                  <mat-option *ngFor="let s of filteredServices | async" [value]="s">
+                    <ion-item>
+                      <ion-label>
+                        <p>{{ s.category }}</p>
+                        <h3>{{ s.name }}</h3>
+                      </ion-label>
+                    </ion-item>
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="addServiceForm.controls['name']['errors']['required']">Veuillez sélectionner un service</mat-error>
+              </mat-form-field>
+
+            </ion-col>
+
+            <ion-col size-xs="12" size-sm="4">
+              <mat-form-field style="max-width: 80%;">
+                <mat-label>Durée (min)</mat-label>
+                <input matInput type="number" step="15" min="0" formControlName="timing" required>
+                <mat-error *ngIf="addServiceForm.controls['timing']['errors']['required']">Veuillez définir le temps nécéssaire au service</mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </form>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <h6>Services</h6>
+        <div class="dentists-services">
+          <ion-list lines="none" style="background-color: white; border-radius: 8px;">
+            <ion-item *ngFor="let s of dentist.services">
+              <ion-label>
+                <h5>{{ s.name }} ({{ s.timing }}')</h5>
+              </ion-label>
+              <ion-button color="primary" (click)="delete(s)" fill="clear" color="danger">
+                <ion-icon slot="icon-only" name="close-circle-outline"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="margin-top: 16px;">
+      <ion-col>
+        <ion-button (click)="update()">Mettre à jour</ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>

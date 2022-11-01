@@ -1,0 +1,107 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+@import "../../../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+ion-content,
+ion-item {
+    // --background: #f6f6f6;
+    // --ion-item-background: #f6f6f6;
+    --background: #f6f6f6;
+    --ion-item-background: #f6f6f6;
+}
+
+// ion-grid {
+//     --ion-grid-width-xs: 100%;
+//     --ion-grid-width-sm: 540px;
+//     --ion-grid-width-md: 720px;
+//     --ion-grid-width-lg: 960px;
+//     --ion-grid-width-xl: 1140px;
+//     --ion-grid-padding: 16px;
+// }
+
+ion-grid {
+    --ion-grid-width-xs: 100%;
+    --ion-grid-width-sm: 600px;
+    --ion-grid-width-md: 1024px;
+    --ion-grid-width-lg: 1440px;
+    --ion-grid-width-xl: 1920px;
+    --ion-grid-padding: 16px;
+}
+
+@media (min-width: 720px) {
+    ion-modal {
+        --height: 800px !important;
+        --width: 656px !important;
+    }
+}
+
+.fullscreen-modal {
+    // @media (min-width: 720px) {
+    //     // --height: 800px !important;
+    //     --height: 90% !important;
+    //     --width: 1024px !important;
+    //     // --height: 100% !important;
+    //     // --width: 100% !important;
+    // }
+    --height: 100% !important;
+    --width: 100% !important;
+}
+
+.ondontogram-history-modal {
+    @media (min-width: 720px) {
+        // --height: 800px !important;
+        --height: 90% !important;
+        --width: 920px !important;
+        // --height: 100% !important;
+        // --width: 100% !important;
+    }
+}
+
+.searchbar-input {
+    --border-radius: 8px;
+    --box-shadow: none;
+    border: solid 1px lightgrey !important;
+}
+
+h6 {
+    color: darkgray;
+}
+
+.calendar-popover {
+    --width: 420px;
+    --min-width: 420px;
+}
+
+.mcc-color-picker-actions .mat-button {
+    color: black;
+}
+
+/* input color class */
+input.mat-input-element {
+    color: #333333 !important;
+}

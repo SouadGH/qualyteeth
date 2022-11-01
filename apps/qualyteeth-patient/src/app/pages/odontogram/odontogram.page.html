@@ -1,0 +1,106 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <toolbar-title></toolbar-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="pop($event)">
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-grid fixed style="padding: 0;">
+    <ion-row>
+      <ion-col>
+        <mat-tab-group mat-align-tabs="center">
+
+          <mat-tab label="Dents">
+            <div style="width: 100%; max-width: 328px; margin: 0 auto; display: flex; align-items: center; justify-content: center; flex-direction: column; position: relative;">
+              <div>
+                <h6>Mâchoire supérieure</h6>
+              </div>
+              <div #map></div>
+              <div>
+                <h6>Mâchoire inférieure</h6>
+              </div>
+              <!-- <div style="position: absolute; top: 50%; left: 50%; border: solid 1px red; font-size: 12px;">Légende</div> -->
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Historique">
+            
+            <mat-tab-group style="margin-top: 32px;">
+
+              <mat-tab label="Diagnostiques">
+                <ion-list *ngIf="diagnostics.length > 0">
+                  <ion-item *ngFor="let d of diagnostics">
+                    <ion-label class="ion-text-wrap">
+                      <ion-text>
+                        <h6>Date: {{ d.startDate | date : "dd.MM.yyyy" }}</h6>
+                        <h2>Diagnostique: {{ d.name }}</h2>
+                        <h3 *ngIf="d.dentist != null">Dentiste: {{ d.dentist.firstname }} {{ d.dentist.lastname }}</h3>
+                        <h4 *ngIf="d.comment != null">Commentaire: {{ d.comment }}</h4>
+  
+                        <div *ngIf="d.teeth != null && d.teeth.length > 0" style="font-size: 0.85em;">
+                          <span *ngIf="d.teeth.length > 1">Dents traîtées: </span>
+                          <span *ngIf="d.teeth.length === 1">Dent traîtée: </span>
+                          <span *ngFor="let tt of d.teeth; let i=index">{{ tt.toothFdiNumber }} <span *ngIf="i < d.teeth.length - 1"> | </span> </span>
+                        </div>
+  
+                      </ion-text>
+                    </ion-label>
+                  </ion-item>
+  
+                </ion-list>
+                <ion-item *ngIf="diagnostics.length === 0">Aucun diagnostique</ion-item>
+              </mat-tab>
+  
+              <mat-tab label="Traitements">
+                <ion-list *ngIf="treatments.length > 0">
+                  <ion-item *ngFor="let t of treatments">
+                    <ion-label class="ion-text-wrap">
+                      <ion-text>
+                        <h6>Date: {{ t.startDate | date : "dd.MM.yyyy" }}</h6>
+                        <h2>Traitement: {{ t.name }}</h2>
+                        <h3 *ngIf="t.dentist != null">Dentiste: {{ t.dentist.firstname }} {{ t.dentist.lastname }}</h3>
+                        <h4 *ngIf="t.comment != null">Commentaire: {{ t.comment }}</h4>
+  
+                        <div *ngIf="t.teeth != null && t.teeth.length > 0" style="font-size: 0.85em;">
+                          <span *ngIf="t.teeth.length > 1">Dents traîtées: </span>
+                          <span *ngIf="t.teeth.length === 1">Dent traîtée: </span>
+                          <span *ngFor="let tt of t.teeth; let i=index">{{ tt.toothFdiNumber }} <span *ngIf="i < t.teeth.length - 1"> | </span> </span>
+                        </div>
+  
+                      </ion-text>
+                    </ion-label>
+                  </ion-item>
+  
+                </ion-list>
+                <ion-item *ngIf="treatments.length === 0">Aucun traitement</ion-item>
+              </mat-tab>
+  
+            </mat-tab-group>
+
+          </mat-tab>
+
+          <mat-tab label="Nomenclature">
+
+            <ion-slides pager="true">
+              <ion-slide>
+                <img src="/assets/img/teeth_mouth_updown.svg" alt="mouth_up">
+              </ion-slide>
+              <ion-slide>
+                <img src="/assets/img/teeth_mouth_side.svg" alt="mouth_side">
+              </ion-slide>
+            </ion-slides>
+
+          </mat-tab>
+        </mat-tab-group>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>

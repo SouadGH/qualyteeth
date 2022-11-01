@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <toolbar-title></toolbar-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="pop($event)">
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-fab vertical="bottom" horizontal="end" edge="true" slot="fixed" style="bottom: 16px;" (click)="openBottomSheet()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-grid fixed>
+    <ion-row class="ion-align-items-center ion-justify-content-center" class="ion-text-center">
+      <ion-col>
+        <ion-item *ngIf="surgeries.length === 0">
+          <ion-label>
+            <h3>Aucune clinique associée</h3>
+          </ion-label>
+        </ion-item>
+        <ion-list lines="full">
+          <ion-item button *ngFor="let surgery of surgeries">
+            <ion-label>
+              <h3>{{ surgery.name }}</h3>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

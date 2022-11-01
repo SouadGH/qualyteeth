@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <toolbar-title></toolbar-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-grid fixed>
+    <ion-row class="ion-align-items-center ion-justify-content-center" class="ion-text-center">
+      <ion-col>
+        <h4>Donner votre feedback nous permet d'améliorer notre outil!</h4>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center" class="ion-text-center">
+      <ion-col>
+        <h5>Quel est votre opinion sur notre app?</h5>
+        <ion-icon name="star-outline" class="star" style="margin-right: 16px;" (mouseover)="turnOn(1)" [ngClass]="{'star-filled': nbStars >= 1}"></ion-icon>
+        <ion-icon name="star-outline" class="star" style="margin-right: 16px;" (mouseover)="turnOn(2)" [ngClass]="{'star-filled': nbStars >= 2}"></ion-icon>
+        <ion-icon name="star-outline" class="star" style="margin-right: 16px;" (mouseover)="turnOn(3)" [ngClass]="{'star-filled': nbStars >= 3}"></ion-icon>
+        <ion-icon name="star-outline" class="star" style="margin-right: 16px;" (mouseover)="turnOn(4)" [ngClass]="{'star-filled': nbStars >= 4}"></ion-icon>
+        <ion-icon name="star-outline" class="star" (mouseover)="turnOn(5)" [ngClass]="{'star-filled': nbStars === 5}"></ion-icon>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center" class="ion-text-center" style="border-top: solid 1px lightgray; margin-top: 32px;"></ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center" class="ion-text-center">
+      <ion-col>
+        <h5>Laissez votre commentaire ci-dessous</h5>
+        <ion-textarea autoGrow="true" rows="3" class="feedback-area" (ionChange)="setComment($event)" debounce="250"></ion-textarea>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="margin-top: 16px;">
+      <ion-col>
+        <ion-button (click)="save()" expand="block" [disabled]="disabled()">Envoyer</ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>

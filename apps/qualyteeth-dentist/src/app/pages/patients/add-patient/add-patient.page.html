@@ -1,0 +1,73 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Nouveau patient
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <button mat-fab color="primary" (click)="add()" style="position: absolute; right: 16px; bottom: 32px;" [disabled]="!patientForm.valid">
+    <mat-icon>check</mat-icon>
+  </button>
+
+  <ion-grid>
+
+    <ion-row>
+      <ion-col>
+        <h4>Ajouter un patient</h4>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="margin-top: 32px;">
+      <ion-col>
+        <form novalidate [formGroup]="patientForm">
+
+          <mat-form-field style="width: 100%;">
+            <mat-label>Nom</mat-label>
+            <input matInput formControlName="lastname" required>
+            <mat-error *ngIf="patientForm.controls['lastname'].hasError('required')">
+              Veuillez entrer un <strong>nom</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field style="width: 100%; margin-top: 8px;">
+            <mat-label>Prénom</mat-label>
+            <input matInput formControlName="firstname" required>
+            <mat-error *ngIf="patientForm.controls['firstname'].hasError('required')">
+              Veuillez entrer un <strong>prénom</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field style="width: 100%; margin-top: 8px;">
+            <mat-label>Adresse e-mail</mat-label>
+            <input type="email" matInput formControlName="email" required>
+            <mat-error *ngIf="patientForm.controls['email'].hasError('required')">
+              Veuillez entrer un <strong>email</strong>
+            </mat-error>
+            <mat-error *ngIf="patientForm.controls['email'].hasError('email')">
+              Email <strong>invalide</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field style="width: 100%; margin-top: 8px;">
+            <mat-label>N° de téléphone</mat-label>
+            <input type="tel" matInput formControlName="phoneNumber">
+          </mat-form-field>
+        </form>
+      </ion-col>
+    </ion-row>
+
+    <!-- <ion-row style="margin-top: 16px;">
+      <ion-col>
+        <ion-button (click)="add()" expand="block" [disabled]="!patientForm.valid">Ajouter</ion-button>
+      </ion-col>
+    </ion-row> -->
+
+  </ion-grid>
+
+</ion-content>

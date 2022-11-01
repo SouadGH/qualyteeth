@@ -1,0 +1,110 @@
+<ion-content [fullscreen]="true">
+
+  <ion-grid style="width: 100%; max-width: 540px; margin: 0 auto; margin-top: 64px;" class="ion-text-center">
+
+    <ion-row>
+      <ion-col>
+        <img src="/assets/img/icon.svg" alt="QualyTeeth" style="width: 120px;">
+        <h2>Enregistrez-vous</h2>
+        ou <a (click)="login()" style="cursor: pointer;">Connectez-vous ici !</a>
+      </ion-col>
+    </ion-row>
+
+    <form novalidate [formGroup]="signinForm" (ngSubmit)="signin()">
+      <ion-row style="margin-top: 32px;">
+        <ion-col>
+
+          <mat-form-field style="width: 100%;">
+            <mat-label>Adresse e-mail</mat-label>
+            <input matInput type="email" formControlName="email" required>
+            <mat-error *ngIf="signinForm.controls['email'].hasError('required')">
+              Veuillez entrer un <strong>email</strong>
+            </mat-error>
+            <mat-error *ngIf="signinForm.controls['email'].hasError('email')">
+              Email <strong>invalide</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field style="width: 100%; margin-top: 8px;">
+            <mat-label>Mot de passe</mat-label>
+            <input matInput type="password" formControlName="password" required>
+            <mat-error *ngIf="signinForm.controls['password'].hasError('required')">
+              Veuillez entrer un <strong>mot de passe</strong>
+            </mat-error>
+            <mat-error *ngIf="signinForm.controls['password'].hasError('minlength')">
+              8 caractères <strong>minimum</strong>
+            </mat-error>
+          </mat-form-field>
+
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="margin-top: 24px;">
+        <ion-col size="12" size-sm>
+          <mat-form-field style="width: 100%;">
+            <mat-label>Nom</mat-label>
+            <input matInput formControlName="lastname" required>
+            <mat-error *ngIf="signinForm.controls['lastname'].hasError('required')">
+              Veuillez entrer votre <strong>nom</strong>
+            </mat-error>
+          </mat-form-field>
+        </ion-col>
+        <ion-col size="12" size-sm>
+          <mat-form-field style="width: 100%;">
+            <mat-label>Prénom</mat-label>
+            <input matInput formControlName="firstname" required>
+            <mat-error *ngIf="signinForm.controls['firstname'].hasError('required')">
+              Veuillez entrer votre <strong>prénom</strong>
+            </mat-error>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="margin-top: 8px;">
+        <ion-col size-xs="12" size-sm="8">
+          <mat-form-field style="width: 100%;">
+            <mat-label>Rue</mat-label>
+            <input matInput formControlName="street" required>
+            <mat-error *ngIf="signinForm.controls['street'].hasError('required')">
+              Veuillez entrer la <strong>rue</strong>
+            </mat-error>
+          </mat-form-field>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="4">
+          <mat-form-field style="width: 100%;">
+            <mat-label>n°</mat-label>
+            <input matInput formControlName="streetNb">
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="margin-top: 8px;">
+        <ion-col size-xs="12" size-sm="4">
+          <mat-form-field style="width: 100%;">
+            <mat-label>Code postal</mat-label>
+            <input matInput formControlName="postalCode" required>
+            <mat-error *ngIf="signinForm.controls['postalCode'].hasError('required')">
+              Veuillez entrer un <strong>code postal</strong>
+            </mat-error>
+          </mat-form-field>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="8">
+          <mat-form-field style="width: 100%;">
+            <mat-label>Localité</mat-label>
+            <input matInput formControlName="city" required>
+            <mat-error *ngIf="signinForm.controls['city'].hasError('required')">
+              Veuillez entrer la <strong>Localité</strong>
+            </mat-error>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+    </form>
+
+    <ion-row style="margin-top: 16px;">
+      <ion-col>
+        <ion-button (click)="signin()" expand="block" [disabled]="!signinForm.valid">Suivant</ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

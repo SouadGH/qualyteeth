@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <toolbar-title></toolbar-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="pop($event)">
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <!-- <ion-fab vertical="bottom" horizontal="end" edge="true" slot="fixed" style="bottom: 16px;" (click)="scanQRCode()"> -->
+  <!-- <ion-fab vertical="bottom" horizontal="end" edge="true" slot="fixed" style="bottom: 16px;" (click)="openBottomSheet()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab> -->
+
+  <button mat-fab color="primary" (click)="openBottomSheet()" style="position: absolute; right: 16px; bottom: 64px;">
+    <mat-icon>add</mat-icon>
+  </button>
+
+  <ion-grid fixed>
+    <ion-row class="ion-align-items-center ion-justify-content-center" class="ion-text-center">
+      <ion-col>
+        <ion-item *ngIf="dentists.length === 0">
+          <ion-label>
+            <h3>Aucun dentiste</h3>
+          </ion-label>
+        </ion-item>
+        <ion-list lines="full">
+          <ion-item button *ngFor="let dentist of dentists" (click)="toDentist(dentist)">
+            <ion-avatar slot="start">
+              <img *ngIf="dentist.image == null" src="/assets/img/profile.png">
+              <img *ngIf="dentist.image != null" [src]="dentist.image">
+            </ion-avatar>
+            <ion-label>
+              <h3>{{ dentist.firstname }} {{ dentist.lastname }}</h3>
+              <!-- <p>{{ dentist.status }}</p> -->
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

@@ -1,0 +1,9 @@
+ion-item {
+    --background: #ffffff;
+    --ion-item-background: #ffffff;
+}
+
+ion-toolbar > ion-title > ion-item {
+    --padding-start: 0px;
+    --pading-end: 0px;
+}

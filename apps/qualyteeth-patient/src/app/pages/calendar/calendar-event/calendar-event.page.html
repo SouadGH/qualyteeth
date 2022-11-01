@@ -1,0 +1,90 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <toolbar-title></toolbar-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid fixed *ngIf="calendarEvent != null">
+    <ion-row>
+      <ion-col>
+        <ion-list lines="none">
+
+          <ion-item>
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <ion-label>
+              <p>Date</p>
+              {{ getDateStr() }}
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name="time-outline" slot="start"></ion-icon>
+            <ion-label>
+              <p>Heure</p>
+              {{ getTimeStr() }} ({{ getDurationStr() }})
+            </ion-label>
+          </ion-item>
+
+          <ion-item *ngIf="service != null">
+            <ion-icon name="bandage-outline" slot="start"></ion-icon>
+            <ion-label>
+              <p>Prestation</p>
+              {{ service.name }}
+            </ion-label>
+          </ion-item>
+
+          <ion-item *ngIf="dentist != null">
+            <ion-icon name="medkit-outline" slot="start"></ion-icon>
+            <ion-label>
+              <p>Dentiste</p>
+              {{ dentist.firstname }} {{ dentist.lastname }}
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name="open-outline" slot="start"></ion-icon>
+            <ion-label>
+              <p>Status</p>
+              {{ getStatusStr() }}
+            </ion-label>
+            <ion-icon name="share-outline" *ngIf="calendarEvent.status === 'REQUESTED'" color="primary" slot="end"></ion-icon>
+            <ion-icon name="close-circle-outline" *ngIf="calendarEvent.status === 'REJECTED'" color="danger" slot="end"></ion-icon>
+            <ion-icon name="checkbox-outline" *ngIf="calendarEvent.status === 'VALIDATED'" color="success" slot="end"></ion-icon>
+            <ion-icon name="trash-bin-outline" *ngIf="calendarEvent.status === 'CANCELLED'" color="danger" slot="end"></ion-icon>
+          </ion-item>
+
+          <ion-item *ngIf="calendarEvent.status === 'REJECTED' || calendarEvent.status === 'CANCELLED'">
+            <ion-icon name="help-circle-outline" slot="start"></ion-icon>
+            <ion-label>
+              <p>Raison</p>
+              {{ calendarEvent.notes || 'Aucune raison' }}
+            </ion-label>
+          </ion-item>
+
+          <ion-item *ngIf="calendarEvent.status === 'REQUESTED'">
+            <ion-icon name="time-outline" slot="start"></ion-icon>
+            <ion-label>
+              <p>Date de requête</p>
+              {{ calendarEvent.createdOn | date: "dd MMM yyyy • HH:mm" }}
+            </ion-label>
+          </ion-item>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col style="display: flex; justify-content: flex-start;">
+        <ion-button color="danger" (click)="cancelRequest()" *ngIf="calendarEvent.status === 'REQUESTED'" fill="outline">Annuler requête</ion-button>
+        <ion-button color="danger" (click)="cancelMeeting()" *ngIf="calendarEvent.status === 'VALIDATED'" fill="outline">Annuler rendez-vous</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
