@@ -120,6 +120,24 @@ export class DiagnosticService {
   /**
    *
    */
+  public async getAllForDentist(dentistId?: number): Promise<Array<Diagnostic>> {
+    const accessToken = await this.storageSvc.get('accessTokenQD');
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`
+    })
+
+    if (dentistId == null) {
+      dentistId = await this.storageSvc.getUserid(accessToken);
+    }
+
+    return await this.httpClient.get<Array<Diagnostic>>(`${API_ENDPOINT}/diagnostic/dentist/${dentistId}`, { headers: headers }).toPromise();
+  }
+
+  /**
+   *
+   */
    public async getAllForPatient(patientId: number): Promise<Array<Diagnostic>> {
     const accessToken = await this.storageSvc.get('accessTokenQD');
 

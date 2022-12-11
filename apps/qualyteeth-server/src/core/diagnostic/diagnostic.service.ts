@@ -146,6 +146,35 @@ export class DiagnosticService {
     /**
      *
      */
+    async getForDentist(dentistId: number): Promise<Array<Diagnostic>> {
+
+        try {
+            let query = `
+                SELECT d.id, d.patient_id, d.dentist_id, d.start_date, d.comment, d.created_on, n.name
+                FROM diagnostic d
+                JOIN diagnostic_definition f on d.definition_id = f.id
+                JOIN diagnostic_definition_name n ON n.definition_id = f.id
+                WHERE d.dentist_id = $1
+                AND d.end_date IS NULL
+                ORDER BY d.created_on DESC
+            `
+            const diagnostics: Array<Diagnostic> = await this.dbService.db.manyOrNone(query, dentistId);
+
+            for (const d of diagnostics) {
+                query = `SELECT * FROM diagnostic_tooth_lnk WHERE diagnostic_id = $1`;
+                d.teeth = await this.dbService.db.manyOrNone(query, d.id);
+            }
+
+            return diagnostics;
+        } catch (e) {
+            this.logger.error(e.message, new Error(e).stack)
+            throw e;
+        }
+    }
+
+    /**
+     *
+     */
     async getForPatient(patientId: number): Promise<Array<Diagnostic>> {
 
         try {

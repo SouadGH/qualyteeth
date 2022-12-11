@@ -64,6 +64,15 @@ export class DiagnosticController {
 
 
 
+    /**
+     *
+     */
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(SnakeToCameInterceptor)
+    @Get('dentist/:dentistId')
+    async getForDentist(@Param() params) {
+        return await this.diagnosticSvc.getForDentist(params.dentistId);
+    }
 
     /**
      *

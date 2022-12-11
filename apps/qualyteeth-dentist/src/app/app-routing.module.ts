@@ -23,7 +23,7 @@ const routes: Routes = [
   },
   {
     path: 'qr',
-    loadChildren: () => import('./pages/auth/qr/qr.module').then( m => m.QrPageModule)
+    loadChildren: () => import('./pages/auth/qr/qr.module').then(m => m.QrPageModule)
   },
   {
     path: 'create-surgery',
@@ -32,6 +32,11 @@ const routes: Routes = [
   {
     path: 'marketplace',
     loadChildren: () => import('./pages/marketplace/marketplace.module').then(m => m.MarketplacePageModule)
+  },
+  {
+    path: 'activity',
+    loadChildren: () => import('./pages/activity/activity.module').then(m => m.ActivityPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'patients',
@@ -70,32 +75,32 @@ const routes: Routes = [
   },
   {
     path: 'admin/dentists',
-    loadChildren: () => import('./pages/settings/dentists/dentists.module').then( m => m.DentistsPageModule),
+    loadChildren: () => import('./pages/settings/dentists/dentists.module').then(m => m.DentistsPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'admin/services',
-    loadChildren: () => import('./pages/settings/services/services.module').then( m => m.ServicesPageModule),
+    loadChildren: () => import('./pages/settings/services/services.module').then(m => m.ServicesPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'admin/treatments',
-    loadChildren: () => import('./pages/settings/treatments/treatments.module').then( m => m.TreatmentsPageModule),
+    loadChildren: () => import('./pages/settings/treatments/treatments.module').then(m => m.TreatmentsPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'admin/diagnostics',
-    loadChildren: () => import('./pages/settings/diagnostics/diagnostics.module').then( m => m.DiagnosticsPageModule),
+    loadChildren: () => import('./pages/settings/diagnostics/diagnostics.module').then(m => m.DiagnosticsPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'admin/settings',
-    loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule),
+    loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: '**',
-    redirectTo: '/calendar', 
+    redirectTo: '/calendar',
     pathMatch: 'full'
   },
 ];

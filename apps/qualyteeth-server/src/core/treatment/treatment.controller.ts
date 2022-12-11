@@ -86,7 +86,15 @@ export class TreatmentController {
 
 
 
-
+    /**
+     *
+     */
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(SnakeToCameInterceptor)
+    @Get('dentist/:dentistId')
+    async getForDentist(@Param() params) {
+        return await this.treatmentSvc.getForDentist(params.dentistId);
+    }
 
     /**
      *

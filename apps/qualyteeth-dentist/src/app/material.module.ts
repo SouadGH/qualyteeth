@@ -23,6 +23,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatRippleModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
@@ -52,7 +53,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatButtonToggleModule,
     MatRippleModule,
     MatSlideToggleModule,
-
+    MatCheckboxModule,
     DragDropModule
   ]
 })

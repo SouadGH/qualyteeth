@@ -134,6 +134,24 @@ export class TreatmentService {
   /**
    *
    */
+  public async getForDentist(dentistId?: number): Promise<Array<Treatment>> {
+    const accessToken = await this.storageSvc.get('accessTokenQD');
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`
+    });
+
+    if (dentistId == null) {
+      dentistId = await this.storageSvc.getUserid(accessToken);
+    }
+
+    return await this.httpClient.get<Array<Treatment>>(`${API_ENDPOINT}/treatment/dentist/${dentistId}`, { headers: headers }).toPromise();
+  }
+
+  /**
+   *
+   */
   public async getForPatient(patientId: number): Promise<Array<Treatment>> {
     const accessToken = await this.storageSvc.get('accessTokenQD');
 

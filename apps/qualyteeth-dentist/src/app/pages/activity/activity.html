@@ -1,0 +1,87 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            Activité
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+    <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
+
+    <ion-grid fixed>
+
+        <!-- <ion-row>
+            <ion-col>
+                <ion-searchbar showCancelButton="never" debounce="200" animated (ionChange)="search($event)"></ion-searchbar>
+            </ion-col>
+        </ion-row> -->
+
+        <ion-row>
+            <ion-col>
+
+                <table mat-table [dataSource]="diagnosticsOrTraitements" class="mat-elevation-z1" *ngIf="diagnosticsOrTraitements != null && diagnosticsOrTraitements.length > 0" style="width: 100%">
+
+                    <!-- Checkbox Column -->
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox (change)="$event ? toggleAllRows() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="date">
+                        <th mat-header-cell *matHeaderCellDef> Date </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.startDate | date : "dd.MM.yyyy" }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="patient">
+                        <th mat-header-cell *matHeaderCellDef> Patient </th>
+                        <td mat-cell *matCellDef="let element" style="padding-left: 8px; padding-right: 8px;"> {{
+                            element.patientId | patient | async }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="teeth">
+                        <th mat-header-cell *matHeaderCellDef> Dents </th>
+                        <td mat-cell *matCellDef="let element" style="padding: 8px;">
+                            <mat-chip-list>
+                                <mat-chip *ngFor="let t of element.teeth" style="cursor: pointer" color="primary" selected (click)="toothDetails(t)">{{ t.toothFdiNumber }}</mat-chip>
+                            </mat-chip-list>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="diagnosticTreatment">
+                        <th mat-header-cell *matHeaderCellDef> Diagnostique / Traitement </th>
+                        <td mat-cell *matCellDef="let element" style="padding-left: 8px; padding-right: 8px;"> {{ element.name
+                            }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="comment">
+                        <th mat-header-cell *matHeaderCellDef> Commentaire </th>
+                        <td mat-cell *matCellDef="let element" class="truncate" style="padding-left: 8px; padding-right: 8px;">
+                            {{ element.comment || 'N/A' }} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="diagnosticsOrTraitementsColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: diagnosticsOrTraitementsColumns;"></tr>
+                </table>
+
+                <div *ngIf="diagnosticsOrTraitements != null && diagnosticsOrTraitements.length === 0" style="margin-top: 32px;">
+                    Aucune activité
+                </div>
+
+            </ion-col>
+        </ion-row>
+
+    </ion-grid>
+
+
+</ion-content>
