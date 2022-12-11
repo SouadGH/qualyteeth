@@ -39,7 +39,11 @@
             <ion-icon name="calendar-outline" slot="start"></ion-icon>
             <ion-label>Calendrier</ion-label>
           </ion-item>
-          <ion-item button (click)="go('diagnostics')"
+          <ion-item button (click)="go('activite')" [ngClass]="{'active-menu': appSvc.currentPage === '/activity'}" disabled>
+            <ion-icon name="search-outline" slot="start"></ion-icon>
+            <ion-label>Activité</ion-label>
+          </ion-item>
+          <!-- <ion-item button (click)="go('diagnostics')"
             [ngClass]="{'active-menu': appSvc.currentPage === '/diagnostics'}" disabled>
             <ion-icon name="search-outline" slot="start"></ion-icon>
             <ion-label>Diagnostiques effectués</ion-label>
@@ -48,7 +52,7 @@
             disabled>
             <ion-icon name="easel-outline" slot="start"></ion-icon>
             <ion-label>Traitements effectués</ion-label>
-          </ion-item>
+          </ion-item> -->
           <!-- <ion-item button (click)="go('calendar/details')" class="sub-menu" [ngClass]="{'active-menu': appSvc.currentPage === '/calendar/details'}">
             <ion-icon name="search-outline" slot="start"></ion-icon>
             <ion-label>Détails</ion-label>
@@ -61,23 +65,22 @@
             <ion-icon name="trash-bin-outline" slot="start"></ion-icon>
             <ion-label>Rendez-vous annulés</ion-label>
           </ion-item> -->
-          <ion-item button [ngClass]="{'active-menu': appSvc.currentPage === '/invoicing'}" disabled>
+          <!-- <ion-item button [ngClass]="{'active-menu': appSvc.currentPage === '/invoicing'}" disabled>
             <ion-icon name="cash-outline" slot="start"></ion-icon>
             <ion-label>Facturation</ion-label>
-          </ion-item>
+          </ion-item> -->
           <ion-item button [ngClass]="{'active-menu': appSvc.currentPage === '/analytics'}" disabled>
             <ion-icon name="trending-up-outline" slot="start"></ion-icon>
             <ion-label>Dashboard</ion-label>
           </ion-item>
 
-          <hr style="background-color: darkgray; margin-left: 8px; margin-right: 8px;" />
+          <hr style="background-color: darkgray; margin-left: 8px; margin-right: 8px; margin-top: 32px; margin-bottom: 32px;" />
 
           <ion-item>
             <ion-label>Configuration</ion-label>
           </ion-item>
 
-          <ion-item button (click)="go('admin/surgery')"
-            [ngClass]="{'active-menu': appSvc.currentPage === 'admin/surgery'}">
+          <ion-item button (click)="go('admin/surgery')" [ngClass]="{'active-menu': appSvc.currentPage === 'admin/surgery'}">
             <ion-icon name="business-outline" slot="start"></ion-icon>
             <ion-label>Cabinets</ion-label>
           </ion-item>
@@ -94,18 +97,15 @@
             <ion-icon style="margin-left: 16px; width: 20px; height: 20px;" name="medkit-outline" slot="start"></ion-icon>
             <ion-label style="font-size: 0.9em;">Dentistes</ion-label>
           </ion-item> -->
-          <ion-item button (click)="go('admin/services')"
-            [ngClass]="{'active-menu': appSvc.currentPage === 'admin/services'}">
+          <ion-item button (click)="go('admin/services')" [ngClass]="{'active-menu': appSvc.currentPage === 'admin/services'}">
             <ion-icon name="hammer-outline" slot="start"></ion-icon>
             <ion-label>Services</ion-label>
           </ion-item>
-          <ion-item button (click)="go('admin/diagnostics')"
-            [ngClass]="{'active-menu': appSvc.currentPage === 'admin/diagnostics'}">
+          <ion-item button (click)="go('admin/diagnostics')" [ngClass]="{'active-menu': appSvc.currentPage === 'admin/diagnostics'}">
             <ion-icon name="glasses-outline" slot="start"></ion-icon>
             <ion-label>Diagnostiques (définitions)</ion-label>
           </ion-item>
-          <ion-item button (click)="go('admin/treatments')"
-            [ngClass]="{'active-menu': appSvc.currentPage === 'admin/treatments'}">
+          <ion-item button (click)="go('admin/treatments')" [ngClass]="{'active-menu': appSvc.currentPage === 'admin/treatments'}">
             <ion-icon name="bandage-outline" slot="start"></ion-icon>
             <ion-label>Traitements (définitions)</ion-label>
           </ion-item>

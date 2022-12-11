@@ -16,8 +16,8 @@
         <ion-title>
             Odontogramme
             <button mat-icon-button (click)="startSpeechRecognition()" style="margin-left: 16px; border: solid 1px lightgrey;">
-        <mat-icon [ngClass]="speechRecognitionStarted ? 'speech-icon-started': 'speech-icon-ended'">mic</mat-icon>
-      </button>
+                <mat-icon [ngClass]="speechRecognitionStarted ? 'speech-icon-started': 'speech-icon-ended'">mic</mat-icon>
+            </button>
         </ion-title>
         <ion-buttons slot="start">
             <ion-back-button></ion-back-button>
@@ -32,8 +32,8 @@
     <div style="position: relative; width: 100%; max-width: 980px; margin: 0 auto;">
 
         <button mat-fab color="primary" (click)="save()" style="position: absolute; right: 32px; bottom: 8px; z-index: 999;">
-      <mat-icon>done</mat-icon>
-    </button>
+            <mat-icon>done</mat-icon>
+        </button>
 
         <ion-grid fixed style="padding-bottom: 64px;">
 

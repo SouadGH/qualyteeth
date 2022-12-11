@@ -1,32 +1,27 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController, NavController, NavParams, PopoverController, ToastController } from '@ionic/angular';
+import { NavController, NavParams, PopoverController, ToastController } from '@ionic/angular';
 import { Patient } from 'libs/shared/src/lib/patient.interface';
 // import Raphael from 'raphael'
-import { TreatmentService } from 'apps/qualyteeth-dentist/src/app/services/treatment.service';
-import { DentistService } from 'apps/qualyteeth-dentist/src/app/services/dentist.service';
-import { Tooth } from 'libs/shared/src/lib/tooth.interface';
-import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
-import { StorageService } from 'apps/qualyteeth-dentist/src/app/services/storage.service';
-import { Diagnostic } from 'libs/shared/src/lib/diagnostic.interface';
-import { DiagnosticService } from 'apps/qualyteeth-dentist/src/app/services/diagnostic.service';
-import { CalendarEvent } from 'libs/shared/src/lib/calendar.interface';
 import { CalendarService } from 'apps/qualyteeth-dentist/src/app/services/calendar.service';
+import { DiagnosticService } from 'apps/qualyteeth-dentist/src/app/services/diagnostic.service';
+import { StorageService } from 'apps/qualyteeth-dentist/src/app/services/storage.service';
+import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
+import { TreatmentService } from 'apps/qualyteeth-dentist/src/app/services/treatment.service';
+import { CalendarEvent } from 'libs/shared/src/lib/calendar.interface';
+import { Diagnostic } from 'libs/shared/src/lib/diagnostic.interface';
+import { Tooth } from 'libs/shared/src/lib/tooth.interface';
 // import { Surgery } from 'libs/shared/src/lib/surgery.interface';
 // import { SurgeryService } from 'apps/qualyteeth-dentist/src/app/services/surgery.service';
-import { DocumentService } from 'apps/qualyteeth-dentist/src/app/services/document.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import * as moment from 'moment';
-import { MatFabMenu } from '@angular-material-extensions/fab-menu';
-import { DiagnosticPage } from '../../diagnostic/diagnostic.page';
-import { TreatmentPage } from '../../treatment/treatment.page';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { SpeechRecognitionService } from 'apps/qualyteeth-dentist/src/app/services/speech-recognition.service';
-import { Subscription } from 'rxjs';
-import { similarity } from 'talisman/metrics/dice';
-import { PatientService } from '../../../services/patient.service';
-import { Treatment } from 'libs/shared/src/lib/treatment.interface';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
+import { DocumentService } from 'apps/qualyteeth-dentist/src/app/services/document.service';
+import { SpeechRecognitionService } from 'apps/qualyteeth-dentist/src/app/services/speech-recognition.service';
+import { Treatment } from 'libs/shared/src/lib/treatment.interface';
+import * as moment from 'moment';
+import { Subscription } from 'rxjs';
+import { PatientService } from '../../../services/patient.service';
 
 @Component({
   selector: 'app-patient',
@@ -62,7 +57,7 @@ export class PatientPage implements OnInit {
   diagnostics: Array<Diagnostic>;
   treatments: Array<Treatment>;
 
-  diagnosticsOrTraitements: Array<Diagnostic | Treatment>;
+  diagnosticsOrTraitements: Array<Diagnostic & { type: 'DIAGNOSTIC' | 'TREATMENT' } | Treatment & { type: 'DIAGNOSTIC' | 'TREATMENT' }>;
   diagnosticsOrTraitementsColumns = ['date', 'dentist', 'teeth', 'diagnosticTreatment', 'comment', 'status', 'more']
 
   calendarEvents: Array<CalendarEvent>;
@@ -86,7 +81,7 @@ export class PatientPage implements OnInit {
    */
   constructor(
     private storageSvc: StorageService,
-    private dentistSvc: DentistService,
+    // private dentistSvc: DentistService,
     private patientSvc: PatientService,
     private nav: NavController,
     private treatmentSvc: TreatmentService,
@@ -96,7 +91,6 @@ export class PatientPage implements OnInit {
     private calendarSvc: CalendarService,
     // private surgerySvc: SurgeryService,
     private activtedRoute: ActivatedRoute,
-    private modalCtrl: ModalController,
     public popoverCtrl: PopoverController,
     private toastCtrl: ToastController,
     private speechSvc: SpeechRecognitionService,
@@ -185,11 +179,11 @@ export class PatientPage implements OnInit {
     this.treatments = await this.treatmentSvc.getForPatientAndDentist(this.patient.id);
     // treatments = treatments.sort((a, b) => moment(b.startDate).valueOf() - moment(a.startDate).valueOf());
 
-    // console.log(diagnostics)
-    // console.log(treatments)
+    // console.log(this.diagnostics)
+    // console.log(this.treatments)
 
-    this.diagnosticsOrTraitements = this.diagnostics;
-    this.diagnosticsOrTraitements = this.diagnosticsOrTraitements.concat(this.treatments);
+    this.diagnosticsOrTraitements = this.diagnostics.map(d => ({ ...d, type: 'DIAGNOSTIC' }));
+    this.diagnosticsOrTraitements = this.diagnosticsOrTraitements.concat(this.treatments.map(t => ({ ...t, type: 'TREATMENT' })));
     this.diagnosticsOrTraitements = this.diagnosticsOrTraitements.sort((a, b) => moment(b.startDate).valueOf() - moment(a.startDate).valueOf());
 
     // console.log(this.diagnosticsOrTraitements);
@@ -364,14 +358,14 @@ export class PatientPage implements OnInit {
   /**
    *
    */
-  phoneCall(): void {
+  async phoneCall(): Promise<void> {
     document.location.href = 'tel:' + this.patient.phoneNumber;
   }
 
   /**
    *
    */
-  sms(): void {
+  async sms(): Promise<void> {
     document.location.href = 'sms:' + this.patient.phoneNumber;
   }
 
@@ -414,7 +408,7 @@ export class PatientPage implements OnInit {
       this.speechSubscription.unsubscribe();
     }
 
-    this.nav.navigateForward(`/odontogram/${this.patient.id}`)
+    this.nav.navigateForward(`/odontogram/${this.patient.id}`);
   }
 
   /**
@@ -491,10 +485,10 @@ export class PatientPage implements OnInit {
               this.selectedTab = 4;
               break;
 
-            case 'diagnostic':
-              this.selectedTab = 1;
-              await this.newDiagnostic();
-              break;
+            // case 'diagnostic':
+            //   this.selectedTab = 1;
+            //   await this.newDiagnostic();
+            //   break;
           }
 
         }
@@ -523,26 +517,26 @@ export class PatientPage implements OnInit {
   /**
    *
    */
-  async newDiagnostic(): Promise<void> {
+  // async newDiagnostic(): Promise<void> {
 
-    if (this.speechRecognitionStarted && this.speechSubscription != null) {
-      this.speechSubscription.unsubscribe();
-    }
+  //   if (this.speechRecognitionStarted && this.speechSubscription != null) {
+  //     this.speechSubscription.unsubscribe();
+  //   }
 
-    this.nav.navigateForward(`/diagnostic/${this.patient.id}`)
-  }
+  //   this.nav.navigateForward(`/diagnostic/${this.patient.id}`)
+  // }
 
   /**
    *
    */
-  async newTreatment(): Promise<void> {
+  // async newTreatment(): Promise<void> {
 
-    if (this.speechRecognitionStarted && this.speechSubscription != null) {
-      this.speechSubscription.unsubscribe();
-    }
+  //   if (this.speechRecognitionStarted && this.speechSubscription != null) {
+  //     this.speechSubscription.unsubscribe();
+  //   }
 
-    this.nav.navigateForward(`/treatment/${this.patient.id}`)
-  }
+  //   this.nav.navigateForward(`/treatment/${this.patient.id}`)
+  // }
 
   /**
    *
@@ -635,12 +629,13 @@ export class PatientPage implements OnInit {
   /**
    *
    */
-  async editDiagnostic(ev: any, diagonostic: Diagnostic): Promise<void> {
+  async edit(ev: any, el: Diagnostic & { type: 'DIAGNOSTIC' | 'TREATMENT' } | Treatment & { type: 'DIAGNOSTIC' | 'TREATMENT' }): Promise<void> {
+
     const popover = await this.popoverCtrl.create({
       component: EditDiagnosticPopover,
       event: ev,
       translucent: true,
-      componentProps: { 'diagnostic': diagonostic }
+      componentProps: { 'diagnostic': el }
     });
     await popover.present();
     popover.onDidDismiss().then(async r => {
