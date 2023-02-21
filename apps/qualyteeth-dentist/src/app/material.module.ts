@@ -24,7 +24,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatRippleModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
@@ -54,7 +54,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatRippleModule,
     MatSlideToggleModule,
     MatCheckboxModule,
-    DragDropModule
+    DragDropModule,
+    ClipboardModule
   ]
 })
 export class MaterialModule { }

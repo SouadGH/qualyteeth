@@ -57,7 +57,10 @@
                 </ion-col> -->
 
                 <ion-col size-xs="12" size-md="4" style="padding: 8px;">
-                    <h6 [ngClass]="speechCommentStarted ? 'speech-section-text-active' : 'speech-section-text-inactive'">Commentaire</h6>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h6 [ngClass]="speechCommentStarted ? 'speech-section-text-active' : 'speech-section-text-inactive'">Commentaire</h6>
+                        <button mat-raised-button [cdkCopyToClipboard]="comment" style="margin-left: 8px;">Copier</button>
+                    </div>
                     <ion-textarea [(ngModel)]="comment" autoGrow="true" rows="3" class="odontogram-textarea"></ion-textarea>
                 </ion-col>
             </ion-row>
