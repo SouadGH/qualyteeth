@@ -5,6 +5,7 @@ import { Act } from 'libs/shared/src/lib/act.interface';
 import { TreatmentDefinition } from 'libs/shared/src/lib/treatment-definition.interface';
 import { Treatment } from 'libs/shared/src/lib/treatment.interface';
 import { StorageService } from './storage.service';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -129,6 +130,21 @@ export class TreatmentService {
     return await this.httpClient.put<void>(`${API_ENDPOINT}/treatment/definition/update/`, body, { headers: headers }).toPromise();
   }
 
+
+
+  /**
+   *
+   */
+  public async getById(id: number): Promise<Treatment> {
+    const accessToken = await this.storageSvc.get('accessTokenQD');
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`
+    });
+
+    return await lastValueFrom(this.httpClient.get<Treatment>(`${API_ENDPOINT}/treatment/${id}`, { headers: headers }));
+  }
 
 
   /**

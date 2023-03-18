@@ -64,6 +64,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'odontogram/:patient_id/:examination_id',
+    loadChildren: () => import('./pages/odontogram/odontogram.module').then(m => m.OdontogramPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'calendar',
     loadChildren: () => import('./pages/calendar/calendar.module').then(m => m.CalendarPageModule),
     canActivate: [AuthGuard]

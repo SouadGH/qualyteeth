@@ -641,6 +641,9 @@ export class PatientPage implements OnInit {
     popover.onDidDismiss().then(async r => {
       if (r.data != null) {
         console.log(r.data)
+        if (r.data === 'edit') {
+          this.nav.navigateForward(`/odontogram/${this.patient.id}/${el.id}`);
+        }
       }
     })
   }

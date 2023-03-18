@@ -45,6 +45,9 @@ export class OdontogramPage implements OnInit {
   treatmentsControl = new FormControl();
   treatmentsList: Array<TreatmentDefinition> = new Array<TreatmentDefinition>();
 
+  diagnostic: Diagnostic;
+  treatment: Treatment;
+
   private teethSelectedParts: Array<Tooth & { selectedParts: Array<string> }> = new Array<Tooth & { selectedParts: Array<string> }>();
   dataSource: MatTableDataSource<Tooth & { selectedParts: Array<string> }>;
 
@@ -102,6 +105,15 @@ export class OdontogramPage implements OnInit {
   async ionViewWillEnter(): Promise<void> {
 
     this.teeth = <any>await this.toothSvc.getAll();
+
+    const examId = parseInt(this.activtedRoute.snapshot.paramMap.get('examination_id'));
+    if (examId != null) {
+      this.diagnostic = await this.diagnosticSvc.getById(examId);
+      this.treatment = await this.treatmentSvc.getById(examId);
+
+      console.log(this.diagnostic)
+      console.log(this.treatment)
+    }
 
     await this.startSpeechRecognition();
     const toast = await this.toastCtrl.create({

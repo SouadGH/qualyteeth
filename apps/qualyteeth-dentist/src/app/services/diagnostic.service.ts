@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { API_ENDPOINT } from 'apps/qualyteeth-dentist/src/environments/environment';
 import { DiagnosticDefinition } from 'libs/shared/src/lib/diagnostic-definition.interface';
 import { Diagnostic } from 'libs/shared/src/lib/diagnostic.interface';
+import { lastValueFrom } from 'rxjs';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -97,6 +98,21 @@ export class DiagnosticService {
     return await this.httpClient.put<void>(`${API_ENDPOINT}/diagnostic/definition/update/`, body, { headers: headers }).toPromise();
   }
 
+
+
+  /**
+   *
+   */
+  public async getById(id: number): Promise<Diagnostic> {
+    const accessToken = await this.storageSvc.get('accessTokenQD');
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`
+    });
+
+    return await lastValueFrom(this.httpClient.get<Diagnostic>(`${API_ENDPOINT}/diagnostic/${id}`, { headers: headers }));
+  }
 
 
   /**

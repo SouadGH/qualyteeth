@@ -232,6 +232,28 @@ export class TreatmentService {
     /**
      *
      */
+    async getById(id: number, language: string = 'fr'): Promise<Treatment> {
+        try {
+            let query = `
+                SELECT t.id, t.patient_id, t.dentist_id, t.start_date, t.comment, t.created_on, n.name
+                FROM treatment t
+                JOIN treatment_definition f on t.definition_id = f.id
+                JOIN treatment_definition_name n ON n.definition_id = f.id
+                WHERE t.ID = $1
+                AND t.end_date IS NULL
+            `
+
+            return await this.dbService.db.oneOrNone(query, [id, language]);
+        }
+        catch (e) {
+            this.logger.error(e.message, new Error(e).stack)
+            throw e;
+        }
+    }
+
+    /**
+     *
+     */
     async getForDentist(dentistId: number): Promise<Array<Treatment>> {
         try {
             let query = `

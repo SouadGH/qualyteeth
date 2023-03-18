@@ -84,7 +84,15 @@ export class TreatmentController {
 
 
 
-
+    /**
+     *
+     */
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(SnakeToCameInterceptor)
+    @Get(':id')
+    async getById(@Param() params) {
+        return await this.treatmentSvc.getById(params.id);
+    }
 
     /**
      *

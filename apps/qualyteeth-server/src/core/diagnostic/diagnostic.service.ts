@@ -141,7 +141,27 @@ export class DiagnosticService {
 
 
 
+    /**
+     *
+     */
+    async getById(id: number, language: string = 'fr'): Promise<Diagnostic> {
+        try {
+            let query = `
+                SELECT d.id, d.patient_id, d.dentist_id, d.start_date, d.comment, d.created_on, n.name
+                FROM diagnostic d
+                JOIN diagnostic_definition f on d.definition_id = f.id
+                JOIN diagnostic_definition_name n ON n.definition_id = f.id
+                WHERE d.id = $1
+                AND d.end_date IS NULL
+            `
 
+            return await this.dbService.db.oneOrNone(query, [id, language]);
+        }
+        catch (e) {
+            this.logger.error(e.message, new Error(e).stack)
+            throw e;
+        }
+    }
 
     /**
      *
