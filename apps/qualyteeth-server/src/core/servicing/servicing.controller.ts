@@ -77,7 +77,8 @@ export class ServicingController {
     @UseGuards(JwtAuthGuard)
     @Post('definition/save')
     async save(@Request() req) {
-        return await this.servicingSvc.saveDefinition(req.body.service, req.body.serviceLinks);
+        // return await this.servicingSvc.saveDefinition(req.body.service, req.body.serviceLinks);
+        return await this.servicingSvc.saveDefinition(req.body.service);
     }
 
     /**
@@ -86,7 +87,8 @@ export class ServicingController {
      @UseGuards(JwtAuthGuard)
      @Put('definition/update')
      async update(@Request() req) {
-         await this.servicingSvc.updateDefinition(req.body.service, req.body.serviceLinks);
+        //  await this.servicingSvc.updateDefinition(req.body.service, req.body.serviceLinks);
+        await this.servicingSvc.updateDefinition(req.body.service);
      }
 
 

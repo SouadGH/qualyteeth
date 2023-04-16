@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { StorageService } from 'apps/qualyteeth-patient/src/app/services/storage.service';
 import { API_ENDPOINT } from '../../environments/environment';
-import { UserType } from 'libs/shared/src/lib/user.interface';
+import { UserType } from 'libs/shared/src/lib/user.entity';
 
 @Injectable({
   providedIn: 'root'

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PatientService } from 'apps/qualyteeth-dentist/src/app/services/patient.service';
-import { Patient } from 'libs/shared/src/lib/patient.interface';
+import { Patient } from 'libs/shared/src/lib/patient.entity';
+import { UserData } from 'libs/shared/src/lib/user-data';
 
 @Component({
   selector: 'app-add-patient',
@@ -57,14 +58,15 @@ export class AddPatientPage implements OnInit {
     //   return
     // }
 
-    const patient: Patient = {
-      id: null,
-      type: 'PATIENT',
-      createdOn: new Date(),
+    const userData: UserData = {
       firstname: firstname,
       lastname: lastname,
       email: email,
       phoneNumber: phoneNumber,
+    }
+
+    const patient: Patient = {
+      userData: userData
     }
 
     try {

@@ -2,18 +2,23 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { MatDateRangePicker } from '@angular/material/datepicker';
 import { MatTableDataSource } from '@angular/material/table';
-import { Tooth } from 'libs/shared/src/lib/tooth.interface';
+import { Tooth } from 'libs/shared/src/lib/tooth.entity';
 import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
 import { ActivatedRoute } from '@angular/router';
 import { OdontogramComponent } from '../../components/odontogram/odontogram.component';
-import { Treatment, TreatmentTooth } from 'libs/shared/src/lib/treatment.interface';
+import { Treatment } from 'libs/shared/src/lib/treatment.entity';
 import { FormControl } from '@angular/forms';
-import { TreatmentDefinition } from 'libs/shared/src/lib/treatment-definition.interface';
+import { TreatmentDefinition } from 'libs/shared/src/lib/treatment-definition.entity';
 import { Subscription } from 'rxjs';
 import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { TreatmentService } from '../../services/treatment.service';
 import { StorageService } from '../../services/storage.service';
 import { SpeechRecognitionService } from '../../services/speech-recognition.service';
+import { ToothIntervention } from 'libs/shared/src/lib/tooth-intervention.entity';
+import { ToothPart } from 'libs/shared/src/lib/tooth-part.entity';
+import { DentistService } from '../../services/dentist.service';
+import { PatientService } from '../../services/patient.service';
+import { Comment } from 'libs/shared/src/lib/treatment-comment.entity';
 
 @Component({
   selector: 'app-treatment',
@@ -48,7 +53,7 @@ export class TreatmentPage implements OnInit {
   /**
    *
    */
-   constructor(
+  constructor(
     private nav: NavController,
     private adapter: DateAdapter<any>,
     private alertCtrl: AlertController,
@@ -57,7 +62,9 @@ export class TreatmentPage implements OnInit {
     private storageSvc: StorageService,
     private toothSvc: ToothService,
     private speechSvc: SpeechRecognitionService,
-    private activtedRoute: ActivatedRoute
+    private activtedRoute: ActivatedRoute,
+    private dentistSvc: DentistService,
+    private patientSvc: PatientService,
   ) {
     this.adapter.setLocale('fr-CH');
 
@@ -83,11 +90,11 @@ export class TreatmentPage implements OnInit {
   /**
    *
    */
-   async ngOnInit() { }
+  async ngOnInit() { }
 
-   /**
-   *
-   */
+  /**
+  *
+  */
   async ionViewWillEnter(): Promise<void> {
 
     this.teeth = <any>await this.toothSvc.getAll();
@@ -108,7 +115,7 @@ export class TreatmentPage implements OnInit {
   /**
    *
    */
-   async ionViewWillLeave(): Promise<void> {
+  async ionViewWillLeave(): Promise<void> {
     if (this.speechRecognitionStarted && this.speechSubscription != null) {
       this.speechSvc.stop();
       this.speechSubscription.unsubscribe();
@@ -118,7 +125,7 @@ export class TreatmentPage implements OnInit {
   /**
    *
    */
-   async startSpeechRecognition(): Promise<void> {
+  async startSpeechRecognition(): Promise<void> {
     if (this.speechRecognitionStarted === true) {
       this.speechSvc.stop();
       this.speechRecognitionStarted = false;
@@ -222,7 +229,7 @@ export class TreatmentPage implements OnInit {
         // else  if (error === 'speech-ended') {
         //   await this.startSpeechRecognition();
         // }
-        else  if (error === 'sound-ended') {
+        else if (error === 'sound-ended') {
           await this.startSpeechRecognition();
         }
         else {
@@ -240,44 +247,42 @@ export class TreatmentPage implements OnInit {
   /**
    *
    */
-   async openDatePicker(): Promise<void> {
+  async openDatePicker(): Promise<void> {
     this.datePicker.open();
   }
 
   /**
    *
    */
-   async save(): Promise<void> {
+  async save(): Promise<void> {
 
     if (this.treatmentsControl.value == null) {
       const alert = await this.alertCtrl.create({
         header: 'Erreur',
-        message: 'Veuillez sélectionner un diagnostique',
+        message: 'Veuillez sélectionner un traitement',
         buttons: ['OK']
       });
       await alert.present();
       return;
     }
 
-    const dentistId = await this.storageSvc.getUserid();
+    // const dentistId = await this.storageSvc.getUserid();
 
     const treatment: Treatment = {
-      id: null,
-      definitionId: this.treatmentsControl.value['id'],
-      dentistId: dentistId,
-      patientId: this.patientId,
-      startDate: this.date,
-      comment: this.comment,
-      createdOn: new Date(),
-      teeth: new Array<TreatmentTooth>(),
+      definition: this.treatmentsControl.value,
+      dentist: await this.dentistSvc.getDentist(),
+      patient: await this.patientSvc.getPatient(this.patientId),
+      creationDate: this.date,
+      comments: [{ text: this.comment }],
+      interventions: new Array<ToothIntervention>(),
     }
 
     this.dataSource.data.forEach(t => {
-      const dt: TreatmentTooth = {
-        toothFdiNumber: t.fdiNumber,
-        toothParts: t.selectedParts,
+      const dt: ToothIntervention = {
+        tooth: t,
+        parts: t.selectedParts.map(p => { const tp: ToothPart = { name: p }; return tp }),
       }
-      treatment.teeth.push(dt);
+      treatment.interventions.push(dt);
     })
 
     await this.treatmentSvc.save(treatment);

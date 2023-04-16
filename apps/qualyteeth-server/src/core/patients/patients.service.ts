@@ -1,8 +1,10 @@
-import { HttpException, Injectable, Logger } from '@nestjs/common';
-import { Dentist } from 'libs/shared/src/lib/dentist.interface';
-import { Patient } from 'libs/shared/src/lib/patient.interface';
-import { Surgery } from 'libs/shared/src/lib/surgery.interface';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { Dentist } from 'libs/shared/src/lib/dentist.entity';
+import { Patient } from 'libs/shared/src/lib/patient.entity';
+import { Surgery } from 'libs/shared/src/lib/surgery.entity';
 import { DbService } from 'apps/qualyteeth-server/src/core/utils/db.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class PatientsService {
@@ -11,7 +13,9 @@ export class PatientsService {
     /**
      *
      */
-    constructor(private dbService: DbService) { }
+    constructor(
+        @InjectRepository(Patient) private patientRepo: Repository<Patient>,
+        private dbService: DbService) { }
 
     /**
      *
@@ -44,62 +48,96 @@ export class PatientsService {
     /**
      *
      */
-    async add(body: any): Promise<void> {
-        const patient: Patient = body.patient;
-        const dentistId: number = body.dentistId;
+    // async add(body: any): Promise<void> {
+    //     const patient: Patient = body.patient;
+    //     const dentistId: number = body.dentistId;
 
-        await this.dbService.db.tx('addPatientTx', async tx => {
-            // tx.ctx = transaction context object
+    //     await this.dbService.db.tx('addPatientTx', async tx => {
+    //         // tx.ctx = transaction context object
 
-            try {
-                const q1 = `
-                    SELECT * 
-                    FROM patient 
-                    WHERE email = $1
-                `
-                const pr = await this.dbService.db.oneOrNone(q1, [patient.email]);
-                console.log(pr)
-                if (pr != null) {
-                    throw new HttpException('Patient already exists', 409);
-                }
+    //         try {
+    //             const q1 = `
+    //                 SELECT * 
+    //                 FROM patient 
+    //                 WHERE email = $1
+    //             `
+    //             const pr = await this.dbService.db.oneOrNone(q1, [patient.userData.email]);
+    //             console.log(pr)
+    //             if (pr != null) {
+    //                 throw new HttpException('Patient already exists', 409);
+    //             }
 
-                const q2 = `
-                    INSERT INTO patient (firstname, lastname, phone_number, email, created_on)
-                    VALUES ($1, $2, $3, $4, $5)
-                    RETURNING id`;
-                const r = await this.dbService.db.one(q2, [patient.firstname, patient.lastname, patient.phoneNumber, patient.email, new Date()]);
-                console.log(r)
+    //             const q2 = `
+    //                 INSERT INTO patient (firstname, lastname, phone_number, email, created_on)
+    //                 VALUES ($1, $2, $3, $4, $5)
+    //                 RETURNING id`;
+    //             const r = await this.dbService.db.one(q2, [patient.userData.firstname, patient.userData.lastname, patient.userData.phoneNumber, patient.userData.email, new Date()]);
+    //             console.log(r)
 
-                const q3 = `
-                    INSERT INTO dentist_patient_lnk (dentist_id, patient_id, created_on) 
-                    VALUES ($1, $2, $3)`;
-                await this.dbService.db.none(q3, [dentistId, r['id'], new Date()]);
-            } catch (e) {
-                this.logger.error(e.message, new Error(e).stack)
-                throw e;
-            }
-        });
+    //             const q3 = `
+    //                 INSERT INTO dentist_patient_lnk (dentist_id, patient_id, created_on) 
+    //                 VALUES ($1, $2, $3)`;
+    //             await this.dbService.db.none(q3, [dentistId, r['id'], new Date()]);
+    //         } catch (e) {
+    //             this.logger.error(e.message, new Error(e).stack)
+    //             throw e;
+    //         }
+    //     });
+    // }
+
+    // /**
+    //  *
+    //  */
+    // async update(patient: Patient): Promise<number> {
+    //     try {
+    //         const query = `
+    //             UPDATE patient 
+    //             SET 
+    //                 firstname = $1, 
+    //                 lastname = $2, 
+    //                 phone_number = $3,
+    //                 image = $4
+    //             WHERE id = $5
+    //             RETURNING id`;
+    //         return await this.dbService.db.one(query, [patient.userData.firstname, patient.userData.lastname, patient.userData.phoneNumber, patient.userData.image, patient.id]);
+    //     } catch (e) {
+    //         this.logger.error(e.message, new Error(e).stack)
+    //         throw e;
+    //     }
+    // }
+
+    /**
+     *
+     */
+    async getById(id: string): Promise<Patient> {
+        let qb = this.patientRepo.createQueryBuilder('t');
+        qb = qb.where('t.id = :id', { id: id });
+
+        const t = await qb.getOne();
+        if (t) {
+            return t;
+        }
+        throw new HttpException('Patient with this id does not exist', HttpStatus.NOT_FOUND);
     }
 
     /**
      *
      */
-    async update(patient: Patient): Promise<number> {
-        try {
-            const query = `
-                UPDATE patient 
-                SET 
-                    firstname = $1, 
-                    lastname = $2, 
-                    phone_number = $3,
-                    image = $4
-                WHERE id = $5
-                RETURNING id`;
-            return await this.dbService.db.one(query, [patient.firstname, patient.lastname, patient.phoneNumber, patient.image, patient.id]);
-        } catch (e) {
-            this.logger.error(e.message, new Error(e).stack)
-            throw e;
-        }
+    async save(data: Patient): Promise<Patient> {
+        const newT = this.patientRepo.create({ ...data, });
+        await this.patientRepo.save(newT);
+        return newT;
+    }
+
+    /**
+     *
+     */
+    async update(data: Patient): Promise<Patient> {
+        const t: Patient = await this.getById(data.id);
+
+        const newT = this.patientRepo.create({ ...t, ...data, });
+        await this.patientRepo.save(newT);
+        return newT;
     }
 
     /**
@@ -144,13 +182,13 @@ export class PatientsService {
     /**
     *
     */
-    async insertImage(patient: Patient): Promise<void> {
-        try {
-            const query = `INSERT INTO account_img VALUES ($1, $2, $3)`;
-            await this.dbService.db.none(query, [patient.accountId, patient.image.imgData, new Date()]);
-        } catch (e) {
-            this.logger.error(e.message, new Error(e).stack)
-            throw e;
-        }
-    }
+    // async insertImage(patient: Patient): Promise<void> {
+    //     try {
+    //         const query = `INSERT INTO account_img VALUES ($1, $2, $3)`;
+    //         await this.dbService.db.none(query, [patient.id, patient.userData.image, new Date()]);
+    //     } catch (e) {
+    //         this.logger.error(e.message, new Error(e).stack)
+    //         throw e;
+    //     }
+    // }
 }

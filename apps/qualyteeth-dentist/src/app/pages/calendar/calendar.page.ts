@@ -4,14 +4,14 @@ import frchLocale from '@fullcalendar/core/locales/fr-ch'
 import * as moment from 'moment';
 import { AddCalendarPage } from './add-calendar/add-calendar.page';
 import { AlertController, IonContent, ModalController, NavController, PopoverController, ToastController } from '@ionic/angular';
-import { CalendarEvent, FullCalendarEvent } from 'libs/shared/src/lib/calendar.interface';
+import { CalendarEvent, FullCalendarEvent } from 'libs/shared/src/lib/calendar.entity';
 import { CalendarService } from 'apps/qualyteeth-dentist/src/app/services/calendar.service';
-import { Patient } from 'libs/shared/src/lib/patient.interface';
-import { Surgery } from 'libs/shared/src/lib/surgery.interface';
+import { Patient } from 'libs/shared/src/lib/patient.entity';
+import { Surgery } from 'libs/shared/src/lib/surgery.entity';
 import { SurgeryService } from 'apps/qualyteeth-dentist/src/app/services/surgery.service';
 import { CalendarEventInfoComponent } from 'apps/qualyteeth-dentist/src/app/components/calendar-event-info/calendar-event-info.component';
 import { SseService } from 'apps/qualyteeth-dentist/src/app/services/sse.service';
-import { Dentist } from 'libs/shared/src/lib/dentist.interface';
+import { Dentist } from 'libs/shared/src/lib/dentist.entity';
 import { DentistService } from 'apps/qualyteeth-dentist/src/app/services/dentist.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';

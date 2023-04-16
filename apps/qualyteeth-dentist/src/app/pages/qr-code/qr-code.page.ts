@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { toDataURL } from 'qrcode'
-import { Dentist } from 'libs/shared/src/lib/dentist.interface';
+import { Dentist } from 'libs/shared/src/lib/dentist.entity';
 import { DentistService } from 'apps/qualyteeth-dentist/src/app/services/dentist.service';
 
 @Component({

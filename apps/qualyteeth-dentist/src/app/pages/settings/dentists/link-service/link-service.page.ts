@@ -4,8 +4,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { ServicingService } from 'apps/qualyteeth-dentist/src/app/services/servicing.service';
-import { Surgery } from 'libs/shared/src/lib/surgery.interface';
-import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.interface';
+import { Surgery } from 'libs/shared/src/lib/surgery.entity';
+import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.entity';
 
 @Component({
   selector: 'app-link-service',

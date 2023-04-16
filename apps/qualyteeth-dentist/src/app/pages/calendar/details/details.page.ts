@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, PopoverController, ToastController } from '@ionic/angular';
-import { CalendarEvent } from 'libs/shared/src/lib/calendar.interface';
-import { Surgery } from 'libs/shared/src/lib/surgery.interface';
+import { CalendarEvent } from 'libs/shared/src/lib/calendar.entity';
+import { Surgery } from 'libs/shared/src/lib/surgery.entity';
 import { CalendarService } from 'apps/qualyteeth-dentist/src/app/services/calendar.service';
 import { PatientService } from 'apps/qualyteeth-dentist/src/app/services/patient.service';
 import { ServicingService } from 'apps/qualyteeth-dentist/src/app/services/servicing.service';

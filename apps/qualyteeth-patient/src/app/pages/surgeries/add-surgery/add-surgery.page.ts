@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController, NavParams } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Surgery } from 'libs/shared/src/lib/surgery.interface';
+import { Surgery } from 'libs/shared/src/lib/surgery.entity';
 import { SurgeryService } from 'apps/qualyteeth-patient/src/app/services/surgery.service';
 
 @Component({

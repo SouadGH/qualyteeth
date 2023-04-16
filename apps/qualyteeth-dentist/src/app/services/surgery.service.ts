@@ -2,9 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { API_ENDPOINT } from 'apps/qualyteeth-dentist/src/environments/environment';
-import { Dentist } from 'libs/shared/src/lib/dentist.interface';
-import { Patient } from 'libs/shared/src/lib/patient.interface';
-import { Surgery } from 'libs/shared/src/lib/surgery.interface';
+import { Dentist } from 'libs/shared/src/lib/dentist.entity';
+import { Patient } from 'libs/shared/src/lib/patient.entity';
+import { Surgery } from 'libs/shared/src/lib/surgery.entity';
 import { StorageService } from './storage.service';
 
 @Injectable({

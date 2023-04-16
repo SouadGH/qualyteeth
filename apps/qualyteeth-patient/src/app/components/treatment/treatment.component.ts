@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Treatment } from 'libs/shared/src/lib/treatment.interface';
+import { Treatment } from 'libs/shared/src/lib/treatment.entity';
 import { TreatmentPage } from 'apps/qualyteeth-patient/src/app/pages/treatment/treatment.page';
 
 @Component({

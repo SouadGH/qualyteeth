@@ -1,15 +1,13 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { LocalStrategy } from './local.strategy';
-import { JwtStrategy } from './jwt.strategy';
-import { UserModule } from '../user/user.module';
-import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
-import { AuthController } from './auth.controller';
-import { DentistService } from 'apps/qualyteeth-server/src/core/dentists/dentist.service';
+import { PassportModule } from '@nestjs/passport';
 import { DbService } from 'apps/qualyteeth-server/src/core/utils/db.service';
-import { PatientsService } from 'apps/qualyteeth-server/src/core/patients/patients.service';
+import { UserModule } from '../user/user.module';
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
+import { jwtConstants } from './constants';
+import { JwtStrategy } from './jwt.strategy';
+import { LocalStrategy } from './local.strategy';
 
 @Module({
   imports: [
@@ -20,7 +18,7 @@ import { PatientsService } from 'apps/qualyteeth-server/src/core/patients/patien
     }),
     UserModule,
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy, DentistService, PatientsService, DbService],
+  providers: [AuthService, LocalStrategy, JwtStrategy, DbService],
   exports: [AuthService],
   controllers: [AuthController],
 })

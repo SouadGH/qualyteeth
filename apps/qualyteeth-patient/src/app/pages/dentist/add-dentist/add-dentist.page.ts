@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController, NavParams } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DentistService } from 'apps/qualyteeth-patient/src/app/services/dentist.service';
-import { Dentist } from 'libs/shared/src/lib/dentist.interface';
+import { Dentist } from 'libs/shared/src/lib/dentist.entity';
 
 @Component({
   selector: 'app-add-dentist',

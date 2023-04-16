@@ -1,7 +1,7 @@
 import { Controller, Get, Header, Param, Post, Put, Request, Res, UseGuards, UseInterceptors } from '@nestjs/common';
 import { JwtAuthGuard } from 'apps/qualyteeth-server/src/core/auth/jwt-auth.guard';
 import { SnakeToCameInterceptor } from 'apps/qualyteeth-server/src/inteceptors/snake-to-came.interceptor';
-import { Diagnostic } from 'libs/shared/src/lib/diagnostic.interface';
+import { Diagnostic } from 'libs/shared/src/lib/diagnostic.entity';
 import { DiagnosticService } from './diagnostic.service';
 
 @Controller('diagnostic')
@@ -47,7 +47,8 @@ export class DiagnosticController {
     @UseGuards(JwtAuthGuard)
     @Post('definition/save')
     async saveDefinition(@Request() req) {
-        await this.diagnosticSvc.saveDefinition(req.body.definition, req.body.language);
+        // await this.diagnosticSvc.saveDefinition(req.body.definition, req.body.language);
+        await this.diagnosticSvc.saveDefinition(req.body.definition);
     }
 
     /**
@@ -153,7 +154,7 @@ export class DiagnosticController {
         this.diagnosticSvc.diagnosticSubject.subscribe(
             (d: Diagnostic) => {
 
-                if (d.patientId !== parseInt(req.params.patientId)) {
+                if (d.patient.id !== req.params.patientId) {
                     return;
                 }
 

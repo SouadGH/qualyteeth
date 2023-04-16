@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, ModalController, NavParams, ToastController } from '@ionic/angular';
-import { Dentist } from 'libs/shared/src/lib/dentist.interface';
-import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.interface';
-import { Surgery } from 'libs/shared/src/lib/surgery.interface';
+import { Dentist } from 'libs/shared/src/lib/dentist.entity';
+import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.entity';
+import { Surgery } from 'libs/shared/src/lib/surgery.entity';
 import { CalendarService } from 'apps/qualyteeth-patient/src/app/services/calendar.service';
 import { SurgeryService } from 'apps/qualyteeth-patient/src/app/services/surgery.service';
 import { map, startWith } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { ServicingService } from 'apps/qualyteeth-patient/src/app/services/servi
 import * as moment from 'moment';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
-import { CalendarEvent, CalendarStatus } from 'libs/shared/src/lib/calendar.interface';
+import { CalendarEvent, CalendarStatus } from 'libs/shared/src/lib/calendar.entity';
 import { StorageService } from 'apps/qualyteeth-patient/src/app/services/storage.service';
 import { DentistService } from '../../../services/dentist.service';
 

@@ -1,10 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { CalendarEvent, CalendarStatus } from 'libs/shared/src/lib/calendar.interface';
-import { DbService } from 'apps/qualyteeth-server/src/core/utils/db.service';
-import * as moment from 'moment'
-import { Subject } from 'rxjs';
-import { DentistTimetable } from 'libs/shared/src/lib/dentist.interface';
 import { DentistService } from 'apps/qualyteeth-server/src/core/dentists/dentist.service';
+import { DbService } from 'apps/qualyteeth-server/src/core/utils/db.service';
+import { CalendarEvent } from 'libs/shared/src/lib/calendar.entity';
+import * as moment from 'moment';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class CalendarService {

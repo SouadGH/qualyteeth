@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Tooth } from 'libs/shared/src/lib/tooth.interface';
-import { Treatment } from 'libs/shared/src/lib/treatment.interface';
+import { Tooth } from 'libs/shared/src/lib/tooth.entity';
+import { Treatment } from 'libs/shared/src/lib/treatment.entity';
 import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
 import { TreatmentService } from 'apps/qualyteeth-dentist/src/app/services/treatment.service';
 import { ModalController } from '@ionic/angular';
 // import { AddTreatmentPage } from '../treatment.old/add-treatment/add-treatment.page';
-import { Patient } from 'libs/shared/src/lib/patient.interface';
+import { Patient } from 'libs/shared/src/lib/patient.entity';
 import { PatientService } from 'apps/qualyteeth-dentist/src/app/services/patient.service';
 import { StorageService } from 'apps/qualyteeth-dentist/src/app/services/storage.service';
 

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Tooth } from 'libs/shared/src/lib/tooth.interface';
+import { Tooth } from 'libs/shared/src/lib/tooth.entity';
 import { StorageService } from 'apps/qualyteeth-patient/src/app/services/storage.service';
 import { API_ENDPOINT } from '../../environments/environment';
 

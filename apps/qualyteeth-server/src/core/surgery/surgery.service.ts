@@ -1,9 +1,9 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
-import { Dentist } from 'libs/shared/src/lib/dentist.interface';
-import { Patient } from 'libs/shared/src/lib/patient.interface';
-import { Surgery } from 'libs/shared/src/lib/surgery.interface';
+import { Dentist } from 'libs/shared/src/lib/dentist.entity';
+import { Patient } from 'libs/shared/src/lib/patient.entity';
+import { Surgery } from 'libs/shared/src/lib/surgery.entity';
 import { DbService } from 'apps/qualyteeth-server/src/core/utils/db.service';
-import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.interface';
+import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.entity';
 
 @Injectable()
 export class SurgeryService {

@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { StorageService } from 'apps/qualyteeth-patient/src/app/services/storage.service';
 import { API_ENDPOINT } from '../../environments/environment';
-import { Patient } from 'libs/shared/src/lib/patient.interface';
+import { Patient } from 'libs/shared/src/lib/patient.entity';
 
 @Injectable({
   providedIn: 'root'

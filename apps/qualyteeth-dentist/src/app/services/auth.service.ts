@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { API_ENDPOINT } from '../../environments/environment';
-import { UserType } from 'libs/shared/src/lib/user.interface';
+import { UserType } from 'libs/shared/src/lib/user.entity';
 import { StorageService } from './storage.service';
 import { SurgeryService } from './surgery.service';
 import { lastValueFrom } from 'rxjs';

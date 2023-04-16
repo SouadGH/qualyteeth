@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { Diagnostic } from 'libs/shared/src/lib/diagnostic.interface';
-import { Tooth } from 'libs/shared/src/lib/tooth.interface';
+import { Diagnostic } from 'libs/shared/src/lib/diagnostic.entity';
+import { Tooth } from 'libs/shared/src/lib/tooth.entity';
 import { DiagnosticService } from 'apps/qualyteeth-dentist/src/app/services/diagnostic.service';
 import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
 import { OdontogramToothComponent } from './tooth/tooth.component';
-import { Treatment } from 'libs/shared/src/lib/treatment.interface';
+import { Treatment } from 'libs/shared/src/lib/treatment.entity';
 import { TreatmentService } from '../../services/treatment.service';
 
 @Component({

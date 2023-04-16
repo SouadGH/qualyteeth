@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Tooth } from 'libs/shared/src/lib/tooth.interface';
+import { Tooth } from 'libs/shared/src/lib/tooth.entity';
 import { API_ENDPOINT } from '../../environments/environment';
 import { StorageService } from './storage.service';
 import { Subject } from 'rxjs';

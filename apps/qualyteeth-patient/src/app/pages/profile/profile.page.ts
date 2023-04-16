@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from 'apps/qualyteeth-patient/src/app/services/auth.service';
 import * as loadImage from 'blueimp-load-image'
 import { PatientService } from 'apps/qualyteeth-patient/src/app/services/patient.service';
-import { Patient } from 'libs/shared/src/lib/patient.interface';
+import { Patient } from 'libs/shared/src/lib/patient.entity';
 
 @Component({
   selector: 'app-profile',

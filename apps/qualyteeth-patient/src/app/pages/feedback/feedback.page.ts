@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
-import { Feedback } from 'libs/shared/src/lib/feedback.interface';
+import { Feedback } from 'libs/shared/src/lib/feedback.entity';
 import { FeedbackService } from 'apps/qualyteeth-patient/src/app/services/feedback.service';
 
 @Component({

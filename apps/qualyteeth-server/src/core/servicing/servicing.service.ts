@@ -1,7 +1,9 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { ServiceLink } from 'libs/shared/src/lib/service.interface';
-import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.interface';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { ServiceLink } from 'libs/shared/src/lib/service.entity';
+import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.entity';
 import { DbService } from 'apps/qualyteeth-server/src/core/utils/db.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ServicingService {
@@ -10,7 +12,40 @@ export class ServicingService {
     /**
      *
      */
-    constructor(private dbService: DbService) { }
+    constructor(
+        @InjectRepository(ServiceDefinition) private definitionRepo: Repository<ServiceDefinition>,
+        private dbService: DbService) { }
+
+    /**
+     *
+     */
+    async getDefinitionById(id: string): Promise<ServiceDefinition> {
+        const def = await this.definitionRepo.findOne({ where: { id: id } });
+        if (def) {
+            return def;
+        }
+        throw new HttpException('Service definition with this id does not exist', HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     *
+     */
+    async saveDefinition(def: ServiceDefinition): Promise<ServiceDefinition> {
+        const newDef = this.definitionRepo.create({ ...def, });
+        await this.definitionRepo.save(newDef);
+        return newDef;
+    }
+
+    /**
+     *
+     */
+    async updateDefinition(data: ServiceDefinition): Promise<ServiceDefinition> {
+        const t: ServiceDefinition = await this.getDefinitionById(data.id);
+
+        const newDef = this.definitionRepo.create({ ...t, ...data, });
+        await this.definitionRepo.save(newDef);
+        return newDef;
+    }
 
     /**
      *
@@ -96,93 +131,93 @@ export class ServicingService {
     /**
      *
      */
-    async saveDefinition(s: ServiceDefinition, links: Array<ServiceLink>, language: string = 'fr'): Promise<any> {
+    // async saveDefinition(s: ServiceDefinition, links: Array<ServiceLink>, language: string = 'fr'): Promise<any> {
 
-        await this.dbService.db.tx('saveServiceTx', async tx => {
-            // tx.ctx = transaction context object
+    //     await this.dbService.db.tx('saveServiceTx', async tx => {
+    //         // tx.ctx = transaction context object
 
-            try {
-                const query = `
-                    INSERT INTO service_definition (created_by, created_on) 
-                    VALUES ($1, $2)
-                    RETURNING id
-                `
-                const sid = await this.dbService.db.one(query, [s.createdBy, new Date()]);
+    //         try {
+    //             const query = `
+    //                 INSERT INTO service_definition (created_by, created_on) 
+    //                 VALUES ($1, $2)
+    //                 RETURNING id
+    //             `
+    //             const sid = await this.dbService.db.one(query, [s.createdBy, new Date()]);
 
-                const nQuery = `
-                    INSERT INTO service_definition_name (definition_id, language, category, name) 
-                    VALUES ($1, $2, $3, $4)
-                `
-                await this.dbService.db.none(nQuery, [sid.id, language, s.category, s.name]);
+    //             const nQuery = `
+    //                 INSERT INTO service_definition_name (definition_id, language, category, name) 
+    //                 VALUES ($1, $2, $3, $4)
+    //             `
+    //             await this.dbService.db.none(nQuery, [sid.id, language, s.category, s.name]);
 
-                const linkQuery = `
-                    INSERT INTO dentist_service_lnk (definition_id, dentist_id, timing)
-                    VALUES ($1, $2, 3)
-                `
+    //             const linkQuery = `
+    //                 INSERT INTO dentist_service_lnk (definition_id, dentist_id, timing)
+    //                 VALUES ($1, $2, 3)
+    //             `
 
-                if (links == null) {
-                    links = [];
-                }
-                links.forEach(async (l: ServiceLink) => {
-                    await this.dbService.db.none(linkQuery, [l.definitionId, l.dentistId, l.timing]);
-                });
+    //             if (links == null) {
+    //                 links = [];
+    //             }
+    //             links.forEach(async (l: ServiceLink) => {
+    //                 await this.dbService.db.none(linkQuery, [l.definitionId, l.dentistId, l.timing]);
+    //             });
 
-                return sid.id;
-            }
-            catch (e) {
-                this.logger.error(e.message, new Error(e).stack)
-                throw e;
-            }
-        })
-    }
+    //             return sid.id;
+    //         }
+    //         catch (e) {
+    //             this.logger.error(e.message, new Error(e).stack)
+    //             throw e;
+    //         }
+    //     })
+    // }
 
     /**
      *
      */
-    async updateDefinition(s: ServiceDefinition, links?: Array<ServiceLink>): Promise<void> {
+    // async updateDefinition(s: ServiceDefinition, links?: Array<ServiceLink>): Promise<void> {
 
-        await this.dbService.db.tx('updateServiceTx', async tx => {
-            // tx.ctx = transaction context object
+    //     await this.dbService.db.tx('updateServiceTx', async tx => {
+    //         // tx.ctx = transaction context object
 
-            try {
-                const query = `
-                    UPDATE service_definition 
-                    SET deleted = $1
-                    WHERE id = $2
-                `
-                await this.dbService.db.none(query, [s.deleted, s.id]);
+    //         try {
+    //             const query = `
+    //                 UPDATE service_definition 
+    //                 SET deleted = $1
+    //                 WHERE id = $2
+    //             `
+    //             await this.dbService.db.none(query, [s.deleted, s.id]);
 
-                const nQuery = `
-                    UPDATE service_definition_name
-                    SET name = $1, category = $2
-                    WHERE definition_id = $3
-                `
-                await this.dbService.db.none(nQuery, [s.name, s.category, s.id]);
+    //             const nQuery = `
+    //                 UPDATE service_definition_name
+    //                 SET name = $1, category = $2
+    //                 WHERE definition_id = $3
+    //             `
+    //             await this.dbService.db.none(nQuery, [s.name, s.category, s.id]);
 
-                const aQuery = `
-                    DELETE FROM dentist_service_lnk
-                    WHERE definition_id = $1
-                `
-                await this.dbService.db.none(aQuery, [s.id]);
+    //             const aQuery = `
+    //                 DELETE FROM dentist_service_lnk
+    //                 WHERE definition_id = $1
+    //             `
+    //             await this.dbService.db.none(aQuery, [s.id]);
 
-                const linkQuery = `
-                    INSERT INTO dentist_service_lnk (definition_id, dentist_id, timing)
-                    VALUES ($1, $2, $3)
-                `
+    //             const linkQuery = `
+    //                 INSERT INTO dentist_service_lnk (definition_id, dentist_id, timing)
+    //                 VALUES ($1, $2, $3)
+    //             `
 
-                if (links == null) {
-                    links = [];
-                }
-                links.forEach(async (l: ServiceLink) => {
-                    await this.dbService.db.none(linkQuery, [l.definitionId, l.dentistId, l.timing]);
-                });
-            }
-            catch (e) {
-                this.logger.error(e.message, new Error(e).stack)
-                throw e;
-            }
-        })
-    }
+    //             if (links == null) {
+    //                 links = [];
+    //             }
+    //             links.forEach(async (l: ServiceLink) => {
+    //                 await this.dbService.db.none(linkQuery, [l.definitionId, l.dentistId, l.timing]);
+    //             });
+    //         }
+    //         catch (e) {
+    //             this.logger.error(e.message, new Error(e).stack)
+    //             throw e;
+    //         }
+    //     })
+    // }
 
     /**
      *
@@ -204,7 +239,7 @@ export class ServicingService {
     /**
      *
      */
-     async getLinksForDentist(dentistId: number, language: string = 'fr'): Promise<Array<any>> {
+    async getLinksForDentist(dentistId: number, language: string = 'fr'): Promise<Array<any>> {
         try {
             const query = `
                 SELECT ds.dentist_id, ds.definition_id, ds.timing, n.category, n.name
@@ -258,7 +293,7 @@ export class ServicingService {
     /**
      *
      */
-     async getServicesForPatient(patientId: number, language: string = 'fr'): Promise<Array<any>> {
+    async getServicesForPatient(patientId: number, language: string = 'fr'): Promise<Array<any>> {
         try {
             const query = `
                 SELECT s.id, s.created_by, s.created_on, n.category, n.name, l.timing

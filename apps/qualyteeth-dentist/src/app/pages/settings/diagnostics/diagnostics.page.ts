@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController, NavParams, PopoverController, ToastController } from '@ionic/angular';
-import { DiagnosticDefinition } from 'libs/shared/src/lib/diagnostic-definition.interface';
+import { DiagnosticDefinition } from 'libs/shared/src/lib/diagnostic-definition.entity';
 import { DiagnosticService } from 'apps/qualyteeth-dentist/src/app/services/diagnostic.service';
 
 @Component({

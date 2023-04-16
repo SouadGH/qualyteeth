@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController, NavParams } from '@ionic/angular';
-import { CalendarEvent } from 'libs/shared/src/lib/calendar.interface';
+import { CalendarEvent } from 'libs/shared/src/lib/calendar.entity';
 import * as moment from 'moment';
-import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.interface';
-import { Dentist } from 'libs/shared/src/lib/dentist.interface';
+import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.entity';
+import { Dentist } from 'libs/shared/src/lib/dentist.entity';
 import { ServicingService } from 'apps/qualyteeth-patient/src/app/services/servicing.service';
 import { DentistService } from 'apps/qualyteeth-patient/src/app/services/dentist.service';
 import { CalendarService } from 'apps/qualyteeth-patient/src/app/services/calendar.service';

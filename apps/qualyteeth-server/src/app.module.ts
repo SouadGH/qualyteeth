@@ -21,9 +21,11 @@ import { FeedbackModule } from './core/feedback/feedback.module';
 import { SurgeryModule } from './core/surgery/surgery.module';
 import { ServicingModule } from './core/servicing/servicing.module';
 import { DiagnosticModule } from './core/diagnostic/diagnostic.module';
+import { DatabaseModule } from './core/__database/database.module';
 
 @Module({
   imports: [
+    DatabaseModule,
     AuthModule,
     UserModule,
     ConfigModule.forRoot({ isGlobal: true }),

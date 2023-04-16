@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavController, PopoverController } from '@ionic/angular';
-import { Patient } from 'libs/shared/src/lib/patient.interface';
+import { Patient } from 'libs/shared/src/lib/patient.entity';
 import { DentistService } from 'apps/qualyteeth-dentist/src/app/services/dentist.service';
 import { AddPatientPage } from './add-patient/add-patient.page';
 

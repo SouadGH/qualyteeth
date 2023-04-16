@@ -4,7 +4,7 @@ import { ToolbarMenuComponent } from 'apps/qualyteeth-patient/src/app/components
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { AddDentistPage } from '../dentist/add-dentist/add-dentist.page';
 import { QrScannerPage } from '../qr-scanner/qr-scanner.page';
-import { Surgery } from 'libs/shared/src/lib/surgery.interface';
+import { Surgery } from 'libs/shared/src/lib/surgery.entity';
 import { SurgeryService } from 'apps/qualyteeth-patient/src/app/services/surgery.service';
 import { AddSurgeryPage } from './add-surgery/add-surgery.page';
 

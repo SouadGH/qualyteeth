@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { StorageService } from 'apps/qualyteeth-patient/src/app/services/storage.service';
 import { API_ENDPOINT } from '../../environments/environment';
-import { Treatment } from 'libs/shared/src/lib/treatment.interface';
+import { Treatment } from 'libs/shared/src/lib/treatment.entity';
 import { SseService } from './sse.service';
 
 @Injectable({

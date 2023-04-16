@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController, NavParams, PopoverController, ToastController } from '@ionic/angular';
-import { CalendarEvent } from 'libs/shared/src/lib/calendar.interface';
-import { Patient } from 'libs/shared/src/lib/patient.interface';
-import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.interface';
+import { CalendarEvent } from 'libs/shared/src/lib/calendar.entity';
+import { Patient } from 'libs/shared/src/lib/patient.entity';
+import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.entity';
 import { CalendarService } from 'apps/qualyteeth-dentist/src/app/services/calendar.service';
 import { PatientService } from 'apps/qualyteeth-dentist/src/app/services/patient.service';
 import { ServicingService } from 'apps/qualyteeth-dentist/src/app/services/servicing.service';
 import * as moment from 'moment';
 import { DentistService } from 'apps/qualyteeth-dentist/src/app/services/dentist.service';
-import { Dentist } from 'libs/shared/src/lib/dentist.interface';
+import { Dentist } from 'libs/shared/src/lib/dentist.entity';
 import { AddCalendarPage } from 'apps/qualyteeth-dentist/src/app/pages/calendar/add-calendar/add-calendar.page';
 
 @Component({

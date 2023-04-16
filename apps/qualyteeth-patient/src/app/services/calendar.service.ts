@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { StorageService } from 'apps/qualyteeth-patient/src/app/services/storage.service';
 import { API_ENDPOINT } from 'apps/qualyteeth-patient/src/environments/environment';
-import { CalendarEvent } from 'libs/shared/src/lib/calendar.interface';
+import { CalendarEvent } from 'libs/shared/src/lib/calendar.entity';
 import * as moment from 'moment';
 import { SseService } from './sse.service';
 

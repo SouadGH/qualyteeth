@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_ENDPOINT } from '../../environments/environment';
-import { Dentist, DentistTimetable } from 'libs/shared/src/lib/dentist.interface';
-import { Patient } from 'libs/shared/src/lib/patient.interface';
+import { Dentist } from 'libs/shared/src/lib/dentist.entity';
+import { DentistTimetable } from 'libs/shared/src/lib/dentist-timetable.entity';
+import { Patient } from 'libs/shared/src/lib/patient.entity';
 import { AuthService } from './auth.service';
 import { StorageService } from './storage.service';
 

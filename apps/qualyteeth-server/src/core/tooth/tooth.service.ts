@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Tooth } from 'libs/shared/src/lib/tooth.interface';
+import { Tooth } from 'libs/shared/src/lib/tooth.entity';
 import { DbService } from 'apps/qualyteeth-server/src/core/utils/db.service';
 
 @Injectable()

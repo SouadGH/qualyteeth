@@ -1,13 +1,9 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
 import { API_ENDPOINT } from 'apps/qualyteeth-dentist/src/environments/environment';
-import { CalendarEvent } from 'libs/shared/src/lib/calendar.interface';
-import { Patient } from 'libs/shared/src/lib/patient.interface';
-import { ServiceLink } from 'libs/shared/src/lib/service.interface';
+import { CalendarEvent } from 'libs/shared/src/lib/calendar.entity';
+import { Observable, Subject } from 'rxjs';
 import { PatientService } from './patient.service';
 import { ServicingService } from './servicing.service';
-import * as moment from 'moment';
-import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -80,7 +76,7 @@ export class SseService {
 
           const patient = await this.patientSvc.getPatient(calendarEvent.patientId);
 
-          const message = `Nouvelle demande de rendez-vous\nPatient: ${patient.firstname} ${patient.lastname}`;
+          const message = `Nouvelle demande de rendez-vous\nPatient: ${patient.userData.firstname} ${patient.userData.lastname}`;
           await this.notify('Qualyteeth', message);
 
           this.calendarSubject.next(calendarEvent);

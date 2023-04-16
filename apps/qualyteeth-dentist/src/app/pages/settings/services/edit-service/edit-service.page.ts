@@ -2,14 +2,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertController, ModalController, NavController, NavParams, ToastController } from '@ionic/angular';
 import { ServicingService } from 'apps/qualyteeth-dentist/src/app/services/servicing.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Dentist } from 'libs/shared/src/lib/dentist.interface';
+import { Dentist } from 'libs/shared/src/lib/dentist.entity';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.interface';
+import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.entity';
 import { DentistService } from 'apps/qualyteeth-dentist/src/app/services/dentist.service';
 import { ActivatedRoute } from '@angular/router';
-import { ServiceLink } from 'libs/shared/src/lib/service.interface';
-import { Surgery } from 'libs/shared/src/lib/surgery.interface';
+import { ServiceLink } from 'libs/shared/src/lib/service.entity';
+import { Surgery } from 'libs/shared/src/lib/surgery.entity';
 import { SurgeryService } from 'apps/qualyteeth-dentist/src/app/services/surgery.service';
 import { MatTable } from '@angular/material/table';
 

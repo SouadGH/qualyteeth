@@ -1,5 +1,7 @@
 import { Exclude } from "class-transformer";
-import { Column, Entity } from "typeorm";
+import { Column, Entity, OneToMany } from "typeorm";
+import { Dentist } from "./dentist.entity";
+import { Patient } from "./patient.entity";
 import { Base } from "./_base.entity";
 
 export enum UserType {
@@ -10,7 +12,7 @@ export enum UserType {
 @Entity()
 export class User extends Base {
 
-  @Column({ type: 'enum', enum: UserType, default: UserType.DENTIST, nullable: false })
+  @Column({ type: 'enum', enum: UserType, nullable: false })
   type: UserType;
 
   @Column({ nullable: false })
@@ -24,7 +26,7 @@ export class User extends Base {
 
   @Column({ nullable: true })
   @Exclude()
-  public password?: string;
+  password?: string;
 
   @Column({ nullable: true })
   street?: string;
@@ -44,9 +46,15 @@ export class User extends Base {
   @Column({ nullable: true })
   phoneNumber?: string;
 
-  @Column({ nullable: true })
-  lastLogin?: Date;
+  //   @Column({ nullable: true })
+  //   lastLogin?: Date;
 
   @Column({ nullable: true })
-  image?: any;
+  image?: string;
+
+  @OneToMany(() => Dentist, dentist => dentist.user, { nullable: true })
+  dentists?: Dentist[];
+
+  @OneToMany(() => Patient, patient => patient.user, { nullable: true })
+  patients?: Patient[];
 }

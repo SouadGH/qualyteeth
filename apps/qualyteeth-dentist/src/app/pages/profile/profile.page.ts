@@ -5,7 +5,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { LoginPage } from '../auth/login/login.page';
 import * as loadImage from 'blueimp-load-image'
 import * as moment from 'moment';
-import { Dentist, DentistTimetable } from 'libs/shared/src/lib/dentist.interface';
+import { Dentist, DentistTimetable } from 'libs/shared/src/lib/dentist.entity';
 import { DentistService } from 'apps/qualyteeth-dentist/src/app/services/dentist.service';
 import { DateAdapter } from '@angular/material/core';
 import { KeyValue } from '@angular/common';

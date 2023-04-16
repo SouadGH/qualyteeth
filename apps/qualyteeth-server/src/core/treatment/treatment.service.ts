@@ -1,9 +1,11 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { Treatment, TreatmentTooth } from 'libs/shared/src/lib/treatment.interface';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { DbService } from 'apps/qualyteeth-server/src/core/utils/db.service';
-import { TreatmentDefinition } from 'libs/shared/src/lib/treatment-definition.interface';
-import { Act } from 'libs/shared/src/lib/act.interface';
+import { Act } from 'libs/shared/src/lib/act.entity';
+import { TreatmentDefinition } from 'libs/shared/src/lib/treatment-definition.entity';
+import { Treatment } from 'libs/shared/src/lib/treatment.entity';
 import { Subject } from 'rxjs';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class TreatmentService {
@@ -14,7 +16,10 @@ export class TreatmentService {
     /**
      *
      */
-    constructor(private dbService: DbService) { }
+    constructor(
+        @InjectRepository(Treatment) private treatmentRepo: Repository<Treatment>,
+        @InjectRepository(TreatmentDefinition) private definitionRepo: Repository<TreatmentDefinition>,
+        private dbService: DbService) { }
 
     /**
      *
@@ -107,91 +112,129 @@ export class TreatmentService {
     /**
      *
      */
-    async saveTreatmentDefinition(t: TreatmentDefinition, language: string = 'fr'): Promise<void> {
+    // async saveTreatmentDefinition(t: TreatmentDefinition, language: string = 'fr'): Promise<void> {
 
-        await this.dbService.db.tx('saveTreatmentDefinitionTx', async tx => {
-            // tx.ctx = transaction context object
+    //     await this.dbService.db.tx('saveTreatmentDefinitionTx', async tx => {
+    //         // tx.ctx = transaction context object
 
-            try {
-                const query = `
-                    INSERT INTO treatment_definition (created_by, created_on) 
-                    VALUES ($1, $2)
-                    RETURNING id
-                `
-                const tid = await this.dbService.db.one(query, [t.createdBy, new Date()]);
+    //         try {
+    //             const query = `
+    //                 INSERT INTO treatment_definition (created_by, created_on) 
+    //                 VALUES ($1, $2)
+    //                 RETURNING id
+    //             `
+    //             const tid = await this.dbService.db.one(query, [t.createdBy, new Date()]);
 
-                const nQuery = `
-                    INSERT INTO treatment_definition_name (definition_id, language, name) 
-                    VALUES ($1, $2, $3)
-                `
-                await this.dbService.db.none(nQuery, [tid.id, language, t.name]);
+    //             const nQuery = `
+    //                 INSERT INTO treatment_definition_name (definition_id, language, name) 
+    //                 VALUES ($1, $2, $3)
+    //             `
+    //             await this.dbService.db.none(nQuery, [tid.id, language, t.name]);
 
-                if (t.acts == null) {
-                    t.acts = [];
-                }
+    //             if (t.acts == null) {
+    //                 t.acts = [];
+    //             }
 
-                t.acts.forEach(async (a: Act) => {
-                    const query = `
-                            INSERT INTO treatment_definition_act_lnk (definition_id, act_id, position) 
-                            VALUES ($1, $2, $3)
-                        `
-                    await this.dbService.db.none(query, [tid.id, a.id, (t.acts.indexOf(a) + 1)]);
-                });
-            }
-            catch (e) {
-                this.logger.error(e.message, new Error(e).stack)
-                throw e;
-            }
-        })
+    //             t.acts.forEach(async (a: Act) => {
+    //                 const query = `
+    //                         INSERT INTO treatment_definition_act_lnk (definition_id, act_id, position) 
+    //                         VALUES ($1, $2, $3)
+    //                     `
+    //                 await this.dbService.db.none(query, [tid.id, a.id, (t.acts.indexOf(a) + 1)]);
+    //             });
+    //         }
+    //         catch (e) {
+    //             this.logger.error(e.message, new Error(e).stack)
+    //             throw e;
+    //         }
+    //     })
+    // }
+
+    /**
+     *
+     */
+    async getDefinitionById(id: string): Promise<TreatmentDefinition> {
+        const def = await this.definitionRepo.findOne({ where: { id: id } });
+        if (def) {
+            return def;
+        }
+        throw new HttpException('Treatment definition with this id does not exist', HttpStatus.NOT_FOUND);
     }
 
     /**
      *
      */
-    async updateTreatmentDefinition(t: TreatmentDefinition): Promise<void> {
-
-        await this.dbService.db.tx('updateTreatmentDefinitionTx', async tx => {
-            // tx.ctx = transaction context object
-
-            try {
-                const query = `
-                    UPDATE treatment_definition 
-                    SET deleted = $1
-                    WHERE id = $2
-                `
-                await this.dbService.db.none(query, [t.deleted, t.id]);
-
-                const nQuery = `
-                    UPDATE treatment_definition_name
-                    SET name = $1
-                    WHERE definition_id = $2
-                `
-                await this.dbService.db.none(nQuery, [t.name, t.id]);
-
-                const aQuery = `
-                    DELETE FROM treatment_definition_act_lnk
-                    WHERE definition_id = $1
-                `
-                await this.dbService.db.none(aQuery, [t.id]);
-
-                if (t.acts == null) {
-                    t.acts = [];
-                }
-
-                t.acts.forEach(async (a: Act) => {
-                    const query = `
-                            INSERT INTO treatment_definition_act_lnk (definition_id, act_id, position) 
-                            VALUES ($1, $2, $3)
-                        `
-                    await this.dbService.db.none(query, [t.id, a.id, (t.acts.indexOf(a) + 1)]);
-                });
-            }
-            catch (e) {
-                this.logger.error(e.message, new Error(e).stack)
-                throw e;
-            }
-        })
+    async saveTreatmentDefinition(def: TreatmentDefinition): Promise<TreatmentDefinition> {
+        const newDef = this.definitionRepo.create({ ...def, });
+        await this.definitionRepo.save(newDef);
+        return newDef;
     }
+
+    /**
+     *
+     */
+    async updateDefinition(data: TreatmentDefinition): Promise<TreatmentDefinition> {
+        const t: TreatmentDefinition = await this.getDefinitionById(data.id);
+
+        const newDef = this.definitionRepo.create({ ...t, ...data, });
+        await this.definitionRepo.save(newDef);
+        return newDef;
+    }
+
+    /**
+     *
+     */
+    async deleteDefinition(definitionId: string): Promise<void> {
+        await this.definitionRepo.softDelete(definitionId);
+    }
+
+    /**
+     *
+     */
+    // async updateTreatmentDefinition(t: TreatmentDefinition): Promise<void> {
+
+    //     await this.dbService.db.tx('updateTreatmentDefinitionTx', async tx => {
+    //         // tx.ctx = transaction context object
+
+    //         try {
+    //             const query = `
+    //                 UPDATE treatment_definition 
+    //                 SET deleted = $1
+    //                 WHERE id = $2
+    //             `
+    //             await this.dbService.db.none(query, [t.deleted, t.id]);
+
+    //             const nQuery = `
+    //                 UPDATE treatment_definition_name
+    //                 SET name = $1
+    //                 WHERE definition_id = $2
+    //             `
+    //             await this.dbService.db.none(nQuery, [t.name, t.id]);
+
+    //             const aQuery = `
+    //                 DELETE FROM treatment_definition_act_lnk
+    //                 WHERE definition_id = $1
+    //             `
+    //             await this.dbService.db.none(aQuery, [t.id]);
+
+    //             if (t.acts == null) {
+    //                 t.acts = [];
+    //             }
+
+    //             t.acts.forEach(async (a: Act) => {
+    //                 const query = `
+    //                         INSERT INTO treatment_definition_act_lnk (definition_id, act_id, position) 
+    //                         VALUES ($1, $2, $3)
+    //                     `
+    //                 await this.dbService.db.none(query, [t.id, a.id, (t.acts.indexOf(a) + 1)]);
+    //             });
+    //         }
+    //         catch (e) {
+    //             this.logger.error(e.message, new Error(e).stack)
+    //             throw e;
+    //         }
+    //     })
+    // }
 
     /**
      *
@@ -232,113 +275,184 @@ export class TreatmentService {
     /**
      *
      */
-    async getById(id: number, language: string = 'fr'): Promise<Treatment> {
-        try {
-            let query = `
-                SELECT t.id, t.patient_id, t.dentist_id, t.start_date, t.comment, t.created_on, n.name
-                FROM treatment t
-                JOIN treatment_definition f on t.definition_id = f.id
-                JOIN treatment_definition_name n ON n.definition_id = f.id
-                WHERE t.ID = $1
-                AND t.end_date IS NULL
-            `
+    async getById(id: string): Promise<Treatment> {
+        let qb = this.treatmentRepo.createQueryBuilder('t');
+        qb = qb.leftJoinAndSelect('t.definition', 'd')
+        qb = qb.where('t.id = :id', { id: id });
 
-            return await this.dbService.db.oneOrNone(query, [id, language]);
+        const t = await qb.getOne();
+        if (t) {
+            return t;
         }
-        catch (e) {
-            this.logger.error(e.message, new Error(e).stack)
-            throw e;
-        }
+        throw new HttpException('Treatment with this id does not exist', HttpStatus.NOT_FOUND);
     }
 
     /**
      *
      */
-    async getForDentist(dentistId: number): Promise<Array<Treatment>> {
-        try {
-            let query = `
-                SELECT t.id, t.patient_id, t.dentist_id, t.start_date, t.comment, t.created_on, n.name
-                FROM treatment t
-                JOIN treatment_definition f on t.definition_id = f.id
-                JOIN treatment_definition_name n ON n.definition_id = f.id
-                WHERE t.dentist_id = $1
-                AND t.end_date IS NULL
-            `
+    async getForDentist(dentistId: string): Promise<Array<Treatment>> {
+        let qb = this.treatmentRepo.createQueryBuilder('t');
+        qb = qb.leftJoinAndSelect('t.definition', 'd')
+        qb = qb.where('t.dentist.id = :dentistId', { dentistId: dentistId });
 
-            const treatments: Array<Treatment> = await this.dbService.db.manyOrNone(query, dentistId);
-
-            for (const t of treatments) {
-                query = `SELECT * FROM treatment_tooth_lnk WHERE treatment_id = $1`;
-                t.teeth = await this.dbService.db.manyOrNone(query, t.id);
-            }
-
-            return treatments;
-        }
-        catch (e) {
-            this.logger.error(e.message, new Error(e).stack)
-            throw e;
-        }
-    }
-
-
-    /**
-     *
-     */
-    async getForPatient(patientId: number): Promise<Array<Treatment>> {
-        try {
-            let query = `
-                SELECT t.id, t.patient_id, t.dentist_id, t.start_date, t.comment, t.created_on, n.name
-                FROM treatment t
-                JOIN treatment_definition f on t.definition_id = f.id
-                JOIN treatment_definition_name n ON n.definition_id = f.id
-                WHERE t.patient_id = $1
-                AND t.end_date IS NULL
-            `
-
-            const treatments: Array<Treatment> = await this.dbService.db.manyOrNone(query, patientId);
-
-            for (const t of treatments) {
-                query = `SELECT * FROM treatment_tooth_lnk WHERE treatment_id = $1`;
-                t.teeth = await this.dbService.db.manyOrNone(query, t.id);
-            }
-
-            return treatments;
-        }
-        catch (e) {
-            this.logger.error(e.message, new Error(e).stack)
-            throw e;
-        }
+        return await qb.getMany()
     }
 
     /**
      *
      */
-    async getForPatientAndDentist(patientId: number, dentistId?: number): Promise<Array<Treatment>> {
-        try {
-            let query = `
-                SELECT t.id, t.patient_id, t.dentist_id, t.start_date, t.comment, t.created_on, n.name
-                FROM treatment t
-                JOIN treatment_definition f on t.definition_id = f.id
-                JOIN treatment_definition_name n ON n.definition_id = f.id
-                WHERE t.patient_id = $1
-                AND t.dentist_id = $2
-                AND t.end_date IS NULL
-            `
+    async getForPatient(patientId: string): Promise<Array<Treatment>> {
+        let qb = this.treatmentRepo.createQueryBuilder('t');
+        qb = qb.leftJoinAndSelect('t.definition', 'd')
+        qb = qb.where('t.patient.id = :patientId', { patientId: patientId });
 
-            const treatments: Array<Treatment> = await this.dbService.db.manyOrNone(query, [patientId, dentistId]);
-
-            for (const t of treatments) {
-                query = `SELECT * FROM treatment_tooth_lnk WHERE treatment_id = $1`;
-                t.teeth = await this.dbService.db.manyOrNone(query, t.id);
-            }
-
-            return treatments;
-        }
-        catch (e) {
-            this.logger.error(e.message, new Error(e).stack)
-            throw e;
-        }
+        return await qb.getMany()
     }
+
+    /**
+     *
+     */
+    async getForPatientAndDentist(dentistId: string, patientId: string): Promise<Array<Treatment>> {
+        let qb = this.treatmentRepo.createQueryBuilder('t');
+        qb = qb.leftJoinAndSelect('t.definition', 'd')
+        qb = qb.where('t.dentist.id = :dentistId', { dentistId: dentistId });
+        qb = qb.andWhere('t.patient.id = :patientId', { patientId: patientId });
+
+        return await qb.getMany()
+    }
+
+    /**
+     *
+     */
+    async saveTreatment(def: Treatment): Promise<Treatment> {
+        const newT = this.treatmentRepo.create({ ...def, });
+        await this.treatmentRepo.save(newT);
+        return newT;
+    }
+
+    /**
+     *
+     */
+    async updateTreatment(data: Treatment): Promise<Treatment> {
+        const t: Treatment = await this.getById(data.id);
+
+        const newT = this.treatmentRepo.create({ ...t, ...data, });
+        await this.treatmentRepo.save(newT);
+        return newT;
+    }
+
+
+
+    /**
+     *
+     */
+    // async getById(id: number, language: string = 'fr'): Promise<Treatment> {
+    //     try {
+    //         let query = `
+    //             SELECT t.id, t.patient_id, t.dentist_id, t.start_date, t.comment, t.created_on, n.name
+    //             FROM treatment t
+    //             JOIN treatment_definition f on t.definition_id = f.id
+    //             JOIN treatment_definition_name n ON n.definition_id = f.id
+    //             WHERE t.ID = $1
+    //             AND t.end_date IS NULL
+    //         `
+
+    //         return await this.dbService.db.oneOrNone(query, [id, language]);
+    //     }
+    //     catch (e) {
+    //         this.logger.error(e.message, new Error(e).stack)
+    //         throw e;
+    //     }
+    // }
+
+    /**
+     *
+     */
+    // async getForDentist(dentistId: number): Promise<Array<Treatment>> {
+    //     try {
+    //         let query = `
+    //             SELECT t.id, t.patient_id, t.dentist_id, t.start_date, t.comment, t.created_on, n.name
+    //             FROM treatment t
+    //             JOIN treatment_definition f on t.definition_id = f.id
+    //             JOIN treatment_definition_name n ON n.definition_id = f.id
+    //             WHERE t.dentist_id = $1
+    //             AND t.end_date IS NULL
+    //         `
+
+    //         const treatments: Array<Treatment> = await this.dbService.db.manyOrNone(query, dentistId);
+
+    //         for (const t of treatments) {
+    //             query = `SELECT * FROM treatment_tooth_lnk WHERE treatment_id = $1`;
+    //             t.teeth = await this.dbService.db.manyOrNone(query, t.id);
+    //         }
+
+    //         return treatments;
+    //     }
+    //     catch (e) {
+    //         this.logger.error(e.message, new Error(e).stack)
+    //         throw e;
+    //     }
+    // }
+
+
+    /**
+     *
+     */
+    // async getForPatient(patientId: number): Promise<Array<Treatment>> {
+    //     try {
+    //         let query = `
+    //             SELECT t.id, t.patient_id, t.dentist_id, t.start_date, t.comment, t.created_on, n.name
+    //             FROM treatment t
+    //             JOIN treatment_definition f on t.definition_id = f.id
+    //             JOIN treatment_definition_name n ON n.definition_id = f.id
+    //             WHERE t.patient_id = $1
+    //             AND t.end_date IS NULL
+    //         `
+
+    //         const treatments: Array<Treatment> = await this.dbService.db.manyOrNone(query, patientId);
+
+    //         for (const t of treatments) {
+    //             query = `SELECT * FROM treatment_tooth_lnk WHERE treatment_id = $1`;
+    //             t.teeth = await this.dbService.db.manyOrNone(query, t.id);
+    //         }
+
+    //         return treatments;
+    //     }
+    //     catch (e) {
+    //         this.logger.error(e.message, new Error(e).stack)
+    //         throw e;
+    //     }
+    // }
+
+    /**
+     *
+     */
+    // async getForPatientAndDentist(patientId: number, dentistId?: number): Promise<Array<Treatment>> {
+    //     try {
+    //         let query = `
+    //             SELECT t.id, t.patient_id, t.dentist_id, t.start_date, t.comment, t.created_on, n.name
+    //             FROM treatment t
+    //             JOIN treatment_definition f on t.definition_id = f.id
+    //             JOIN treatment_definition_name n ON n.definition_id = f.id
+    //             WHERE t.patient_id = $1
+    //             AND t.dentist_id = $2
+    //             AND t.end_date IS NULL
+    //         `
+
+    //         const treatments: Array<Treatment> = await this.dbService.db.manyOrNone(query, [patientId, dentistId]);
+
+    //         for (const t of treatments) {
+    //             query = `SELECT * FROM treatment_tooth_lnk WHERE treatment_id = $1`;
+    //             t.teeth = await this.dbService.db.manyOrNone(query, t.id);
+    //         }
+
+    //         return treatments;
+    //     }
+    //     catch (e) {
+    //         this.logger.error(e.message, new Error(e).stack)
+    //         throw e;
+    //     }
+    // }
 
     /**
      *
@@ -391,14 +505,14 @@ export class TreatmentService {
             `
             const treatments: Array<Treatment> = await this.dbService.db.manyOrNone(query, [patientId, toothFdiNumber]);
 
-            for (const t of treatments) {
-                query = `
-                    SELECT * 
-                    FROM treatment_tooth_lnk 
-                    WHERE treatment_id = $1
-                    AND tooth_fdi_number = $2`;
-                t.teeth = await this.dbService.db.manyOrNone(query, [t.id, toothFdiNumber]);
-            }
+            // for (const t of treatments) {
+            //     query = `
+            //         SELECT * 
+            //         FROM treatment_tooth_lnk 
+            //         WHERE treatment_id = $1
+            //         AND tooth_fdi_number = $2`;
+            //     t.teeth = await this.dbService.db.manyOrNone(query, [t.id, toothFdiNumber]);
+            // }
 
             return treatments;
         } catch (e) {
@@ -455,46 +569,46 @@ export class TreatmentService {
     /**
      *
      */
-     async saveTreatment(t: Treatment): Promise<number> {
+    // async saveTreatment(t: Treatment): Promise<number> {
 
-        // this.logger.log(d)
+    //     // this.logger.log(d)
 
-        return await this.dbService.db.tx('addTreatmentTx', async tx => {
-            // tx.ctx = transaction context object
+    //     return await this.dbService.db.tx('addTreatmentTx', async tx => {
+    //         // tx.ctx = transaction context object
 
-            try {
-                const query = `
-                    INSERT INTO treatment (definition_id, patient_id, dentist_id, comment, start_date, created_on)
-                    VALUES ($1, $2, $3, $4, $5, $6)
-                    RETURNING id`;
+    //         try {
+    //             const query = `
+    //                 INSERT INTO treatment (definition_id, patient_id, dentist_id, comment, start_date, created_on)
+    //                 VALUES ($1, $2, $3, $4, $5, $6)
+    //                 RETURNING id`;
 
-                const idObj = await this.dbService.db.one(query, [t.definitionId, t.patientId, t.dentistId, t.comment, t.startDate, new Date()]);
-                t.id = idObj['id'];
+    //             const idObj = await this.dbService.db.one(query, [t.definitionId, t.patientId, t.dentistId, t.comment, t.startDate, new Date()]);
+    //             t.id = idObj['id'];
 
-                const hQuery = `
-                    INSERT INTO treatment_tooth_lnk (treatment_id, tooth_fdi_number, tooth_parts) 
-                    VALUES ($1, $2, $3)`;
+    //             const hQuery = `
+    //                 INSERT INTO treatment_tooth_lnk (treatment_id, tooth_fdi_number, tooth_parts) 
+    //                 VALUES ($1, $2, $3)`;
 
-                for (const td of t.teeth) {
-                    await this.dbService.db.none(hQuery, [t.id, td.toothFdiNumber, td.toothParts]);
-                }
+    //             for (const td of t.teeth) {
+    //                 await this.dbService.db.none(hQuery, [t.id, td.toothFdiNumber, td.toothParts]);
+    //             }
 
-                const def: TreatmentDefinition = await this.getDefinition(t.definitionId);
-                this.treatmentSubject.next(Object.assign(t, def));
+    //             const def: TreatmentDefinition = await this.getDefinition(t.definitionId);
+    //             this.treatmentSubject.next(Object.assign(t, def));
 
-                return t.id;
-            } catch (e) {
-                this.logger.error(e.message, new Error(e).stack)
-                throw e;
-            }
-        });
-    }
+    //             return t.id;
+    //         } catch (e) {
+    //             this.logger.error(e.message, new Error(e).stack)
+    //             throw e;
+    //         }
+    //     });
+    // }
 
 
     /**
      *
      */
-     async getActs(language: string = 'fr'): Promise<Array<Act>> {
+    async getActs(language: string = 'fr'): Promise<Array<Act>> {
         try {
             let query = `
                 SELECT a.id, a.vat, n.name from Act a
@@ -512,13 +626,13 @@ export class TreatmentService {
     /**
      *
      */
-     async init(dentistid: number): Promise<void> {
+    async init(dentistid: number): Promise<void> {
 
         return await this.dbService.db.tx('initTreatmentDataTx', async tx => {
             // tx.ctx = transaction context object
 
             const treatments = [
-                
+
             ]
 
             try {
@@ -527,7 +641,7 @@ export class TreatmentService {
 
                     const idObj = await this.dbService.db.one(query, [dentistid, new Date()]);
                     const id = idObj['id'];
-    
+
                     const hQuery = `INSERT INTO treatment_definition_name VALUES ($1, $2, $3)`;
                     await this.dbService.db.none(hQuery, [id, 'fr', d]);
                 }

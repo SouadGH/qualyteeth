@@ -37,7 +37,7 @@ export class PatientsController {
     @UseGuards(JwtAuthGuard)
     @Post('add')
     async add(@Request() req) {
-        await this.patientSvc.add(req.body);
+        await this.patientSvc.save(req.body);
     }
 
     /**

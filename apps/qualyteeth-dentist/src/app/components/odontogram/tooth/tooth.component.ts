@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Inject, Input, OnInit, ViewChild, Renderer2 } from '@angular/core';
-import { Tooth } from 'libs/shared/src/lib/tooth.interface';
+import { Tooth } from 'libs/shared/src/lib/tooth.entity';
 import { OdontogramComponent } from '../odontogram.component';
 import { Observable, Subject } from 'rxjs';
 import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';

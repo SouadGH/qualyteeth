@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController, PopoverController } from '@ionic/angular';
 import { ToolbarMenuComponent } from 'apps/qualyteeth-patient/src/app/components/toolbar-menu/toolbar-menu.component';
-import { Surgery } from 'libs/shared/src/lib/surgery.interface';
+import { Surgery } from 'libs/shared/src/lib/surgery.entity';
 import { CalendarService } from 'apps/qualyteeth-patient/src/app/services/calendar.service';
 import { SurgeryService } from 'apps/qualyteeth-patient/src/app/services/surgery.service';
 import { AddCalendarPage } from './add-calendar/add-calendar.page';
 import * as moment from 'moment';
-import { CalendarEvent } from 'libs/shared/src/lib/calendar.interface';
+import { CalendarEvent } from 'libs/shared/src/lib/calendar.entity';
 import { SseService } from 'apps/qualyteeth-patient/src/app/services/sse.service';
 import { MatSelectChange } from '@angular/material/select';
 import { CalendarEventPage } from './calendar-event/calendar-event.page';

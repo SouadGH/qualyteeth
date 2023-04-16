@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Dentist } from 'libs/shared/src/lib/dentist.interface';
+import { Dentist } from 'libs/shared/src/lib/dentist.entity';
 import { DentistService } from '../services/dentist.service';
 
 
@@ -22,6 +22,6 @@ export class DentistPipe implements PipeTransform {
     if (d == null) {
       return null;
     }
-    return `${d.firstname} ${d.lastname}`;
+    return `${d.userData.firstname} ${d.userData.lastname}`;
   }
 }

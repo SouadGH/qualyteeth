@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, ToastController } from '@ionic/angular';
-import { Surgery } from 'libs/shared/src/lib/surgery.interface';
+import { Surgery } from 'libs/shared/src/lib/surgery.entity';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SurgeryService } from 'apps/qualyteeth-dentist/src/app/services/surgery.service';
 import { ActivatedRoute } from '@angular/router';

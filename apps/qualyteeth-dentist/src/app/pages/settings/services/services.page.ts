@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { AlertController, ModalController, NavController, PopoverController, ToastController } from '@ionic/angular';
-import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.interface';
-import { Surgery } from 'libs/shared/src/lib/surgery.interface';
-import { Treatment } from 'libs/shared/src/lib/treatment.interface';
+import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.entity';
+import { Surgery } from 'libs/shared/src/lib/surgery.entity';
+import { Treatment } from 'libs/shared/src/lib/treatment.entity';
 import { ServicingService } from 'apps/qualyteeth-dentist/src/app/services/servicing.service';
 import { SurgeryService } from 'apps/qualyteeth-dentist/src/app/services/surgery.service';
 import { EditServicePage } from './edit-service/edit-service.page';

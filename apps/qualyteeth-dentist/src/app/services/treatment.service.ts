@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_ENDPOINT } from '../../environments/environment';
-import { Act } from 'libs/shared/src/lib/act.interface';
-import { TreatmentDefinition } from 'libs/shared/src/lib/treatment-definition.interface';
-import { Treatment } from 'libs/shared/src/lib/treatment.interface';
+import { Act } from 'libs/shared/src/lib/act.entity';
+import { TreatmentDefinition } from 'libs/shared/src/lib/treatment-definition.entity';
+import { Treatment } from 'libs/shared/src/lib/treatment.entity';
 import { StorageService } from './storage.service';
 import { lastValueFrom } from 'rxjs';
 
@@ -101,16 +101,20 @@ export class TreatmentService {
   /**
    *
    */
-  //  public async deleteDefinition(tId: number): Promise<void> {
-  //   const accessToken = await this.storageSvc.get('accessTokenQD');
+  public async deleteDefinition(tId: string): Promise<void> {
+    const accessToken = await this.storageSvc.get('accessTokenQD');
 
-  //   const headers = new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //     'Authorization': `Bearer ${accessToken}`
-  //   });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`
+    });
 
-  //   return await this.httpClient.delete<void>(`${API_ENDPOINT}/treatment/definition/delete/${tId}`, { headers: headers }).toPromise();
-  // }
+    const body = {
+      definitionId: tId
+    }
+
+    await lastValueFrom(this.httpClient.put<void>(`${API_ENDPOINT}/treatment/definition/delete`, body, { headers: headers }));
+  }
 
   /**
    *

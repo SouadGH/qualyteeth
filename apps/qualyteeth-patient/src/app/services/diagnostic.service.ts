@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { StorageService } from 'apps/qualyteeth-patient/src/app/services/storage.service';
 import { API_ENDPOINT } from '../../environments/environment';
-import { Diagnostic } from 'libs/shared/src/lib/diagnostic.interface';
+import { Diagnostic } from 'libs/shared/src/lib/diagnostic.entity';
 import { SseService } from './sse.service';
 import { firstValueFrom } from 'rxjs';
 

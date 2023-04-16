@@ -1,7 +1,7 @@
-import { Controller, Delete, Get, Header, HttpException, HttpStatus, Param, Post, Put, Request, Res, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Header, HttpException, HttpStatus, Param, Post, Put, Request, Res, UseGuards, UseInterceptors } from '@nestjs/common';
 import { JwtAuthGuard } from 'apps/qualyteeth-server/src/core/auth/jwt-auth.guard';
 import { SnakeToCameInterceptor } from 'apps/qualyteeth-server/src/inteceptors/snake-to-came.interceptor';
-import { Treatment } from 'libs/shared/src/lib/treatment.interface';
+import { Treatment } from 'libs/shared/src/lib/treatment.entity';
 import { TreatmentService } from './treatment.service';
 
 @Controller('treatment')
@@ -59,7 +59,8 @@ export class TreatmentController {
     @Post('definition/save')
     async saveTreatmentDefinition(@Request() req) {
         // console.log(req.body.treatment, req.body.language)
-        await this.treatmentSvc.saveTreatmentDefinition(req.body.treatment, req.body.language);
+        // await this.treatmentSvc.saveTreatmentDefinition(req.body.treatment, req.body.language);
+        await this.treatmentSvc.saveTreatmentDefinition(req.body.treatment);
     }
 
     /**
@@ -69,7 +70,16 @@ export class TreatmentController {
     @Put('definition/update')
     async updateTreatmentDefinition(@Request() req) {
         // console.log(req.body.treatment)
-        await this.treatmentSvc.updateTreatmentDefinition(req.body.treatment);
+        await this.treatmentSvc.updateDefinition(req.body.treatment);
+    }
+
+    /**
+     *
+     */
+    @UseGuards(JwtAuthGuard)
+    @Put('delete')
+    async delete(@Body() body: any): Promise<void> {
+        return await this.treatmentSvc.deleteDefinition(body.definitionId);
     }
 
     /**
@@ -111,7 +121,7 @@ export class TreatmentController {
     @UseInterceptors(SnakeToCameInterceptor)
     @Get('patient/:patientId')
     async getForPatient(@Param() params) {
-        return await this.treatmentSvc.getForPatient(parseInt(params.patientId));
+        return await this.treatmentSvc.getForPatient(params.patientId);
     }
 
     /**
@@ -121,7 +131,7 @@ export class TreatmentController {
     @UseInterceptors(SnakeToCameInterceptor)
     @Get('patient/:patientId/tooth/:fdiNumber')
     async getForPatientAndTooth(@Param() params) {
-        return await this.treatmentSvc.getForPatientAndTooth(parseInt(params.patientId), parseInt(params.fdiNumber));
+        return await this.treatmentSvc.getForPatientAndTooth(params.patientId, parseInt(params.fdiNumber));
     }
 
     /**
@@ -131,7 +141,7 @@ export class TreatmentController {
     @UseInterceptors(SnakeToCameInterceptor)
     @Get('patient/:patientId/dentist/:dentistId')
     async getForPatientAndDentist(@Param() params) {
-        return await this.treatmentSvc.getForPatientAndDentist(parseInt(params.patientId), parseInt(params.dentistId));
+        return await this.treatmentSvc.getForPatientAndDentist(params.patientId, params.dentistId);
     }
 
     /**
@@ -141,7 +151,7 @@ export class TreatmentController {
     @UseInterceptors(SnakeToCameInterceptor)
     @Get('patient/:patientId/dentist/:dentistId/tooth/:fdiNumber')
     async getForPatientAndDentistAndTooth(@Param() params) {
-        return await this.treatmentSvc.getForPatientAndDentistAndTooth(parseInt(params.patientId), parseInt(params.dentistId), parseInt(params.fdiNumber));
+        return await this.treatmentSvc.getForPatientAndDentistAndTooth(params.patientId, params.dentistId, parseInt(params.fdiNumber));
     }
 
     /**
@@ -157,25 +167,25 @@ export class TreatmentController {
     /**
      *
      */
-     @UseGuards(JwtAuthGuard)
-     @Post('init')
-     async init(@Request() req) {
-         return await this.treatmentSvc.init(req.body.dentistId);
-     }
+    @UseGuards(JwtAuthGuard)
+    @Post('init')
+    async init(@Request() req) {
+        return await this.treatmentSvc.init(req.body.dentistId);
+    }
 
     /**
      *
      */
-     @UseGuards(JwtAuthGuard)
-     @UseInterceptors(SnakeToCameInterceptor)
-     @Get('acts')
-     async getActs(@Param() params) {
-         return await this.treatmentSvc.getActs();
-     }
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(SnakeToCameInterceptor)
+    @Get('acts')
+    async getActs(@Param() params) {
+        return await this.treatmentSvc.getActs();
+    }
 
-     /**
-     *
-     */
+    /**
+    *
+    */
     @Get('sse/patient/:patientId')
     @Header('Content-Type', 'text/event-stream')
     @Header('Cache-Control', 'no-cache')
@@ -184,7 +194,7 @@ export class TreatmentController {
         this.treatmentSvc.treatmentSubject.subscribe(
             (t: Treatment) => {
 
-                if (t.patientId !== parseInt(req.params.patientId)) {
+                if (t.patient.id !== req.params.patientId) {
                     return;
                 }
 

@@ -2,8 +2,8 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { DiagnosticService } from 'apps/qualyteeth-dentist/src/app/services/diagnostic.service';
-import { Diagnostic } from 'libs/shared/src/lib/diagnostic.interface';
-import { Treatment } from 'libs/shared/src/lib/treatment.interface';
+import { Diagnostic } from 'libs/shared/src/lib/diagnostic.entity';
+import { Treatment } from 'libs/shared/src/lib/treatment.entity';
 import * as moment from 'moment';
 import { TreatmentService } from '../../services/treatment.service';
 

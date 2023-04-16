@@ -1,8 +1,8 @@
 import { MatFabMenu } from '@angular-material-extensions/fab-menu';
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController, NavParams, PopoverController } from '@ionic/angular';
-import { Patient } from 'libs/shared/src/lib/patient.interface';
-import { Surgery } from 'libs/shared/src/lib/surgery.interface';
+import { Patient } from 'libs/shared/src/lib/patient.entity';
+import { Surgery } from 'libs/shared/src/lib/surgery.entity';
 import { SurgeryService } from 'apps/qualyteeth-dentist/src/app/services/surgery.service';
 
 @Component({

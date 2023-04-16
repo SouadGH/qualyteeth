@@ -24,7 +24,7 @@ export class DentistController {
     @ApiParam({name: 'id'})
     @Get(':id')
     async find(@Param() params) {
-        return await this.dentistSvc.findById(params.id);
+        return await this.dentistSvc.getById(params.id);
     }
 
     /**
@@ -89,9 +89,9 @@ export class DentistController {
     /**
      *
      */
-    @UseGuards(JwtAuthGuard)
-    @Post('connect')
-    async connect(@Request() req) {
-        return await this.dentistSvc.connect(req.body.dentistId, req.body.patientId);
-    }
+    // @UseGuards(JwtAuthGuard)
+    // @Post('connect')
+    // async connect(@Request() req) {
+    //     return await this.dentistSvc.connect(req.body.dentistId, req.body.patientId);
+    // }
 }

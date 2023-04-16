@@ -2,13 +2,13 @@ import { Component, ViewChild, ElementRef, OnInit, Renderer2 } from '@angular/co
 import { NavController, PopoverController } from '@ionic/angular';
 import Raphael from 'raphael'
 import { ToolbarMenuComponent } from 'apps/qualyteeth-patient/src/app/components/toolbar-menu/toolbar-menu.component';
-import { Treatment } from 'libs/shared/src/lib/treatment.interface';
+import { Treatment } from 'libs/shared/src/lib/treatment.entity';
 import { TreatmentService } from 'apps/qualyteeth-patient/src/app/services/treatment.service';
-import { Diagnostic } from 'libs/shared/src/lib/diagnostic.interface';
+import { Diagnostic } from 'libs/shared/src/lib/diagnostic.entity';
 import { DiagnosticService } from '../../services/diagnostic.service';
 import { Subscription } from 'rxjs';
 import { SseService } from '../../services/sse.service';
-import { Dentist } from 'libs/shared/src/lib/dentist.interface';
+import { Dentist } from 'libs/shared/src/lib/dentist.entity';
 import { DentistService } from '../../services/dentist.service';
 // import ImageMap from "image-map";
 

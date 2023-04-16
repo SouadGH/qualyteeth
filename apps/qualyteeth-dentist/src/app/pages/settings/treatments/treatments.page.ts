@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController, PopoverController, ToastController } from '@ionic/angular';
-import { TreatmentDefinition } from 'libs/shared/src/lib/treatment-definition.interface';
+import { TreatmentDefinition } from 'libs/shared/src/lib/treatment-definition.entity';
 import { TreatmentService } from 'apps/qualyteeth-dentist/src/app/services/treatment.service';
 
 @Component({
@@ -75,9 +75,7 @@ export class TreatmentsPage implements OnInit {
         { text: 'Non' },
         {
           text: 'Oui', handler: async () => {
-            t.deleted = true;
-            await this.treatmentSvc.updateDefinition(t);
-            // await this.treatmentSvc.deleteDefinition(t.id);
+            await this.treatmentSvc.deleteDefinition(t.id);
             await this.loadData();
 
             const toast = await this.toastCtrl.create({

@@ -1,7 +1,7 @@
 import { Controller, Get, Header, Param, Post, Put, Request, Res, UseGuards, UseInterceptors } from '@nestjs/common';
 import { JwtAuthGuard } from 'apps/qualyteeth-server/src/core/auth/jwt-auth.guard';
 import { SnakeToCameInterceptor } from 'apps/qualyteeth-server/src/inteceptors/snake-to-came.interceptor';
-import { CalendarEvent } from 'libs/shared/src/lib/calendar.interface';
+import { CalendarEvent } from 'libs/shared/src/lib/calendar.entity';
 import { CalendarService } from './calendar.service';
 
 @Controller('calendar')

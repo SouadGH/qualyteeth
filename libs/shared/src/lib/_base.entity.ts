@@ -3,14 +3,14 @@ import { Exclude } from 'class-transformer';
 
 export abstract class Base {
     @PrimaryGeneratedColumn('uuid')
-    id!: string
+    id?: string
 
     @CreateDateColumn({ select: true, type: 'timestamptz', precision: 3 })
-    public creationDate!: Date;
+    public creationDate?: Date;
 
     @UpdateDateColumn({ select: false, type: 'timestamptz', precision: 3 })
     @Exclude()
-    public updateDate!: Date;
+    public updateDate?: Date;
 
     @DeleteDateColumn({ nullable: true, type: 'timestamptz', precision: 3 })
     public deletedDate?: Date;

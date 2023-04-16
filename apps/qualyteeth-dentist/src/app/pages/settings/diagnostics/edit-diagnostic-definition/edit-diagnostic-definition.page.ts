@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { DiagnosticDefinition } from 'libs/shared/src/lib/diagnostic-definition.interface';
+import { DiagnosticDefinition } from 'libs/shared/src/lib/diagnostic-definition.entity';
 import { DentistService } from 'apps/qualyteeth-dentist/src/app/services/dentist.service';
 import { DiagnosticService } from 'apps/qualyteeth-dentist/src/app/services/diagnostic.service';
 

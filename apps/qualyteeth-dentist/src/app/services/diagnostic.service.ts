@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_ENDPOINT } from 'apps/qualyteeth-dentist/src/environments/environment';
-import { DiagnosticDefinition } from 'libs/shared/src/lib/diagnostic-definition.interface';
-import { Diagnostic } from 'libs/shared/src/lib/diagnostic.interface';
+import { DiagnosticDefinition } from 'libs/shared/src/lib/diagnostic-definition.entity';
+import { Diagnostic } from 'libs/shared/src/lib/diagnostic.entity';
 import { lastValueFrom } from 'rxjs';
 import { StorageService } from './storage.service';
 

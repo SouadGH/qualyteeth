@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { Tooth } from 'libs/shared/src/lib/tooth.interface';
+import { Tooth } from 'libs/shared/src/lib/tooth.entity';
 import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
 import { OdontogramComponent } from '../odontogram.component';
 

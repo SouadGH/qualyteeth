@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Patient } from 'libs/shared/src/lib/patient.interface';
+import { Patient } from 'libs/shared/src/lib/patient.entity';
 import { MatStepper } from '@angular/material/stepper';
-import { Tooth } from 'libs/shared/src/lib/tooth.interface';
+import { Tooth } from 'libs/shared/src/lib/tooth.entity';
 import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
-import { Diagnostic } from 'libs/shared/src/lib/diagnostic.interface';
+import { Diagnostic } from 'libs/shared/src/lib/diagnostic.entity';
 import { PatientService } from 'apps/qualyteeth-dentist/src/app/services/patient.service';
 
 @Component({

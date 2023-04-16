@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_ENDPOINT } from 'apps/qualyteeth-dentist/src/environments/environment';
-// import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.interface';
-import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.interface';
-import { ServiceLink } from 'libs/shared/src/lib/service.interface';
+// import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.entity';
+import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.entity';
+import { ServiceLink } from 'libs/shared/src/lib/service.entity';
 import { StorageService } from './storage.service';
 
 @Injectable({

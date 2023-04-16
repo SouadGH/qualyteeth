@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Tooth } from 'libs/shared/src/lib/tooth.interface';
-import { Treatment } from 'libs/shared/src/lib/treatment.interface';
+import { Tooth } from 'libs/shared/src/lib/tooth.entity';
+import { Treatment } from 'libs/shared/src/lib/treatment.entity';
 import { ToothService } from 'apps/qualyteeth-patient/src/app/services/tooth.service';
 import { TreatmentService } from 'apps/qualyteeth-patient/src/app/services/treatment.service';
-import { Diagnostic } from 'libs/shared/src/lib/diagnostic.interface';
+import { Diagnostic } from 'libs/shared/src/lib/diagnostic.entity';
 import { DiagnosticService } from '../../services/diagnostic.service';
-import { Dentist } from 'libs/shared/src/lib/dentist.interface';
+import { Dentist } from 'libs/shared/src/lib/dentist.entity';
 import { DentistService } from '../../services/dentist.service';
 import { Subscription } from 'rxjs';
 import { SseService } from '../../services/sse.service';

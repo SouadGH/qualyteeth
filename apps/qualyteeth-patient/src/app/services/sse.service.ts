@@ -1,15 +1,15 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { API_ENDPOINT } from 'apps/qualyteeth-patient/src/environments/environment';
-import { CalendarEvent } from 'libs/shared/src/lib/calendar.interface';
-import { Dentist } from 'libs/shared/src/lib/dentist.interface';
-import { Diagnostic } from 'libs/shared/src/lib/diagnostic.interface';
-import { Patient } from 'libs/shared/src/lib/patient.interface';
-import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.interface';
+import { CalendarEvent } from 'libs/shared/src/lib/calendar.entity';
+import { Dentist } from 'libs/shared/src/lib/dentist.entity';
+import { Diagnostic } from 'libs/shared/src/lib/diagnostic.entity';
+import { Patient } from 'libs/shared/src/lib/patient.entity';
+import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.entity';
 import { DentistService } from './dentist.service';
 import { PatientService } from './patient.service';
 import { ServicingService } from './servicing.service';
-import { Treatment } from 'libs/shared/src/lib/treatment.interface';
+import { Treatment } from 'libs/shared/src/lib/treatment.entity';
 
 @Injectable({
   providedIn: 'root'

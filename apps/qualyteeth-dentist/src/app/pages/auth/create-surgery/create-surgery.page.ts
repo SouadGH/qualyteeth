@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, NavController } from '@ionic/angular';
-import { Surgery } from 'libs/shared/src/lib/surgery.interface';
+import { Surgery } from 'libs/shared/src/lib/surgery.entity';
 import { AuthService } from 'apps/qualyteeth-dentist/src/app/services/auth.service';
 import { SurgeryService } from 'apps/qualyteeth-dentist/src/app/services/surgery.service';
-import { Dentist } from 'libs/shared/src/lib/dentist.interface';
+import { Dentist } from 'libs/shared/src/lib/dentist.entity';
 import { DentistService } from '../../../services/dentist.service';
 
 @Component({

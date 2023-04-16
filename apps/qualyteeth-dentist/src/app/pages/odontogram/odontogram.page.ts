@@ -4,18 +4,18 @@ import { DateAdapter } from '@angular/material/core';
 import { MatDateRangePicker } from '@angular/material/datepicker';
 import { MatTableDataSource } from '@angular/material/table';
 import { AlertController, NavController, NavParams, PopoverController, ToastController } from '@ionic/angular';
-import { Diagnostic, DiagnosticTooth } from 'libs/shared/src/lib/diagnostic.interface';
-import { Tooth } from 'libs/shared/src/lib/tooth.interface';
+import { Diagnostic, DiagnosticTooth } from 'libs/shared/src/lib/diagnostic.entity';
+import { Tooth } from 'libs/shared/src/lib/tooth.entity';
 import { DiagnosticService } from 'apps/qualyteeth-dentist/src/app/services/diagnostic.service';
 import { StorageService } from 'apps/qualyteeth-dentist/src/app/services/storage.service';
 import { OdontogramComponent } from 'apps/qualyteeth-dentist/src/app/components/odontogram/odontogram.component';
 import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
 import { Subscription } from 'rxjs';
 import { SpeechRecognitionService } from 'apps/qualyteeth-dentist/src/app/services/speech-recognition.service';
-import { DiagnosticDefinition } from 'libs/shared/src/lib/diagnostic-definition.interface';
+import { DiagnosticDefinition } from 'libs/shared/src/lib/diagnostic-definition.entity';
 import { ActivatedRoute } from '@angular/router';
-import { Treatment, TreatmentTooth } from 'libs/shared/src/lib/treatment.interface';
-import { TreatmentDefinition } from 'libs/shared/src/lib/treatment-definition.interface';
+import { Treatment, TreatmentTooth } from 'libs/shared/src/lib/treatment.entity';
+import { TreatmentDefinition } from 'libs/shared/src/lib/treatment-definition.entity';
 import { TreatmentService } from '../../services/treatment.service';
 
 @Component({

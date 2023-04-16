@@ -4,9 +4,17 @@ import { DentistService } from './dentist.service';
 import { UtilsModule } from 'apps/qualyteeth-server/src/core/utils/utils.module';
 import { UserModule } from 'apps/qualyteeth-server/src/core/user/user.module';
 import { PatientsModule } from 'apps/qualyteeth-server/src/core/patients/patients.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Dentist } from 'libs/shared/src/lib/dentist.entity';
+import { DentistTimetable } from 'libs/shared/src/lib/dentist-timetable.entity';
 
 @Module({
-  imports: [UtilsModule, UserModule, PatientsModule],
+  imports: [
+    TypeOrmModule.forFeature([Dentist, DentistTimetable]),
+    UtilsModule,
+    UserModule,
+    PatientsModule
+  ],
   controllers: [DentistController],
   exports: [DentistService],
   providers: [DentistService]
