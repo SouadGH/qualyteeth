@@ -73,11 +73,14 @@
 
 .footer-item {
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .footer-item p {
   color: #ccc;
-  font-size: 15px;
+  font-size: 16px;
   margin-bottom: 0;
 }
 
@@ -89,17 +92,17 @@
 
 .footer-item ul li {
   color: #ccc;
-  line-height: 30px;
+  line-height: 32px;
 }
 
 .footer-item ul li i {
   color: #fd6121;
-  font-size: 20px;
+  font-size: 24px;
 }
 
 .footer-item ul li a {
   color: #ccc;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 // .footer-item ul li a:before {
@@ -112,9 +115,9 @@
 
 ul.social li {
   float: left;
-  margin: 0 10px 0 0;
+  margin: 0 8px 0 0;
   background: #5e5c5c;
-  padding: 4px 10px;
+  padding: 4px 8px;
 }
 
 ul.social li a {
@@ -126,7 +129,7 @@ ul.social li a {
   color: #fff;
   font-size: 18px;
   font-weight: 600;
-  margin: 0 0 25px;
+  margin: 0 0;
 }
 
 .footer-item ul li a {
@@ -192,6 +195,9 @@ ul.social li a {
 .team-content {
   margin: 15px auto;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 @media (min-width: 576px) {
