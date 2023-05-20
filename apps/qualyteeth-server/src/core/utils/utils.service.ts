@@ -16,7 +16,7 @@ export class UtilsService {
      *
      */
     public snakeToCamel(s: string) {
-        return s.replace(/(\_\w)/g, function (m) { return m[1].toUpperCase(); });
+        return s.replace(/(_\w)/g, function (m) { return m[1].toUpperCase(); });
     }
 
     /**

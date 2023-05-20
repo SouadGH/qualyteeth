@@ -1,26 +1,22 @@
+
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Act } from 'libs/shared/src/lib/act.entity';
-import { DentistTimetable } from 'libs/shared/src/lib/dentist-timetable.entity';
-import { Dentist } from 'libs/shared/src/lib/dentist.entity';
-import { DiagnosticDefinition } from 'libs/shared/src/lib/diagnostic-definition.entity';
-import { Feedback } from 'libs/shared/src/lib/feedback.entity';
-import { Diagnostic } from 'libs/shared/src/lib/diagnostic.entity';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
-import { Patient } from 'libs/shared/src/lib/patient.entity';
-import { Service } from 'libs/shared/src/lib/service.entity';
-import { ServiceCategory } from 'libs/shared/src/lib/service-category.entity';
-import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.entity';
-import { Tooth } from 'libs/shared/src/lib/tooth.entity';
-import { ToothPart } from 'libs/shared/src/lib/tooth-part.entity';
-import { ToothIntervention } from 'libs/shared/src/lib/tooth-intervention.entity';
-import { Treatment } from 'libs/shared/src/lib/treatment.entity';
-import { TreatmentDefinition } from 'libs/shared/src/lib/treatment-definition.entity';
-import { User } from 'libs/shared/src/lib/user.entity';
-import { DatabaseLogger } from './databaseLogger';
+import { Category } from 'libs/shared/src/lib/category.entity';
 import { Comment } from 'libs/shared/src/lib/comment.entity';
-import { Visit } from 'libs/shared/src/lib/visit.entity';
+import { Feedback } from 'libs/shared/src/lib/feedback.entity';
+import { Intervention } from 'libs/shared/src/lib/intervention.entity';
+import { Material } from 'libs/shared/src/lib/material.entity';
+import { Patient } from 'libs/shared/src/lib/patient.entity';
+import { Practitioner } from 'libs/shared/src/lib/practitioner.entity';
+import { PredicamentPlan } from 'libs/shared/src/lib/predicament-plan.entity';
+import { Predicament } from 'libs/shared/src/lib/predicament.entity';
+import { ToothPart } from 'libs/shared/src/lib/tooth-part.entity';
+import { Tooth } from 'libs/shared/src/lib/tooth.entity';
+import { User } from 'libs/shared/src/lib/user.entity';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { DatabaseLogger } from './databaseLogger';
 
 
 @Module({
@@ -41,23 +37,29 @@ import { Visit } from 'libs/shared/src/lib/visit.entity';
         // ],
         entities: [
           Act,
-          Dentist,
-          DentistTimetable,
-          Diagnostic,
-          DiagnosticDefinition,
+          Category,
+          Comment,
+          // Dentist,
+          // PractitionerTimetable,
+          // Diagnostic,
+          // DiagnosticDefinition,
           Feedback,
+          Intervention,
+          Material,
           Patient,
-          Service,
-          ServiceCategory,
-          ServiceDefinition,
+          Practitioner,
+          Predicament,
+          PredicamentPlan,
+          // Service,
+          // ServiceCategory,
+          // ServiceDefinition,
           Tooth,
           ToothPart,
-          ToothIntervention,
-          Treatment,
-          TreatmentDefinition,
-          Comment,
+          // ToothIntervention,
+          // Treatment,
+          // TreatmentDefinition,
           User,
-          Visit,
+          // Visit,
         ],
         synchronize: configService.get('TYPEORM_SYNCHRONIZE') || false,
         namingStrategy: new SnakeNamingStrategy()

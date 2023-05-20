@@ -1,4 +1,4 @@
-import { Controller, Get, HttpException, HttpStatus, Param, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards, UseInterceptors } from '@nestjs/common';
 import { JwtAuthGuard } from 'apps/qualyteeth-server/src/core/auth/jwt-auth.guard';
 import { SnakeToCameInterceptor } from 'apps/qualyteeth-server/src/inteceptors/snake-to-came.interceptor';
 import { ToothService } from './tooth.service';

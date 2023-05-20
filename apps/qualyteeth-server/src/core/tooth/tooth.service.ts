@@ -14,7 +14,7 @@ export class ToothService {
     /**
      *
      */
-    async findByFdiNumber(fdiNumber: number, lang: string = 'fr'): Promise<Tooth> {
+    async findByFdiNumber(fdiNumber: number, lang = 'fr'): Promise<Tooth> {
         try {
             const query = `
                 SELECT t.fdi_number, t.svg, tn.name, tn.description FROM tooth t
@@ -32,7 +32,7 @@ export class ToothService {
     /**
      *
      */
-    async findall(lang: string = 'fr'): Promise<Array<Tooth>> {
+    async findall(lang = 'fr'): Promise<Array<Tooth>> {
         try {
             const query = `
                 SELECT t.fdi_number, t.svg, tn.name, tn.description FROM tooth t

@@ -1,11 +1,11 @@
 import { Exclude } from "class-transformer";
 import { Column, Entity, OneToMany } from "typeorm";
-import { Dentist } from "./dentist.entity";
+import { Practitioner } from "./practitioner.entity";
 import { Patient } from "./patient.entity";
 import { Base } from "./_base.entity";
 
 export enum UserType {
-  DENTIST,
+  PRACTITIONER,
   PATIENT
 }
 
@@ -52,8 +52,8 @@ export class User extends Base {
   @Column({ nullable: true })
   image?: string;
 
-  @OneToMany(() => Dentist, dentist => dentist.user, { nullable: true })
-  dentists?: Dentist[];
+  @OneToMany(() => Practitioner, practitioner => practitioner.user, { nullable: true })
+  practitioners?: Practitioner[];
 
   @OneToMany(() => Patient, patient => patient.user, { nullable: true })
   patients?: Patient[];

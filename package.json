@@ -32,6 +32,7 @@
     "@nrwl/workspace": "13.8.5",
     "@nxtend/capacitor": "^13.0.0",
     "@nxtend/ionic-angular": "^13.0.0",
+    "@types/bcrypt": "^5.0.0",
     "@types/jest": "27.0.2",
     "@types/node": "16.11.7",
     "@types/passport-jwt": "^3.0.6",

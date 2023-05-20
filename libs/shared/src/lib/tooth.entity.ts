@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany } from "typeorm";
+import { Column, Entity, ManyToMany, OneToMany } from "typeorm";
 import { Intervention } from "./intervention.entity";
 import { Base } from "./_base.entity";
 
@@ -17,6 +17,6 @@ export class Tooth extends Base {
     @Column({ nullable: true })
     description?: string;
 
-    @OneToMany(() => Intervention, intervention => intervention.tooth)
+    @ManyToMany(() => Intervention, intervention => intervention.tooth)
     public interventions: Intervention[];
 }

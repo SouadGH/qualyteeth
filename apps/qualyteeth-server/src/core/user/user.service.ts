@@ -21,11 +21,11 @@ export class UserService {
   async create(body: any): Promise<User> {
 
     const user: User = {
-      id: null,
       type: body['type'],
       firstname: body['firstname'],
       lastname: body['lastname'],
       email: body['email'],
+      password: body['password'],
       street: body['street'],
       streetNb: body['streetNb'],
       city: body['city'],
@@ -33,6 +33,10 @@ export class UserService {
       country: body['country'],
       phoneNumber: body['phoneNumber'],
     };
+
+    if (user.password) {
+      user.password = await bcrypt.hash(user.password, await bcrypt.genSalt());
+    }
 
     return user;
   }
@@ -86,7 +90,7 @@ export class UserService {
   async update(user: User): Promise<User> {
     const u: User = await this.getById(user.id);
     if (u.password) {
-      u.password = await bcrypt.hash(u.password, 10);
+      u.password = await bcrypt.hash(u.password, await bcrypt.genSalt());
     }
 
     const newUser = this.userRepo.create({ ...u, ...user, });
@@ -109,9 +113,9 @@ export class UserService {
   /**
    *
    */
-  async findByEmail(email: string) {
+  async getByEmail(email: string) {
     let qb = this.userRepo.createQueryBuilder('t');
-    qb = qb.where('t.userData.email = :email', { email: email });
+    qb = qb.where('t.email = :email', { email: email });
 
     const t = await qb.getOne();
     if (t) {

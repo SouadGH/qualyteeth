@@ -1,6 +1,9 @@
+
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { User, UserType } from 'libs/shared/src/lib/user.entity';
+import * as bcrypt from 'bcrypt';
+import { User } from 'libs/shared/src/lib/user.entity';
 import { UserService } from '../user/user.service';
 
 @Injectable()
@@ -12,7 +15,8 @@ export class AuthService {
    */
   constructor(
     private userSvc: UserService,
-    private jwtSvc: JwtService
+    private jwtSvc: JwtService,
+    private readonly configSvc: ConfigService,
   ) { }
 
   /**
@@ -20,10 +24,9 @@ export class AuthService {
    */
   async validate(email: string, pass: string): Promise<any> {
     try {
-      const user: User = await this.userSvc.findByEmail(email);
-      if (user && user.password === pass) {
-        const { password, ...result } = user;
-        return result;
+      const user: User = await this.userSvc.getByEmail(email);
+      if (user != null && bcrypt.compare(user.password, pass)) {
+        return user;
       }
       return null;
     } catch (e) {
@@ -65,31 +68,67 @@ export class AuthService {
   /**
    *
    */
-  async login(email: string, type: UserType) {
+  async login(user: User) {
     try {
-      const user = await this.userSvc.findByEmail(email);
 
-      // if (type === UserType.DENTIST) {
-      //   user = await this.dentistSvc.findByAccountId(account.id);
-      // } else if (type === UserType.PATIENT) {
-      //   user = await this.patientSvc.findByAccountId(account.id);
-      // } else {
-      //   throw new Error('Cannot authenticate user');
-      // }
-
-      if (user == null) {
-        throw new Error(`user-not-found`);
-      }
-
-      const payload = { email: email, sub: user.id };
-      // await this.userSvc.updateUserConnection(user);
+      const payload = { email: user.email, sub: user.id };
       return {
-        access_token: this.jwtSvc.sign(payload),
+        access_token: this.jwtSvc.sign(payload, { secret: this.configSvc.get('JWT_ACCESS_TOKEN_SECRET'), }),
         userid: user.id
       };
     } catch (e) {
       this.logger.error(e.message, new Error(e).stack)
       throw e;
+    }
+    // try {
+    //   const user = await this.userSvc.getByEmail(email);
+
+    //   // if (type === UserType.DENTIST) {
+    //   //   user = await this.dentistSvc.findByAccountId(account.id);
+    //   // } else if (type === UserType.PATIENT) {
+    //   //   user = await this.patientSvc.findByAccountId(account.id);
+    //   // } else {
+    //   //   throw new Error('Cannot authenticate user');
+    //   // }
+
+    //   if (user == null) {
+    //     throw new Error(`user-not-found`);
+    //   }
+
+    //   const payload = { email: email, sub: user.id };
+    //   // await this.userSvc.updateUserConnection(user);
+    //   return {
+    //     access_token: this.jwtSvc.sign(payload),
+    //     userid: user.id
+    //   };
+    // } catch (e) {
+    //   this.logger.error(e.message, new Error(e).stack)
+    //   throw e;
+    // }
+  }
+
+  /**
+  *
+  */
+  public async getAuthenticatedUser(email: string, plainTextPassword: string) {
+    try {
+      const user = await this.userSvc.getByEmail(email);
+      await this.verifyPassword(plainTextPassword, user.password);
+      return user;
+    } catch (error) {
+      throw new HttpException('Wrong credentials provided', HttpStatus.UNAUTHORIZED);
+    }
+  }
+
+  /**
+   *
+   */
+  private async verifyPassword(plainTextPassword: string, hashedPassword?: string) {
+    if (hashedPassword) {
+      const isPasswordMatching = await bcrypt.compare(plainTextPassword, hashedPassword);
+      if (!isPasswordMatching) {
+        throw new HttpException('Wrong credentials provided', HttpStatus.BAD_REQUEST);
+      }
     }
   }
 
@@ -121,18 +160,20 @@ export class AuthService {
    *
    */
   async signin(body: any): Promise<void> {
-
     try {
-      const u: User = await this.userSvc.findByEmail(body['email'])
+      const u: User = await this.userSvc.getByEmail(body['email'])
       if (u != null) {
         throw new HttpException('Account already exists', HttpStatus.CONFLICT);
       }
-
-      const user: User = await this.userSvc.create(body);
-      await this.userSvc.save(user);
     } catch (e) {
-      this.logger.error(e.message, new Error(e).stack)
-      throw e;
+      if (e.status === 404) {
+        const user: User = await this.userSvc.create(body);
+        await this.userSvc.save(user);
+      }
+      else {
+        this.logger.error(e.status, e.message, new Error(e).stack)
+        throw e;
+      }
     }
   }
 

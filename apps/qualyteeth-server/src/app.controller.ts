@@ -3,7 +3,6 @@ import { JwtAuthGuard } from './core/auth/jwt-auth.guard';
 
 @Controller()
 export class AppController {
-  constructor() { }
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')

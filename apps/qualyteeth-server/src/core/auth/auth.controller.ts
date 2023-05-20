@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Header, HttpException, Logger, MessageEvent, Param, Post, Request, Res, Sse, UseGuards } from '@nestjs/common';
-import { Observable, Subject } from 'rxjs';
+
+import { Body, Controller, Get, Header, Post, Request, Res, Sse, UseGuards } from '@nestjs/common';
 import { AuthService } from 'apps/qualyteeth-server/src/core/auth/auth.service';
 import { LocalAuthGuard } from 'apps/qualyteeth-server/src/core/auth/local-auth.guard';
+import { Subject } from 'rxjs';
 import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller('auth')
@@ -28,16 +29,18 @@ export class AuthController {
     @UseGuards(LocalAuthGuard)
     @Post('login')
     async login(@Request() req) {
-        try {
-            return await this.authService.login(req.user, req.body['type']);
-        } catch (e) {
-            if (e.message === 'user-not-found') {
-                throw new HttpException(`User ${req.user.username} does not exist`, 401);
-            }
-            else {
-                throw e;
-            }
-        }
+        return await this.authService.login(req.user);
+
+        // try {
+        //     return await this.authService.login(req.user, req.body['type']);
+        // } catch (e) {
+        //     if (e.message === 'user-not-found') {
+        //         throw new HttpException(`User ${req.user.username} does not exist`, 401);
+        //     }
+        //     else {
+        //         throw e;
+        //     }
+        // }
     }
 
     /**
