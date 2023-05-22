@@ -1,10 +1,9 @@
 
 import { Controller, Get, Param, Post, Request, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Response } from 'express';
 import { JwtAuthGuard } from 'apps/qualyteeth-server/src/core/auth/jwt-auth.guard';
+import { Response } from 'express';
 import { DocumentService } from './document.service';
-import { SnakeToCameInterceptor } from 'apps/qualyteeth-server/src/inteceptors/snake-to-came.interceptor';
 
 @Controller('document')
 export class DocumentController {
@@ -56,7 +55,7 @@ export class DocumentController {
      *
      */
     @UseGuards(JwtAuthGuard)
-    @UseInterceptors(SnakeToCameInterceptor)
+    // @UseInterceptors(SnakeToCameInterceptor)
     @Get(':patientId/all')
     async getDocumentsForPatient(@Param() params) {
         return await this.documentSvc.getDocumentsForPatient(params.patientId);
@@ -66,7 +65,7 @@ export class DocumentController {
      *
      */
     @UseGuards(JwtAuthGuard)
-    @UseInterceptors(SnakeToCameInterceptor)
+    // @UseInterceptors(SnakeToCameInterceptor)
     @Get(':patientId/treatment/:treatmentId')
     async getDocumentsForPatientAndTreatment(@Param() params) {
         return await this.documentSvc.getDocumentsForPatientAndTreatment(params.patientId, params.treatmentId);
@@ -76,10 +75,10 @@ export class DocumentController {
      *
      */
     @UseGuards(JwtAuthGuard)
-    @UseInterceptors(SnakeToCameInterceptor)
+    // @UseInterceptors(SnakeToCameInterceptor)
     @Get(':id')
     async downloadDocument(@Param() params, @Request() req: Request, @Res() res: Response) {
-        const doc = await this.documentSvc.getDocument(params.id);
+        const doc = await this.documentSvc.getById(params.id);
         // console.log(doc)
 
         // return writeFile(doc['filename'], doc['file_data'], 'binary', () => {});

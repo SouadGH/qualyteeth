@@ -19,7 +19,6 @@ export class PredicamentService {
         @InjectRepository(Intervention) private interventionRepo: Repository<Intervention>,
         @InjectRepository(Category) private categoryRepo: Repository<Category>,
         @InjectRepository(Act) private actRepo: Repository<Act>,
-        // @InjectRepository(Practitioner) private practitionerRepo: Repository<Practitioner>,
         // @InjectRepository(Patient) private patientRepo: Repository<Patient>,
     ) {
     }

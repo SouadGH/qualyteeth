@@ -41,8 +41,8 @@ export class PractitionerController {
     @UseGuards(JwtAuthGuard)
     // @UseInterceptors(SnakeToCameInterceptor)
     @Get(':id/patient/all')
-    async findPatientsForDentist(@Param() params) {
-        return await this.dentistSvc.findPatientsForPractitioner(params.id)
+    async findPatients(@Param() params) {
+        return await this.dentistSvc.findPatients(params.id)
     }
 
     /**
@@ -88,9 +88,9 @@ export class PractitionerController {
     /**
      *
      */
-    // @UseGuards(JwtAuthGuard)
-    // @Post('connect')
-    // async connect(@Request() req) {
-    //     return await this.dentistSvc.connect(req.body.dentistId, req.body.patientId);
-    // }
+    @UseGuards(JwtAuthGuard)
+    @Post('connect')
+    async connect(@Request() req) {
+        return await this.dentistSvc.connect(req.body.dentistId, req.body.patientId);
+    }
 }

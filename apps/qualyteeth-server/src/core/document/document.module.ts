@@ -1,12 +1,14 @@
 
 import { Module } from '@nestjs/common';
-import { PatientsModule } from 'apps/qualyteeth-server/src/core/patient/patients.module';
-import { UtilsModule } from 'apps/qualyteeth-server/src/core/utils/utils.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Document } from 'libs/shared/src/lib/document.entity';
 import { DocumentController } from './document.controller';
 import { DocumentService } from './document.service';
 
 @Module({
-  imports: [UtilsModule, PatientsModule],
+  imports: [
+    TypeOrmModule.forFeature([Document]),
+  ],
   controllers: [DocumentController],
   providers: [DocumentService],
   exports: [DocumentService]

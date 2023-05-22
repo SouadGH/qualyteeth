@@ -14,16 +14,6 @@ export class PatientsController {
     /**
      *
      */
-    // @UseGuards(JwtAuthGuard)
-    // @UseInterceptors(SnakeToCameInterceptor)
-    // @Get(':id')
-    // async find(@Param() params) {
-    //     return await this.userSvc.find(params.id, 'PATIENT')
-    // }
-
-    /**
-     *
-     */
     @UseGuards(JwtAuthGuard)
     // @UseInterceptors(SnakeToCameInterceptor)
     @Get(':id')

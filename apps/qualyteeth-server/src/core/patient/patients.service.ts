@@ -1,9 +1,8 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
-import { Patient } from 'libs/shared/src/lib/patient.entity';
-import { DbService } from 'apps/qualyteeth-server/src/core/utils/db.service';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Patient } from 'libs/shared/src/lib/patient.entity';
 import { Practitioner } from 'libs/shared/src/lib/practitioner.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class PatientsService {
@@ -107,6 +106,7 @@ export class PatientsService {
      */
     async getById(id: string): Promise<Patient> {
         let qb = this.patientRepo.createQueryBuilder('t');
+        qb = qb.leftJoinAndSelect('t.user', 'u');
         qb = qb.where('t.id = :id', { id: id });
 
         const t = await qb.getOne();
@@ -140,10 +140,15 @@ export class PatientsService {
      *
      */
     async findConnectedPractitioners(patientId: number): Promise<Array<Practitioner>> {
+        // let qb = this.practitionerRepo.createQueryBuilder('pr');
+        // qb = qb.leftJoin('pr.predicaments', 'pred')
+        // qb = qb.leftJoin('pred.plan', 'plan')
+        // qb = qb.leftJoin('plan.patient', 'p')
+        // qb = qb.where('p.id = :patientId', { patientId: patientId });
+
         let qb = this.practitionerRepo.createQueryBuilder('pr');
-        qb = qb.leftJoin('pr.predicaments', 'pred')
-        qb = qb.leftJoin('pred.plan', 'plan')
-        qb = qb.leftJoin('plan.patient', 'p')
+        qb = qb.leftJoinAndSelect('pr.user', 'u');
+        qb = qb.leftJoin('pr.patients', 'p')
         qb = qb.where('p.id = :patientId', { patientId: patientId });
 
         return await qb.getMany();

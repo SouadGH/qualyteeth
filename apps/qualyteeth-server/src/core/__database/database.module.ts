@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Act } from 'libs/shared/src/lib/act.entity';
 import { Category } from 'libs/shared/src/lib/category.entity';
 import { Comment } from 'libs/shared/src/lib/comment.entity';
+import { Document } from 'libs/shared/src/lib/document.entity';
 import { Feedback } from 'libs/shared/src/lib/feedback.entity';
 import { Intervention } from 'libs/shared/src/lib/intervention.entity';
 import { Material } from 'libs/shared/src/lib/material.entity';
@@ -39,6 +40,7 @@ import { DatabaseLogger } from './databaseLogger';
           Act,
           Category,
           Comment,
+          Document,
           // Dentist,
           // PractitionerTimetable,
           // Diagnostic,

@@ -1,7 +1,9 @@
-import { Entity, ManyToOne, OneToMany } from "typeorm";
+import { Entity, JoinTable, ManyToMany, ManyToOne, OneToMany } from "typeorm";
 import { PredicamentPlan } from "./predicament-plan.entity";
 import { User } from "./user.entity";
 import { Base } from "./_base.entity";
+import { Document } from './document.entity';
+import { Practitioner } from "./practitioner.entity";
 
 @Entity()
 export class Patient extends Base {
@@ -9,9 +11,9 @@ export class Patient extends Base {
     @ManyToOne(() => User, user => user.patients, { nullable: true })
     user?: User;
 
-    // @ManyToMany(() => Dentist, dentist => dentist.patients, { nullable: true })
-    // @JoinTable()
-    // dentists?: Dentist[];
+    @ManyToMany(() => Practitioner, p => p.patients, { nullable: true })
+    @JoinTable()
+    practitioners?: Practitioner[];
 
     // @OneToMany(() => Treatment, treatment => treatment.patient, { nullable: true })
     // treatments?: Treatment[];
@@ -27,5 +29,8 @@ export class Patient extends Base {
 
     // @OneToMany(() => Intervention, intervention => intervention.patient, { nullable: true })
     // interventions?: Intervention[];
+
+    @OneToMany(() => Document, d => d.patient)
+    documents?: Document[];
     
 }

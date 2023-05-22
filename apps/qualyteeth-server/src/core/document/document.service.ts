@@ -1,7 +1,8 @@
 
-import { Injectable, Logger } from '@nestjs/common';
-import { PatientsService } from 'apps/qualyteeth-server/src/core/patient/patients.service';
-import { DbService } from 'apps/qualyteeth-server/src/core/utils/db.service';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Document } from 'libs/shared/src/lib/document.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class DocumentService {
@@ -11,68 +12,84 @@ export class DocumentService {
      *
      */
     constructor(
-        private dbService: DbService,
-        private patientSvc: PatientsService) { }
+        @InjectRepository(Document) private docRepo: Repository<Document>,
+    ) { }
+
 
     /**
      *
      */
-    async saveDocument(file: any, body: any): Promise<number> {
+    async getById(id: string): Promise<Document> {
+        let qb = this.docRepo.createQueryBuilder('t');
+        qb = qb.where('t.id = :id', { id: id });
 
-        try {
-            // console.log(body)
+        const t = await qb.getOne();
+        if (t) {
+            return t;
+        }
+        throw new HttpException('Document with this id does not exist', HttpStatus.NOT_FOUND);
+    }
 
-            const query = `
-                    INSERT INTO document (patient_id, dentist_id, treatment_id, filename, file_data, created_on) 
-                    VALUES ($1, $2, $3, $4, $5, $6)
-                    RETURNING id
-                `
-            return await this.dbService.db.one(query, [body['patientId'], body['dentistId'], body['treatmentId'], file.originalname, `\\x${file.buffer.toString('hex')}`, new Date()]);
+    /**
+     *
+     */
+    async saveDocument(file: any, body: any): Promise<Document> {
+        const data: Document = {
+            file: file,
+            filename: file.originalname
         }
-        catch (e) {
-            this.logger.error(e.message, new Error(e).stack)
-            throw e;
-        }
+
+        const newT = this.docRepo.create({ ...data, });
+        return await this.docRepo.save(newT);
+
+        // try {
+        //     // console.log(body)
+
+        //     const query = `
+        //             INSERT INTO document (patient_id, dentist_id, treatment_id, filename, file_data, created_on) 
+        //             VALUES ($1, $2, $3, $4, $5, $6)
+        //             RETURNING id
+        //         `
+        //     return await this.dbService.db.one(query, [body['patientId'], body['dentistId'], body['treatmentId'], file.originalname, `\\x${file.buffer.toString('hex')}`, new Date()]);
+        // }
+        // catch (e) {
+        //     this.logger.error(e.message, new Error(e).stack)
+        //     throw e;
+        // }
     }
 
     /**
      *
      */
     async getDocumentsForPatient(patientId: number): Promise<Array<any>> {
+        let qb = this.docRepo.createQueryBuilder('t');
+        qb = qb.leftJoin('t.patient', 'p')
+        qb = qb.where('p.id = :patientId', { patientId: patientId });
 
-        try {
-            const query = `SELECT id, treatment_id, filename, created_on FROM document WHERE patient_id = $1`
-            return await this.dbService.db.manyOrNone(query, patientId);
-        } catch (e) {
-            this.logger.error(e.message, new Error(e).stack)
-            throw e;
-        }
+        return await qb.getMany();
+
+
+        // try {
+        //     const query = `SELECT id, treatment_id, filename, created_on FROM document WHERE patient_id = $1`
+        //     return await this.dbService.db.manyOrNone(query, patientId);
+        // } catch (e) {
+        //     this.logger.error(e.message, new Error(e).stack)
+        //     throw e;
+        // }
     }
 
     /**
      *
      */
     async getDocumentsForPatientAndTreatment(patientId: number, treatmentId: number): Promise<Array<any>> {
-        try {
-            const query = `SELECT id, treatment_id, filename, created_on FROM document WHERE patient_id = $1 and treatment_id = $2`
-            return await this.dbService.db.manyOrNone(query, [patientId, treatmentId]);
-        } catch (e) {
-            this.logger.error(e.message, new Error(e).stack)
-            throw e;
-        }
-    }
-
-    /**
-     *
-     */
-    async getDocument(id: number): Promise<any> {
-        try {
-            const query = `SELECT * FROM document WHERE id = $1`
-            return await this.dbService.db.oneOrNone(query, id);
-        } catch (e) {
-            this.logger.error(e.message, new Error(e).stack)
-            throw e;
-        }
+        return []
+        // try {
+        //     const query = `SELECT id, treatment_id, filename, created_on FROM document WHERE patient_id = $1 and treatment_id = $2`
+        //     return await this.dbService.db.manyOrNone(query, [patientId, treatmentId]);
+        // } catch (e) {
+        //     this.logger.error(e.message, new Error(e).stack)
+        //     throw e;
+        // }
     }
 
 }

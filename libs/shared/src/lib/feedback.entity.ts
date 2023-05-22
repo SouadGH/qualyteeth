@@ -1,4 +1,5 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, ManyToOne } from "typeorm";
+import { User } from "./user.entity";
 import { Base } from "./_base.entity";
 
 @Entity()
@@ -9,4 +10,7 @@ export class Feedback extends Base {
 
     @Column({ nullable: true })
     comment: string;
+
+    @ManyToOne(() => User, u => u.feedbacks, { nullable: true })
+    user?: User;
 }

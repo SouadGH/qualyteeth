@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
-  selector: 'app-login',
+  selector: 'qualyteeth-app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })

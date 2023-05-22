@@ -21,36 +21,9 @@ export class PractitionerService {
     /**
      *
      */
-    // async findById(id: number): Promise<Practitioner> {
-    //     try {
-    //         const query = `SELECT * FROM Practitioner WHERE id = $1`;
-    //         return await this.dbService.db.oneOrNone(query, id);
-    //     }
-    //     catch (e) {
-    //         this.logger.error(e.message, new Error(e).stack)
-    //         throw e;
-    //     }
-    // }
-
-    // /**
-    //  *
-    //  */
-    // async findByAccountId(accountId: number): Promise<Practitioner> {
-    //     try {
-    //         const query = `SELECT * FROM Practitioner WHERE account_id = $1`
-    //         return await this.dbService.db.oneOrNone(query, accountId);
-    //     }
-    //     catch (e) {
-    //         this.logger.error(e.message, new Error(e).stack)
-    //         throw e;
-    //     }
-    // }
-
-    /**
-     *
-     */
     async getById(id: string): Promise<Practitioner> {
         let qb = this.practitionerRepo.createQueryBuilder('t');
+        qb = qb.leftJoinAndSelect('t.user', 'u');
         qb = qb.where('t.id = :id', { id: id });
 
         const t = await qb.getOne();
@@ -80,129 +53,69 @@ export class PractitionerService {
         return newT;
     }
 
-    // /**
-    //  *
-    //  */
-    // async update(Practitioner: Practitioner): Promise<number> {
-    //     try {
-    //         const query = `
-    //             UPDATE Practitioner 
-    //             SET 
-    //                 firstname = $1, 
-    //                 lastname = $2, 
-    //                 phone_number = $3,
-    //                 image = $4,
-    //                 color = $5
-    //             WHERE id = $6
-    //             RETURNING id`;
-    //         return await this.dbService.db.one(query, [Practitioner.userData.firstname, Practitioner.userData.lastname, Practitioner.userData.phoneNumber, Practitioner.userData.image, Practitioner.color, Practitioner.id]);
-    //     } catch (e) {
-    //         this.logger.error(e.message, new Error(e).stack)
-    //         throw e;
-    //     }
-    // }
-
     /**
      *
      */
-    // async connect(PractitionerId: number, patientId: number): Promise<void> {
-    //     try {
-    //         const query = `
-    //             INSERT INTO Practitioner_patient_lnk (Practitioner_id, patient_id, created_on) 
-    //             VALUES ($1, $2, $3)`;
-    //         await this.dbService.db.none(query, [PractitionerId, patientId, new Date()]);
-    //     } catch (e) {
-    //         this.logger.error(e.message, new Error(e).stack)
-    //         throw e;
-    //     }
-    // }
+    async connect(practitionerId: string, patientId: string): Promise<void> {
+        let qb = this.practitionerRepo.createQueryBuilder('pr');
+        qb = qb.leftJoinAndSelect('pr.patients', 'p')
+        qb = qb.where('pr.id = :practitionerId', { practitionerId: practitionerId });
+
+        const pr: Practitioner = await qb.getOne();
+        if (pr == null) {
+            throw new HttpException('Practitioner with this id does not exist', HttpStatus.NOT_FOUND);
+        }
+
+        let pqb = this.patientRepo.createQueryBuilder('p');
+        pqb = pqb.where('p.id = :patientId', { patientId: patientId });
+
+        const p: Patient = await pqb.getOne();
+        if (p == null) {
+            throw new HttpException('Patient with this id does not exist', HttpStatus.NOT_FOUND);
+        }
+        
+        pr.patients.push(p);
+
+        await this.save(pr);
+    }
 
     /**
      *
      */
     async findPractitioner(firstname: string, lastname: string, postalCode: number): Promise<Practitioner> {
         let qb = this.practitionerRepo.createQueryBuilder('t');
-        qb = qb.where('t.firstname = :firstname', { firstname: firstname });
-        qb = qb.andWhere('t.lastname = :lastname', { lastname: lastname });
-        qb = qb.andWhere('t.postalCode = :postalCode', { postalCode: postalCode });
+        qb = qb.leftJoinAndSelect('t.user', 'u');
+        qb = qb.where('u.firstname = :firstname', { firstname: firstname });
+        qb = qb.andWhere('u.lastname = :lastname', { lastname: lastname });
+        // qb = qb.andWhere('t.postalCode = :postalCode', { postalCode: postalCode });
 
         const t = await qb.getOne();
         if (t) {
             return t;
         }
-        throw new HttpException('Practitioner with this id does not exist', HttpStatus.NOT_FOUND);
-
-
-        // try {
-        //     const query = `
-        //         SELECT * FROM Practitioner
-        //         WHERE firstname = $1
-        //         AND lastname = $2
-        //         AND postal_code = $3
-        //     `;
-        //     let d = await this.dbService.db.oneOrNone(query, [firstname, lastname, postalCode]);
-        //     if (d == null) {
-        //         throw new HttpException('Practitioner does not exists', HttpStatus.NOT_FOUND);
-        //     }
-        //     // d = this.utils.snakeCaseToCamelCase(d);
-        //     return d;
-        // } catch (e) {
-        //     this.logger.error(e.message, new Error(e).stack)
-        //     throw e;
-        // }
+        throw new HttpException('Practitioner not found', HttpStatus.NOT_FOUND);
     }
 
     /**
      *
      */
-    async findPatientsForPractitioner(practitionerId: number): Promise<Array<Patient>> {
+    async findPatients(practitionerId: number): Promise<Array<Patient>> {
 
         let qb = this.patientRepo.createQueryBuilder('p');
-        qb = qb.leftJoin('p.predicamentPlans', 'pls')
-        qb = qb.leftJoin('pls.predicaments', 'pr')
-        qb = qb.leftJoin('pr.practitioner', 'pract')
-        qb = qb.where('pract.id = :practitionerId', { practitionerId: practitionerId });
+        qb = qb.leftJoinAndSelect('p.user', 'u');
+        qb = qb.leftJoin('p.practitioners', 'pr')
+        qb = qb.where('pr.id = :practitionerId', { practitionerId: practitionerId });
 
         return await qb.getMany();
-
-        // let qb = this.practitionerRepo.createQueryBuilder('t');
-        // qb = qb.leftJoin('t.predicaments', 'pr')
-        // qb = qb.leftJoin('pr.plan', 'plan')
-        // qb = qb.leftJoinAndSelect('pr.patient', 'p')
-        // qb = qb.where('t.id = :practitionerId', { practitionerId: practitionerId });
-        
-
-        // try {
-        //     const query = `
-        //         SELECT p.* FROM patient p
-        //         INNER JOIN Practitioner_patient_lnk dp ON dp.patient_id = p.id
-        //         WHERE dp.Practitioner_id = $1
-        //     `
-        //     return await this.dbService.db.manyOrNone(query, [PractitionerId]);
-        // }
-        // catch (e) {
-        //     this.logger.error(e.message, new Error(e).stack)
-        //     throw e;
-        // }
     }
 
     /**
      *
      */
      async findAll(): Promise<Array<Practitioner>> {
-        const qb = this.practitionerRepo.createQueryBuilder('t');
+        let qb = this.practitionerRepo.createQueryBuilder('t');
+        qb = qb.leftJoinAndSelect('t.user', 'u');
         return await qb.getMany();
-
-        // try {
-        //     const query = `
-        //         SELECT * FROM Practitioner
-        //     `
-        //     return await this.dbService.db.manyOrNone(query);
-        // }
-        // catch (e) {
-        //     this.logger.error(e.message, new Error(e).stack)
-        //     throw e;
-        // }
     }
 
     /**

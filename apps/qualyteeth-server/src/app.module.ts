@@ -1,20 +1,17 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AuthModule } from './core/auth/auth.module';
-import { UserModule } from './core/user/user.module';
-import { ConfigModule } from '@nestjs/config';
-import { AuthController } from './core/auth/auth.controller';
-import { UtilsService } from './core/utils/utils.service';
-import { UtilsModule } from './core/utils/utils.module';
-import { PatientsModule } from './core/patient/patients.module';
-import { ToothModule } from './core/tooth/tooth.module';
-import { DocumentService } from './core/document/document.service';
-import { DocumentController } from './core/document/document.controller';
 import { DocumentModule } from './core/document/document.module';
-import { FeedbackService } from './core/feedback/feedback.service';
 import { FeedbackModule } from './core/feedback/feedback.module';
-import { DatabaseModule } from './core/__database/database.module';
+import { InterventionModule } from './core/intervention/intervention.module';
+import { PatientsModule } from './core/patient/patients.module';
 import { PractitionerModule } from './core/practitioner/practitioner.module';
+import { ToothModule } from './core/tooth/tooth.module';
+import { UserModule } from './core/user/user.module';
+import { UtilsModule } from './core/utils/utils.module';
+import { UtilsService } from './core/utils/utils.service';
+import { DatabaseModule } from './core/__database/database.module';
 
 @Module({
   imports: [
@@ -28,8 +25,10 @@ import { PractitionerModule } from './core/practitioner/practitioner.module';
     ToothModule,
     DocumentModule,
     FeedbackModule,
+    InterventionModule,
+    PractitionerModule,
   ],
-  controllers: [AppController, AuthController, DocumentController],
-  providers: [UtilsService, DocumentService, FeedbackService],
+  controllers: [AppController],
+  providers: [UtilsService],
 })
 export class AppModule { }

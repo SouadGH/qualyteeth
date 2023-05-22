@@ -3,7 +3,11 @@ import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { User } from 'libs/shared/src/lib/user.entity';
+import { Patient } from 'libs/shared/src/lib/patient.entity';
+import { Practitioner } from 'libs/shared/src/lib/practitioner.entity';
+import { User, UserType } from 'libs/shared/src/lib/user.entity';
+import { PatientsService } from '../patient/patients.service';
+import { PractitionerService } from '../practitioner/practitioner.service';
 import { UserService } from '../user/user.service';
 
 @Injectable()
@@ -17,6 +21,8 @@ export class AuthService {
     private userSvc: UserService,
     private jwtSvc: JwtService,
     private readonly configSvc: ConfigService,
+    private practitionerSvc: PractitionerService,
+    private patientSvc: PatientsService
   ) { }
 
   /**
@@ -70,7 +76,6 @@ export class AuthService {
    */
   async login(user: User) {
     try {
-
       const payload = { email: user.email, sub: user.id };
       return {
         access_token: this.jwtSvc.sign(payload, { secret: this.configSvc.get('JWT_ACCESS_TOKEN_SECRET'), }),
@@ -159,16 +164,29 @@ export class AuthService {
   /**
    *
    */
-  async signin(body: any): Promise<void> {
+  async signin(data: User): Promise<void> {
     try {
-      const u: User = await this.userSvc.getByEmail(body['email'])
+      const u: User = await this.userSvc.getByEmail(data['email'])
       if (u != null) {
         throw new HttpException('Account already exists', HttpStatus.CONFLICT);
       }
     } catch (e) {
       if (e.status === 404) {
-        const user: User = await this.userSvc.create(body);
-        await this.userSvc.save(user);
+        let user: User = await this.userSvc.create(data);
+        user = await this.userSvc.save(user);
+
+        if (user.type == UserType.PRACTITIONER) {
+          const practitioner: Practitioner = {
+            user: user
+          };
+          await this.practitionerSvc.save(practitioner);
+        }
+        else {
+          const patient: Patient = {
+            user: user
+          }
+          await this.patientSvc.save(patient);
+        }
       }
       else {
         this.logger.error(e.status, e.message, new Error(e).stack)

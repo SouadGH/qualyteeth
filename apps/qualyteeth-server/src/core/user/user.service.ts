@@ -18,27 +18,27 @@ export class UserService {
   /**
    *
    */
-  async create(body: any): Promise<User> {
+  async create(data: User): Promise<User> {
 
-    const user: User = {
-      type: body['type'],
-      firstname: body['firstname'],
-      lastname: body['lastname'],
-      email: body['email'],
-      password: body['password'],
-      street: body['street'],
-      streetNb: body['streetNb'],
-      city: body['city'],
-      postalCode: body['postalCode'],
-      country: body['country'],
-      phoneNumber: body['phoneNumber'],
-    };
+    // const user: User = {
+    //   type: body['type'],
+    //   firstname: body['firstname'],
+    //   lastname: body['lastname'],
+    //   email: body['email'],
+    //   password: body['password'],
+    //   street: body['street'],
+    //   streetNb: body['streetNb'],
+    //   city: body['city'],
+    //   postalCode: body['postalCode'],
+    //   country: body['country'],
+    //   phoneNumber: body['phoneNumber'],
+    // };
 
-    if (user.password) {
-      user.password = await bcrypt.hash(user.password, await bcrypt.genSalt());
+    if (data.password) {
+      data.password = await bcrypt.hash(data.password, await bcrypt.genSalt());
     }
 
-    return user;
+    return data;
   }
 
   /**

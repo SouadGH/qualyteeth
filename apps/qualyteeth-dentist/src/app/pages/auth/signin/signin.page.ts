@@ -4,9 +4,10 @@ import { AuthService } from 'apps/qualyteeth-dentist/src/app/services/auth.servi
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DiagnosticService } from '../../../services/diagnostic.service';
 import { TreatmentService } from '../../../services/treatment.service';
+import { User, UserType } from 'libs/shared/src/lib/user.entity';
 
 @Component({
-  selector: 'app-signin',
+  selector: 'qualyteeth-app-signin',
   templateUrl: './signin.page.html',
   styleUrls: ['./signin.page.scss'],
 })
@@ -70,19 +71,31 @@ export class SigninPage implements OnInit {
   async signin(): Promise<void> {
     this.isSubmitted = true;
 
-    const firstname = this.signinForm.controls['firstname'].value;
-    const lastname = this.signinForm.controls['lastname'].value;
-    const username = this.signinForm.controls['email'].value;
-    const email = this.signinForm.controls['email'].value;
-    const password = this.signinForm.controls['password'].value;
-    const street = this.signinForm.controls['street'].value;
-    const streetNb = this.signinForm.controls['streetNb'].value;
-    const postalCode = this.signinForm.controls['postalCode'].value;
-    const city = this.signinForm.controls['city'].value;
+    // const firstname = this.signinForm.controls['firstname'].value;
+    // const lastname = this.signinForm.controls['lastname'].value;
+    // const email = this.signinForm.controls['email'].value;
+    // const password = this.signinForm.controls['password'].value;
+    // const street = this.signinForm.controls['street'].value;
+    // const streetNb = this.signinForm.controls['streetNb'].value;
+    // const postalCode = this.signinForm.controls['postalCode'].value;
+    // const city = this.signinForm.controls['city'].value;
+
+    const user: User = {
+      type: UserType.PRACTITIONER,
+      firstname: this.signinForm.controls['firstname'].value,
+      lastname: this.signinForm.controls['lastname'].value,
+      email: this.signinForm.controls['email'].value,
+      password: this.signinForm.controls['password'].value,
+      street: this.signinForm.controls['street'].value,
+      streetNb: this.signinForm.controls['streetNb'].value,
+      postalCode: this.signinForm.controls['postalCode'].value,
+      city: this.signinForm.controls['city'].value,
+    }
 
     try {
-      await this.authSvc.signin(firstname, lastname, street, streetNb, postalCode, city, username, password, email, 'DENTIST');
-      await this.authSvc.login(username, password);
+      // await this.authSvc.signin(firstname, lastname, street, streetNb, postalCode, city, password, email, UserType.PRACTITIONER);
+      await this.authSvc.signin(user);
+      await this.authSvc.login(user.email, user.password);
       await this.diagnosticSvc.init();
       // await this.treatmentSvc.init();
       this.nav.navigateRoot('patients');

@@ -3,6 +3,7 @@ import { Column, Entity, OneToMany } from "typeorm";
 import { Practitioner } from "./practitioner.entity";
 import { Patient } from "./patient.entity";
 import { Base } from "./_base.entity";
+import { Feedback } from "./feedback.entity";
 
 export enum UserType {
   PRACTITIONER,
@@ -24,7 +25,7 @@ export class User extends Base {
   @Column({ nullable: false })
   email!: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, select: false })
   @Exclude()
   password?: string;
 
@@ -46,9 +47,6 @@ export class User extends Base {
   @Column({ nullable: true })
   phoneNumber?: string;
 
-  //   @Column({ nullable: true })
-  //   lastLogin?: Date;
-
   @Column({ nullable: true })
   image?: string;
 
@@ -57,4 +55,7 @@ export class User extends Base {
 
   @OneToMany(() => Patient, patient => patient.user, { nullable: true })
   patients?: Patient[];
+
+  @OneToMany(() => Feedback, f => f.user, { nullable: true })
+  feedbacks?: Feedback[];
 }

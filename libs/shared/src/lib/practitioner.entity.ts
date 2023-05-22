@@ -1,7 +1,9 @@
-import { Entity, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import { Predicament } from './predicament.entity';
+import { Document } from './document.entity';
 import { User } from './user.entity';
 import { Base } from './_base.entity';
+import { Patient } from './patient.entity';
 
 @Entity()
 export class Practitioner extends Base {
@@ -12,8 +14,8 @@ export class Practitioner extends Base {
     // @Column({ nullable: true })
     // color: string;
 
-    // @ManyToMany(() => Patient, patient => patient.dentists, { nullable: true })
-    // patients?: Patient[];
+    @ManyToMany(() => Patient, p => p.practitioners, { nullable: true })
+    patients?: Patient[];
 
     // @OneToOne(() => PractitionerTimetable, timetable => timetable.dentist, { nullable: true })
     // timetable?: PractitionerTimetable;
@@ -38,4 +40,7 @@ export class Practitioner extends Base {
 
     // @OneToMany(() => ServiceDefinition, serviceDefinition => serviceDefinition.createdBy)
     // serviceDefinitions?: ServiceDefinition[];
+
+    @OneToMany(() => Document, d => d.practitioner)
+    documents?: Document[];
 }

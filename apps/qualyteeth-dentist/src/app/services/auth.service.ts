@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { API_ENDPOINT } from '../../environments/environment';
-import { UserType } from 'libs/shared/src/lib/user.entity';
+import { User, UserType } from 'libs/shared/src/lib/user.entity';
 import { StorageService } from './storage.service';
 import { SurgeryService } from './surgery.service';
 import { lastValueFrom } from 'rxjs';
@@ -59,30 +59,37 @@ export class AuthService {
   //   return this.canActivate
   // }
 
+  // /**
+  //  *
+  //  */
+  // public async signin(firstname: string, lastname: string, street: string, streetNb: string, postalCode: string, city: string, password: string, email: string, type: UserType): Promise<void> {
+  //   const data: User = {
+  //     'firstname': firstname,
+  //     'lastname': lastname,
+  //     'street': street,
+  //     'streetNb': streetNb,
+  //     'postalCode': postalCode,
+  //     'city': city,
+  //     'password': password,
+  //     'type': type,
+  //     'email': email
+  //   }
+
+  //   await lastValueFrom(this.httpClient.post(`${API_ENDPOINT}/auth/signin`, data));
+  // }
+
   /**
    *
    */
-  public async signin(firstname: string, lastname: string, street: string, streetNb: string, postalCode: number, city: string, username: string, password: string, email: string, type: UserType): Promise<void> {
-    await lastValueFrom(this.httpClient.post(API_ENDPOINT + '/auth/signin',
-      {
-        'firstname': firstname,
-        'lastname': lastname,
-        'street': street,
-        'streetNb': streetNb,
-        'postalCode': postalCode,
-        'city': city,
-        'username': username,
-        'password': password,
-        'type': type,
-        'email': email
-      }));
+  public async signin(data: User): Promise<void> {
+    await lastValueFrom(this.httpClient.post(`${API_ENDPOINT}/auth/signin`, data));
   }
 
   /**
    *
    */
   public async login(username: string, password: string): Promise<void> {
-    const data = await lastValueFrom(this.httpClient.post(API_ENDPOINT + '/auth/login', { 'username': username, 'password': password, 'type': 'DENTIST' }));
+    const data = await lastValueFrom(this.httpClient.post(`${API_ENDPOINT}/auth/login`, { 'username': username, 'password': password, 'type': UserType.PRACTITIONER }));
     await this.storageSvc.set('accessTokenQD', data['access_token']);
     // await this.storageSvc.set('useridQD', data['userid']);
 

@@ -1,6 +1,7 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Tooth } from 'libs/shared/src/lib/tooth.entity';
-import { DbService } from 'apps/qualyteeth-server/src/core/utils/db.service';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ToothService {
@@ -9,40 +10,40 @@ export class ToothService {
     /**
      *
      */
-    constructor(private dbService: DbService) { }
+    constructor(
+        @InjectRepository(Tooth) private toothRepo: Repository<Tooth>,
+    ) { }
 
     /**
      *
      */
     async findByFdiNumber(fdiNumber: number, lang = 'fr'): Promise<Tooth> {
-        try {
-            const query = `
-                SELECT t.fdi_number, t.svg, tn.name, tn.description FROM tooth t
-                LEFT JOIN tooth_name tn ON t.fdi_number = tn.fdi_number AND tn.language = $2
-                WHERE t.fdi_number = $1
-            `
-            return await this.dbService.db.oneOrNone(query, [fdiNumber, lang]);
+        let qb = this.toothRepo.createQueryBuilder('t');
+        qb = qb.where('t.fdiNumber = :fdiNumber', { fdiNumber: fdiNumber });
+
+        const t = await qb.getOne();
+        if (t) {
+            return t;
         }
-        catch (e) {
-            this.logger.error(e.message, new Error(e).stack)
-            throw e;
-        }
+        throw new HttpException('Tooth with this FDI number does not exist', HttpStatus.NOT_FOUND);
     }
 
     /**
      *
      */
     async findall(lang = 'fr'): Promise<Array<Tooth>> {
-        try {
-            const query = `
-                SELECT t.fdi_number, t.svg, tn.name, tn.description FROM tooth t
-                LEFT JOIN tooth_name tn ON t.fdi_number = tn.fdi_number AND tn.language = $1
-            `
-            return await this.dbService.db.many(query, [lang]);
-        }
-        catch (e) {
-            this.logger.error(e.message, new Error(e).stack)
-            throw e;
-        }
+        const qb = this.toothRepo.createQueryBuilder('t');
+        return await qb.getMany();
+        // try {
+        //     const query = `
+        //         SELECT t.fdi_number, t.svg, tn.name, tn.description FROM tooth t
+        //         LEFT JOIN tooth_name tn ON t.fdi_number = tn.fdi_number AND tn.language = $1
+        //     `
+        //     return await this.dbService.db.many(query, [lang]);
+        // }
+        // catch (e) {
+        //     this.logger.error(e.message, new Error(e).stack)
+        //     throw e;
+        // }
     }
 }

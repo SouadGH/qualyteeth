@@ -17,6 +17,7 @@ export class FeedbackController {
     @UseGuards(JwtAuthGuard)
     @Post('add')
     async saveCalendar(@Request() req) {
-        return await this.feedbackSvc.saveFeedback(req.body.userid, req.body.feedback.stars, req.body.feedback.comment);
+        // return await this.feedbackSvc.saveFeedback(req.body.userid, req.body.feedback.stars, req.body.feedback.comment);
+        return await this.feedbackSvc.saveFeedback(req.data);
     }
 }
