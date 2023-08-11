@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController, PopoverController, ToastController } from '@ionic/angular';
-import { TreatmentDefinition } from 'libs/shared/src/lib/treatment-definition.entity';
 import { TreatmentService } from 'apps/qualyteeth-dentist/src/app/services/treatment.service';
+import { PredicamentDto } from 'libs/shared/src/lib/dto/predicament.dto';
 
 @Component({
   selector: 'app-treatments',
@@ -11,7 +11,7 @@ import { TreatmentService } from 'apps/qualyteeth-dentist/src/app/services/treat
 export class TreatmentsPage implements OnInit {
 
   loading: boolean = true;
-  treatments: Array<TreatmentDefinition> = new Array<TreatmentDefinition>();
+  treatments: Array<PredicamentDto> = new Array<PredicamentDto>();
 
   columns = ['name', 'creator', 'created', 'edit']
 
@@ -43,7 +43,7 @@ export class TreatmentsPage implements OnInit {
    */
   async loadData(): Promise<void> {
     this.loading = true;
-    this.treatments = await this.treatmentSvc.getDefinitionsForDentist();
+    // this.treatments = await this.treatmentSvc.getDefinitionsForDentist();
     this.loading = false;
     console.log(this.treatments)
   }
@@ -58,14 +58,14 @@ export class TreatmentsPage implements OnInit {
   /**
    *
    */
-   async edit(t: TreatmentDefinition): Promise<void> {
+   async edit(t: PredicamentDto): Promise<void> {
     this.nav.navigateForward(`admin/treatments/edit-treatment-definition/${t.id}`)
   }
 
   /**
    *
    */
-  async delete(t: TreatmentDefinition): Promise<void> {
+  async delete(t: PredicamentDto): Promise<void> {
     // ev.stopImmediatePropagation();
 
     const alert = await this.alertCtrl.create({
@@ -93,7 +93,7 @@ export class TreatmentsPage implements OnInit {
   /**
    *
    */
-  async more(ev: Event, t: TreatmentDefinition): Promise<void> {
+  async more(ev: Event, t: PredicamentDto): Promise<void> {
     ev.stopImmediatePropagation();
 
     const popover = await this.popoverCtrl.create({

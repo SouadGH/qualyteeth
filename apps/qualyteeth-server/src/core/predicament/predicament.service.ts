@@ -1,10 +1,10 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Act } from 'libs/shared/src/lib/act.entity';
-import { Category } from 'libs/shared/src/lib/category.entity';
-import { Intervention } from 'libs/shared/src/lib/intervention.entity';
-import { Predicament } from 'libs/shared/src/lib/predicament.entity';
+import { Act } from 'apps/qualyteeth-server/src/core/act/act.entity';
+import { Category } from 'apps/qualyteeth-server/src/core/category/category.entity';
 import { Repository } from 'typeorm';
+import { Predicament } from './predicament.entity';
+import { Intervention } from '../intervention/intervention.entity';
 
 
 @Injectable()

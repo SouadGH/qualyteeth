@@ -3,13 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController, NavController, Platform, PopoverController } from '@ionic/angular';
 // import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 // import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Router } from '@angular/router';
+import { ToolbarMenuComponent } from './components/toolbar-menu/toolbar-menu.component';
+import { AppService } from './services/app.service';
 import { AuthService } from './services/auth.service';
 import { SseService } from './services/sse.service';
-import { AppService } from './services/app.service';
-import { SurgeryService } from './services/surgery.service';
-import { ToolbarMenuComponent } from './components/toolbar-menu/toolbar-menu.component';
-import { Router } from '@angular/router';
 import { StorageService } from './services/storage.service';
+import { SurgeryService } from './services/surgery.service';
 
 @Component({
   selector: 'app-root',
@@ -65,7 +65,7 @@ export class AppComponent implements OnInit {
 
     const userId = await this.storageSvc.getUserid();
 
-    this.surgerySvc.getActiveSurgeryForDentist().then(s => this.surgerySvc.activeSurgery = s);
+    // this.surgerySvc.getActiveSurgeryForDentist().then(s => this.surgerySvc.activeSurgery = s);
 
     // this.surgery = await this.surgerySvc.getActiveSurgeryForDentist();
 

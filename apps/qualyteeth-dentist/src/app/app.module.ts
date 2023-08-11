@@ -26,20 +26,20 @@ import { FeedbackPage } from './pages/feedback/feedback.page';
 import { MatFabMenuModule } from '@angular-material-extensions/fab-menu';
 import { StorageService } from './services/storage.service';
 
-import { FullCalendarModule } from '@fullcalendar/angular';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid'
-import resourceDayGridPlugin from '@fullcalendar/resource-daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
+// import { FullCalendarModule } from '@fullcalendar/angular';
+// import dayGridPlugin from '@fullcalendar/daygrid';
+// import timeGridPlugin from '@fullcalendar/timegrid';
+// import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid'
+// import resourceDayGridPlugin from '@fullcalendar/resource-daygrid';
+// import interactionPlugin from '@fullcalendar/interaction';
 
-FullCalendarModule.registerPlugins([
-  dayGridPlugin,
-  timeGridPlugin,
-  interactionPlugin, 
-  resourceDayGridPlugin, 
-  resourceTimeGridPlugin
-]);
+// FullCalendarModule.registerPlugins([
+//   dayGridPlugin,
+//   timeGridPlugin,
+//   interactionPlugin, 
+//   resourceDayGridPlugin, 
+//   resourceTimeGridPlugin
+// ]);
 
 @NgModule({
   declarations: [
@@ -63,7 +63,7 @@ FullCalendarModule.registerPlugins([
     BrowserAnimationsModule,
     ToolbarTitleModule,
     MatFabMenuModule,
-    FullCalendarModule
+    // FullCalendarModule
     // SpeechModule,
   ],
   providers: [

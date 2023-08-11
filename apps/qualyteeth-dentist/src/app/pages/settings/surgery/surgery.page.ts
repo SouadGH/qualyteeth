@@ -1,9 +1,8 @@
 import { MatFabMenu } from '@angular-material-extensions/fab-menu';
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController, NavParams, PopoverController } from '@ionic/angular';
-import { Patient } from 'libs/shared/src/lib/patient.entity';
-import { Surgery } from 'libs/shared/src/lib/surgery.entity';
 import { SurgeryService } from 'apps/qualyteeth-dentist/src/app/services/surgery.service';
+import { PatientDto } from 'libs/shared/src/lib/dto/patient.dto';
 
 @Component({
   selector: 'app-surgery',
@@ -15,9 +14,9 @@ export class SurgeryPage implements OnInit {
   selectedTab = 0;
 
   loading: boolean = true;
-  surgeries: Array<Surgery> = new Array<Surgery>();
+  // surgeries: Array<Surgery> = new Array<Surgery>();
   dentists: Array<any> = new Array<any>();
-  patients: Array<Patient> = new Array<Patient>();
+  patients: Array<PatientDto> = new Array<PatientDto>();
 
   columns = ['id', 'name', 'dentists', 'default', 'edit'];
 
@@ -49,18 +48,18 @@ export class SurgeryPage implements OnInit {
    */
   async loadData(): Promise<void> {
     this.loading = true;
-    this.surgeries = await this.surgerySvc.getSurgeriesForDentist();
-    this.surgeries = this.surgeries.sort((a, b) => {
-      const aName = a.name.toLowerCase();
-      const bName = b.name.toLowerCase();
+    // this.surgeries = await this.surgerySvc.getSurgeriesForDentist();
+    // this.surgeries = this.surgeries.sort((a, b) => {
+    //   const aName = a.name.toLowerCase();
+    //   const bName = b.name.toLowerCase();
 
-      return aName < bName ? -1 : aName > bName ? 1 : 0;
-    });
+    //   return aName < bName ? -1 : aName > bName ? 1 : 0;
+    // });
 
-    this.surgeries.forEach(async (s: any) => {
-      s.dentists = await this.surgerySvc.getDentistsForSurgery(s.id);
-      // s.patients = await this.surgerySvc.getPatienstForSurgery(s.id);
-    });
+    // this.surgeries.forEach(async (s: any) => {
+    //   // s.dentists = await this.surgerySvc.getDentistsForSurgery(s.id);
+    //   // s.patients = await this.surgerySvc.getPatienstForSurgery(s.id);
+    // });
 
     // this.activeSurgery = this.surgeries.find(s => s.active);
     // this.services = await this.servicingSvc.getForDentist();
@@ -83,64 +82,64 @@ export class SurgeryPage implements OnInit {
   /**
    *
    */
-  async edit(s: Surgery): Promise<void> {
-    this.nav.navigateForward(`admin/surgery/edit-surgery/${s.id}`)
-  }
+  // async edit(s: Surgery): Promise<void> {
+  //   this.nav.navigateForward(`admin/surgery/edit-surgery/${s.id}`)
+  // }
 
   /**
    *
    */
-  async more(ev: Event, s: Surgery): Promise<void> {
-    ev.stopImmediatePropagation();
+  // async more(ev: Event, s: Surgery): Promise<void> {
+  //   ev.stopImmediatePropagation();
 
-    const popover = await this.popoverCtrl.create({
-      component: EditSurgeryPopover,
-      event: ev,
-      translucent: true,
-      componentProps: {
-        isActive: s.active
-      }
-    });
-    await popover.present();
+  //   const popover = await this.popoverCtrl.create({
+  //     component: EditSurgeryPopover,
+  //     event: ev,
+  //     translucent: true,
+  //     componentProps: {
+  //       isActive: s.active
+  //     }
+  //   });
+  //   await popover.present();
 
-    popover.onDidDismiss().then(async r => {
-      if (r.data != null) {
-        if (r.data === 'edit') {
-          await this.edit(s);
-        }
-        else if (r.data === 'set') {
-          await this.surgerySvc.activate(s);
-          await this.loadData();
-        }
-        else if (r.data === 'unset') {
-          await this.surgerySvc.deactivate(s);
-          await this.loadData();
-        }
-        else if (r.data === 'delete') {
-          if (s.active) {
-            const alert = await this.alertCtrl.create({
-              header: 'Erreur',
-              message: 'Impossible de supprimer un cabinet actif',
-              buttons: ['OK']
-            });
-            await alert.present();
-            return;
-          }
-          s.deleted = true;
-          await this.surgerySvc.update(s);
-          await this.loadData();
-        }
-      }
-    })
-  }
+  //   popover.onDidDismiss().then(async r => {
+  //     if (r.data != null) {
+  //       if (r.data === 'edit') {
+  //         await this.edit(s);
+  //       }
+  //       else if (r.data === 'set') {
+  //         // await this.surgerySvc.activate(s);
+  //         await this.loadData();
+  //       }
+  //       else if (r.data === 'unset') {
+  //         // await this.surgerySvc.deactivate(s);
+  //         await this.loadData();
+  //       }
+  //       else if (r.data === 'delete') {
+  //         if (s.active) {
+  //           const alert = await this.alertCtrl.create({
+  //             header: 'Erreur',
+  //             message: 'Impossible de supprimer un cabinet actif',
+  //             buttons: ['OK']
+  //           });
+  //           await alert.present();
+  //           return;
+  //         }
+  //         s.deleted = true;
+  //         // await this.surgerySvc.update(s);
+  //         await this.loadData();
+  //       }
+  //     }
+  //   })
+  // }
 
   /**
    *
    */
-  async activate(s: Surgery): Promise<void> {
-    await this.surgerySvc.activate(s);
-    await this.loadData();
-  }
+  // async activate(s: Surgery): Promise<void> {
+  //   // await this.surgerySvc.activate(s);
+  //   await this.loadData();
+  // }
 
   /**
    * 

@@ -3,7 +3,7 @@
 // import { DbService } from 'apps/qualyteeth-server/src/core/utils/db.service';
 // import { Act } from 'libs/shared/src/lib/act.entity';
 // import { TreatmentDefinition } from 'libs/shared/src/lib/treatment-definition.entity';
-// import { Treatment } from 'libs/shared/src/lib/treatment.entity';
+// import { Predicament } from 'libs/shared/src/lib/predicament.entity';
 // import { Subject } from 'rxjs';
 // import { Repository } from 'typeorm';
 

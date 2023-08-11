@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { TreatmentPage } from './treatment.page';
+import { PredicamentPage } from './treatment.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: TreatmentPage
+    component: PredicamentPage
   }
 ];
 

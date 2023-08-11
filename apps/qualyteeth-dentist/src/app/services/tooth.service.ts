@@ -1,16 +1,16 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Tooth } from 'libs/shared/src/lib/tooth.entity';
 import { API_ENDPOINT } from '../../environments/environment';
 import { StorageService } from './storage.service';
 import { Subject } from 'rxjs';
+import { ToothDto } from 'libs/shared/src/lib/dto/tooth.dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToothService {
 
-  public toothSelectedParts: Subject<Tooth & { selectedParts: Array<string> }> = new Subject<Tooth & { selectedParts: Array<string> }>();
+  public toothSelectedParts: Subject<ToothDto & { selectedParts: Array<string> }> = new Subject<ToothDto & { selectedParts: Array<string> }>();
 
   /**
    *
@@ -22,7 +22,7 @@ export class ToothService {
   /**
    *
    */
-  public async getTooth(fdiNumber: number): Promise<Tooth> {
+  public async getTooth(fdiNumber: number): Promise<ToothDto> {
     const accessToken = await this.storageSvc.get('accessTokenQD');
 
     const headers = new HttpHeaders({
@@ -30,13 +30,13 @@ export class ToothService {
       'Authorization': `Bearer ${accessToken}`
     })
 
-    return await this.httpClient.get<Tooth>(API_ENDPOINT + '/tooth/' + fdiNumber, { headers: headers }).toPromise();
+    return await this.httpClient.get<ToothDto>(API_ENDPOINT + '/tooth/' + fdiNumber, { headers: headers }).toPromise();
   }
 
   /**
    *
    */
-  public async getAll(): Promise<Array<Tooth>> {
+  public async getAll(): Promise<Array<ToothDto>> {
     const accessToken = await this.storageSvc.get('accessTokenQD');
 
     const headers = new HttpHeaders({
@@ -44,6 +44,6 @@ export class ToothService {
       'Authorization': `Bearer ${accessToken}`
     })
 
-    return await this.httpClient.get<Array<Tooth>>(`${API_ENDPOINT}/tooth`, { headers: headers }).toPromise();
+    return await this.httpClient.get<Array<ToothDto>>(`${API_ENDPOINT}/tooth`, { headers: headers }).toPromise();
   }
 }

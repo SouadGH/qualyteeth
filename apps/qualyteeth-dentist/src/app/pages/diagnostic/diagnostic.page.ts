@@ -3,17 +3,16 @@ import { FormControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDateRangePicker } from '@angular/material/datepicker';
 import { MatTableDataSource } from '@angular/material/table';
-import { AlertController, NavController, NavParams, PopoverController, ToastController } from '@ionic/angular';
-import { Diagnostic, DiagnosticTooth } from 'libs/shared/src/lib/diagnostic.entity';
-import { Tooth } from 'libs/shared/src/lib/tooth.entity';
-import { DiagnosticService } from 'apps/qualyteeth-dentist/src/app/services/diagnostic.service';
-import { StorageService } from 'apps/qualyteeth-dentist/src/app/services/storage.service';
-import { OdontogramComponent } from 'apps/qualyteeth-dentist/src/app/components/odontogram/odontogram.component';
-import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
-import { Subscription } from 'rxjs';
-import { SpeechRecognitionService } from 'apps/qualyteeth-dentist/src/app/services/speech-recognition.service';
-import { DiagnosticDefinition } from 'libs/shared/src/lib/diagnostic-definition.entity';
 import { ActivatedRoute } from '@angular/router';
+import { AlertController, NavController, ToastController } from '@ionic/angular';
+import { OdontogramComponent } from 'apps/qualyteeth-dentist/src/app/components/odontogram/odontogram.component';
+import { DiagnosticService } from 'apps/qualyteeth-dentist/src/app/services/diagnostic.service';
+import { SpeechRecognitionService } from 'apps/qualyteeth-dentist/src/app/services/speech-recognition.service';
+import { StorageService } from 'apps/qualyteeth-dentist/src/app/services/storage.service';
+import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
+import { PredicamentDto } from 'libs/shared/src/lib/dto/predicament.dto';
+import { ToothDto } from 'libs/shared/src/lib/dto/tooth.dto';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-diagnostic',
@@ -29,16 +28,16 @@ export class DiagnosticPage implements OnInit {
   comment: string;
 
   patientId: number;
-  teeth: Array<Tooth & { selectedParts: Array<string>, hasDiagnostic: boolean, hasTreatment: boolean }>;
+  teeth: Array<ToothDto & { selectedParts: Array<string>, hasDiagnostic: boolean, hasTreatment: boolean }>;
 
-  diagnostics: Array<Diagnostic>;
+  diagnostics: Array<PredicamentDto>;
   diagnosticsColumns = ['date', 'dentist', 'teeth', 'diagnostic', 'comment', 'status']
 
   diagnosticsControl = new FormControl();
-  diagnosticsList: Array<DiagnosticDefinition> = new Array<DiagnosticDefinition>();
+  diagnosticsList: Array<PredicamentDto> = new Array<PredicamentDto>();
 
-  private teethSelectedParts: Array<Tooth & { selectedParts: Array<string> }> = new Array<Tooth & { selectedParts: Array<string> }>();
-  dataSource: MatTableDataSource<Tooth & { selectedParts: Array<string> }>;
+  private teethSelectedParts: Array<ToothDto & { selectedParts: Array<string> }> = new Array<ToothDto & { selectedParts: Array<string> }>();
+  dataSource: MatTableDataSource<ToothDto & { selectedParts: Array<string> }>;
 
   speechRecognitionStarted: boolean;
   speechSubscription: Subscription;
@@ -64,10 +63,10 @@ export class DiagnosticPage implements OnInit {
 
     this.patientId = parseInt(this.activtedRoute.snapshot.paramMap.get('patient_id'));
 
-    this.dataSource = new MatTableDataSource<Tooth & { selectedParts: Array<string> }>();
+    this.dataSource = new MatTableDataSource<ToothDto & { selectedParts: Array<string> }>();
 
     this.toothSvc.toothSelectedParts.subscribe(
-      (t: Tooth & { selectedParts: Array<string> }) => {
+      (t: ToothDto & { selectedParts: Array<string> }) => {
         const i = this.teethSelectedParts.findIndex(tt => tt.fdiNumber === t.fdiNumber);
         if (i > -1) {
           this.teethSelectedParts.splice(i, 1);
@@ -100,8 +99,8 @@ export class DiagnosticPage implements OnInit {
     });
     await toast.present();
 
-    this.diagnosticsList = await this.diagnosticSvc.getDefinitionsForDentist();
-    this.diagnostics = await this.diagnosticSvc.getForPatientAndDentist(this.patientId);
+    // this.diagnosticsList = await this.diagnosticSvc.getDefinitionsForDentist();
+    // this.diagnostics = await this.diagnosticSvc.getForPatientAndDentist(this.patientId);
 
     console.log(this.diagnostics)
 
@@ -298,26 +297,26 @@ export class DiagnosticPage implements OnInit {
 
     const dentistId = await this.storageSvc.getUserid();
 
-    const diagnostic: Diagnostic = {
-      id: null,
-      definitionId: this.diagnosticsControl.value['id'],
-      dentistId: dentistId,
-      patientId: this.patientId,
-      startDate: this.date,
-      comment: this.comment,
-      createdOn: new Date(),
-      teeth: new Array<DiagnosticTooth>(),
-    }
+    // const diagnostic: Diagnostic = {
+    //   id: null,
+    //   definitionId: this.diagnosticsControl.value['id'],
+    //   dentistId: dentistId,
+    //   patientId: this.patientId,
+    //   startDate: this.date,
+    //   comment: this.comment,
+    //   createdOn: new Date(),
+    //   teeth: new Array<DiagnosticTooth>(),
+    // }
 
-    this.dataSource.data.forEach(t => {
-      const dt: DiagnosticTooth = {
-        toothFdiNumber: t.fdiNumber,
-        toothParts: t.selectedParts,
-      }
-      diagnostic.teeth.push(dt);
-    })
+    // this.dataSource.data.forEach(t => {
+    //   const dt: DiagnosticTooth = {
+    //     toothFdiNumber: t.fdiNumber,
+    //     toothParts: t.selectedParts,
+    //   }
+    //   diagnostic.teeth.push(dt);
+    // })
 
-    await this.diagnosticSvc.save(diagnostic);
+    // await this.diagnosticSvc.save(diagnostic);
 
     const toast = await this.toastCtrl.create({
       message: 'Diagnostic enregistré!',
@@ -332,7 +331,7 @@ export class DiagnosticPage implements OnInit {
   /**
    *
    */
-  async remove(e: Event, el: Tooth & { selectedParts: Array<string> }): Promise<void> {
+  async remove(e: Event, el: ToothDto & { selectedParts: Array<string> }): Promise<void> {
     const i: number = this.dataSource.data.findIndex(t => t.fdiNumber = el.fdiNumber);
     console.log(i)
     // if (i > -1) {

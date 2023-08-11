@@ -36,8 +36,8 @@ export class QrPage implements OnInit {
       toCanvas(this.canvas.nativeElement, code.segments, { scale: 10 })
     }
 
-    const result = await this.sseSvc.getQRCodeSSeEvent(this.channel).toPromise();
-    this.nav.navigateRoot(`patients/${result['patientId']}`)
+    // const result = await this.sseSvc.getQRCodeSSeEvent(this.channel).toPromise();
+    // this.nav.navigateRoot(`patients/${result['patientId']}`)
   }
 
   // /**

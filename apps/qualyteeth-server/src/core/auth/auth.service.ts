@@ -3,12 +3,13 @@ import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { Patient } from 'libs/shared/src/lib/patient.entity';
-import { Practitioner } from 'libs/shared/src/lib/practitioner.entity';
-import { User, UserType } from 'libs/shared/src/lib/user.entity';
+import { User } from 'apps/qualyteeth-server/src/core/user/user.entity';
 import { PatientsService } from '../patient/patients.service';
 import { PractitionerService } from '../practitioner/practitioner.service';
 import { UserService } from '../user/user.service';
+import { UserType } from 'libs/shared/src/lib/dto/user.dto';
+import { Practitioner } from '../practitioner/practitioner.entity';
+import { Patient } from '../patient/patient.entity';
 
 @Injectable()
 export class AuthService {

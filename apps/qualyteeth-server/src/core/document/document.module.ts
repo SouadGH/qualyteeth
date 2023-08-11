@@ -1,9 +1,9 @@
 
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Document } from 'libs/shared/src/lib/document.entity';
 import { DocumentController } from './document.controller';
 import { DocumentService } from './document.service';
+import { Document } from './document.entity';
 
 @Module({
   imports: [

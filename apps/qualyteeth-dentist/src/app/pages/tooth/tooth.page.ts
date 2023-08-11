@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Tooth } from 'libs/shared/src/lib/tooth.entity';
-import { Treatment } from 'libs/shared/src/lib/treatment.entity';
 import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
 import { TreatmentService } from 'apps/qualyteeth-dentist/src/app/services/treatment.service';
 import { ModalController } from '@ionic/angular';
-// import { AddTreatmentPage } from '../treatment.old/add-treatment/add-treatment.page';
-import { Patient } from 'libs/shared/src/lib/patient.entity';
 import { PatientService } from 'apps/qualyteeth-dentist/src/app/services/patient.service';
 import { StorageService } from 'apps/qualyteeth-dentist/src/app/services/storage.service';
+import { PredicamentDto } from 'libs/shared/src/lib/dto/predicament.dto';
+import { ToothDto } from 'libs/shared/src/lib/dto/tooth.dto';
+import { PatientDto } from 'libs/shared/src/lib/dto/patient.dto';
 
 @Component({
   selector: 'app-odontogram-tooth',
@@ -17,10 +16,10 @@ import { StorageService } from 'apps/qualyteeth-dentist/src/app/services/storage
 })
 export class ToothPage implements OnInit {
 
-  tooth: Tooth;
-  patient: Patient;
+  tooth: ToothDto;
+  patient: PatientDto;
   dentistId: number;
-  treatments: Array<Treatment> = new Array<Treatment>();
+  treatments: Array<PredicamentDto> = new Array<PredicamentDto>();
 
   /**
    *

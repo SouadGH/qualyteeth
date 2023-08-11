@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_ENDPOINT } from 'apps/qualyteeth-dentist/src/environments/environment';
-import { Feedback } from 'libs/shared/src/lib/feedback.entity';
 import { StorageService } from './storage.service';
+import { FeedbackDto } from 'libs/shared/src/lib/dto/feedback.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class FeedbackService {
   /**
    *
    */
-  public async saveFeedback(feedback: Feedback): Promise<void> {
+  public async saveFeedback(feedback: FeedbackDto): Promise<void> {
     const accessToken = await this.storageSvc.get('accessTokenQD');
 
     const headers = new HttpHeaders({

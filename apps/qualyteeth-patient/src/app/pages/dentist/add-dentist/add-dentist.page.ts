@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController, NavParams } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DentistService } from 'apps/qualyteeth-patient/src/app/services/dentist.service';
+import { PractitionerService } from 'apps/qualyteeth-patient/src/app/services/practitioner.service';
 import { Dentist } from 'libs/shared/src/lib/dentist.entity';
 
 @Component({
@@ -23,7 +23,7 @@ export class AddDentistPage implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
-    private dentistSvc: DentistService,
+    private dentistSvc: PractitionerService,
     private navParams: NavParams,
     private fb: FormBuilder) {
 

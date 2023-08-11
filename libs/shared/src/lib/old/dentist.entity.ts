@@ -6,7 +6,7 @@
 // import { ServiceCategory } from './service-category.entity';
 // import { ServiceDefinition } from './service-definition.entity';
 // import { Service } from './service.entity';
-// import { Treatment } from './treatment.entity';
+// import { Predicament } from './treatment.entity';
 // import { User } from './user.entity';
 // import { Base } from './_base.entity';
 

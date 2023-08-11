@@ -1,11 +1,10 @@
 import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { Diagnostic } from 'libs/shared/src/lib/diagnostic.entity';
-import { Tooth } from 'libs/shared/src/lib/tooth.entity';
 import { DiagnosticService } from 'apps/qualyteeth-dentist/src/app/services/diagnostic.service';
 import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
-import { OdontogramToothComponent } from './tooth/tooth.component';
-import { Treatment } from 'libs/shared/src/lib/treatment.entity';
 import { TreatmentService } from '../../services/treatment.service';
+import { OdontogramToothComponent } from './tooth/tooth.component';
+import { ToothDto } from 'libs/shared/src/lib/dto/tooth.dto';
+import { PredicamentDto } from 'libs/shared/src/lib/dto/predicament.dto';
 
 @Component({
   selector: 'app-odontogram',
@@ -16,7 +15,7 @@ export class OdontogramComponent implements OnInit {
 
   @ViewChildren(OdontogramToothComponent) toothComponents: QueryList<OdontogramToothComponent>;
   @Input() patientId: number;
-  @Input() teeth: Array<Tooth & { selectedParts: Array<string>, hasDiagnostic: boolean, hasTreatment: boolean }>;
+  @Input() teeth: Array<ToothDto & { selectedParts: Array<string>, hasDiagnostic: boolean, hasTreatment: boolean }>;
   @Input() editable: boolean;
 
   // @Input() showCommands: boolean;
@@ -25,8 +24,8 @@ export class OdontogramComponent implements OnInit {
 
   // @ViewChildren(OdontogramToothComponent) allTeeth: OdontogramToothComponent;
 
-  diagnostics: Array<Diagnostic>;
-  treatments: Array<Treatment>;
+  diagnostics: Array<PredicamentDto>;
+  treatments: Array<PredicamentDto>;
 
   // teeth: Array<Tooth> = new Array<Tooth>();
   quadrants = {
@@ -53,8 +52,8 @@ export class OdontogramComponent implements OnInit {
   async ngOnInit() {
     // this.teeth = <any>await this.toothsvc.getAll();
 
-    this.diagnostics = await this.diagnosticSvc.getForPatientAndDentist(this.patientId);
-    this.treatments = await this.treatmentSvc.getForPatientAndDentist(this.patientId);
+    // this.diagnostics = await this.diagnosticSvc.getForPatientAndDentist(this.patientId);
+    // this.treatments = await this.treatmentSvc.getForPatientAndDentist(this.patientId);
 
     // console.log(this.diagnostics)
     // console.log(this.treatments)
@@ -63,7 +62,7 @@ export class OdontogramComponent implements OnInit {
 
       if (this.diagnostics != null) {
         for (const d of this.diagnostics) {
-          t.hasDiagnostic = d.teeth.filter(dt => dt.toothFdiNumber === t.fdiNumber).length > 0;
+          // t.hasDiagnostic = d.teeth.filter(dt => dt.toothFdiNumber === t.fdiNumber).length > 0;
           if (t.hasDiagnostic) {
             break;
           }
@@ -72,7 +71,7 @@ export class OdontogramComponent implements OnInit {
 
       if (this.treatments != null) {
         for (const tr of this.treatments) {
-          t.hasTreatment = tr.teeth.filter(trt => trt.toothFdiNumber === t.fdiNumber).length > 0;
+          // t.hasTreatment = tr.teeth.filter(trt => trt.toothFdiNumber === t.fdiNumber).length > 0;
           if (t.hasTreatment) {
             break;
           }
@@ -109,7 +108,7 @@ export class OdontogramComponent implements OnInit {
   /**
    * 
    */
-  async select(e: MouseEvent, t: Tooth & { selectedParts: Array<string> }): Promise<void> {
+  async select(e: MouseEvent, t: ToothDto & { selectedParts: Array<string> }): Promise<void> {
     if (e != null) {
       e.stopImmediatePropagation();
     }

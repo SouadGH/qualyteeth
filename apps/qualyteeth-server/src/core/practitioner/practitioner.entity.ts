@@ -1,9 +1,9 @@
 import { Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
-import { Predicament } from './predicament.entity';
-import { Document } from './document.entity';
-import { User } from './user.entity';
-import { Base } from './_base.entity';
-import { Patient } from './patient.entity';
+import { Predicament } from '../predicament/predicament.entity';
+import { Document } from '../document/document.entity';
+import { User } from '../user/user.entity';
+import { Base } from '../_base.entity';
+import { Patient } from '../patient/patient.entity';
 
 @Entity()
 export class Practitioner extends Base {

@@ -7,7 +7,7 @@ import { API_ENDPOINT } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class DentistService {
+export class PractitionerService {
 
   /**
    *

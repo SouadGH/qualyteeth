@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToMany } from 'typeorm';
-import { Act } from './act.entity';
-import { Predicament } from './predicament.entity';
-import { Base } from './_base.entity';
+import { Act } from '../act/act.entity';
+import { Predicament } from '../predicament/predicament.entity';
+import { Base } from '../_base.entity';
 
 @Entity()
 export class Category extends Base {

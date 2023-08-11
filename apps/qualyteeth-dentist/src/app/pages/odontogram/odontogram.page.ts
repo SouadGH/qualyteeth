@@ -3,19 +3,16 @@ import { FormControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDateRangePicker } from '@angular/material/datepicker';
 import { MatTableDataSource } from '@angular/material/table';
-import { AlertController, NavController, NavParams, PopoverController, ToastController } from '@ionic/angular';
-import { Diagnostic, DiagnosticTooth } from 'libs/shared/src/lib/diagnostic.entity';
-import { Tooth } from 'libs/shared/src/lib/tooth.entity';
-import { DiagnosticService } from 'apps/qualyteeth-dentist/src/app/services/diagnostic.service';
-import { StorageService } from 'apps/qualyteeth-dentist/src/app/services/storage.service';
-import { OdontogramComponent } from 'apps/qualyteeth-dentist/src/app/components/odontogram/odontogram.component';
-import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
-import { Subscription } from 'rxjs';
-import { SpeechRecognitionService } from 'apps/qualyteeth-dentist/src/app/services/speech-recognition.service';
-import { DiagnosticDefinition } from 'libs/shared/src/lib/diagnostic-definition.entity';
 import { ActivatedRoute } from '@angular/router';
-import { Treatment, TreatmentTooth } from 'libs/shared/src/lib/treatment.entity';
-import { TreatmentDefinition } from 'libs/shared/src/lib/treatment-definition.entity';
+import { AlertController, NavController, ToastController } from '@ionic/angular';
+import { OdontogramComponent } from 'apps/qualyteeth-dentist/src/app/components/odontogram/odontogram.component';
+import { DiagnosticService } from 'apps/qualyteeth-dentist/src/app/services/diagnostic.service';
+import { SpeechRecognitionService } from 'apps/qualyteeth-dentist/src/app/services/speech-recognition.service';
+import { StorageService } from 'apps/qualyteeth-dentist/src/app/services/storage.service';
+import { PredicamentDto } from 'libs/shared/src/lib/dto/predicament.dto';
+import { ToothDto } from 'libs/shared/src/lib/dto/tooth.dto';
+import { Subscription } from 'rxjs';
+import { ToothService } from '../../services/tooth.service';
 import { TreatmentService } from '../../services/treatment.service';
 
 @Component({
@@ -32,24 +29,24 @@ export class OdontogramPage implements OnInit {
   comment: string;
 
   patientId: number;
-  teeth: Array<Tooth & { selectedParts: Array<string>, hasDiagnostic: boolean, hasTreatment: boolean }>;
+  teeth: Array<ToothDto & { selectedParts: Array<string>, hasDiagnostic: boolean, hasTreatment: boolean }>;
 
-  diagnostics: Array<Diagnostic>;
+  diagnostics: Array<PredicamentDto>;
   diagnosticsColumns = ['date', 'dentist', 'teeth', 'diagnostic', 'comment', 'status']
 
-  treatments: Array<Treatment>;
+  treatments: Array<PredicamentDto>;
 
   diagnosticsControl = new FormControl();
-  diagnosticsList: Array<DiagnosticDefinition> = new Array<DiagnosticDefinition>();
+  diagnosticsList: Array<PredicamentDto> = new Array<PredicamentDto>();
 
   treatmentsControl = new FormControl();
-  treatmentsList: Array<TreatmentDefinition> = new Array<TreatmentDefinition>();
+  treatmentsList: Array<PredicamentDto> = new Array<PredicamentDto>();
 
-  diagnostic: Diagnostic;
-  treatment: Treatment;
+  diagnostic: PredicamentDto;
+  treatment: PredicamentDto;
 
-  private teethSelectedParts: Array<Tooth & { selectedParts: Array<string> }> = new Array<Tooth & { selectedParts: Array<string> }>();
-  dataSource: MatTableDataSource<Tooth & { selectedParts: Array<string> }>;
+  private teethSelectedParts: Array<ToothDto & { selectedParts: Array<string> }> = new Array<ToothDto & { selectedParts: Array<string> }>();
+  dataSource: MatTableDataSource<ToothDto & { selectedParts: Array<string> }>;
 
   speechRecognitionStarted: boolean;
   speechSubscription: Subscription;
@@ -77,10 +74,10 @@ export class OdontogramPage implements OnInit {
 
     this.patientId = parseInt(this.activtedRoute.snapshot.paramMap.get('patient_id'));
 
-    this.dataSource = new MatTableDataSource<Tooth & { selectedParts: Array<string> }>();
+    this.dataSource = new MatTableDataSource<ToothDto & { selectedParts: Array<string> }>();
 
     this.toothSvc.toothSelectedParts.subscribe(
-      (t: Tooth & { selectedParts: Array<string> }) => {
+      (t: ToothDto & { selectedParts: Array<string> }) => {
         const i = this.teethSelectedParts.findIndex(tt => tt.fdiNumber === t.fdiNumber);
         if (i > -1) {
           this.teethSelectedParts.splice(i, 1);
@@ -108,8 +105,8 @@ export class OdontogramPage implements OnInit {
 
     const examId = parseInt(this.activtedRoute.snapshot.paramMap.get('examination_id'));
     if (examId != null) {
-      this.diagnostic = await this.diagnosticSvc.getById(examId);
-      this.treatment = await this.treatmentSvc.getById(examId);
+      // this.diagnostic = await this.diagnosticSvc.getById(examId);
+      // this.treatment = await this.treatmentSvc.getById(examId);
 
       console.log(this.diagnostic)
       console.log(this.treatment)
@@ -122,11 +119,11 @@ export class OdontogramPage implements OnInit {
     });
     await toast.present();
 
-    this.diagnosticsList = await this.diagnosticSvc.getDefinitionsForDentist();
-    this.diagnostics = await this.diagnosticSvc.getForPatientAndDentist(this.patientId);
+    // this.diagnosticsList = await this.diagnosticSvc.getDefinitionsForDentist();
+    // this.diagnostics = await this.diagnosticSvc.getForPatientAndDentist(this.patientId);
 
-    this.treatmentsList = await this.treatmentSvc.getDefinitionsForDentist();
-    this.treatments = await this.treatmentSvc.getForPatientAndDentist(this.patientId);
+    // this.treatmentsList = await this.treatmentSvc.getDefinitionsForDentist();
+    // this.treatments = await this.treatmentSvc.getForPatientAndDentist(this.patientId);
 
     console.log(this.diagnostics)
     console.log(this.treatments)
@@ -347,51 +344,51 @@ export class OdontogramPage implements OnInit {
 
     const dentistId = await this.storageSvc.getUserid();
 
-    if (this.diagnosticsControl.value != null) {
-      const diagnostic: Diagnostic = {
-        id: null,
-        definitionId: this.diagnosticsControl.value['id'],
-        dentistId: dentistId,
-        patientId: this.patientId,
-        startDate: this.date,
-        comment: this.comment,
-        createdOn: new Date(),
-        teeth: new Array<DiagnosticTooth>(),
-      }
+    // if (this.diagnosticsControl.value != null) {
+    //   const diagnostic: Diagnostic = {
+    //     id: null,
+    //     definitionId: this.diagnosticsControl.value['id'],
+    //     dentistId: dentistId,
+    //     patientId: this.patientId,
+    //     startDate: this.date,
+    //     comment: this.comment,
+    //     createdOn: new Date(),
+    //     teeth: new Array<DiagnosticTooth>(),
+    //   }
 
-      this.dataSource.data.forEach(t => {
-        const dt: DiagnosticTooth = {
-          toothFdiNumber: t.fdiNumber,
-          toothParts: t.selectedParts,
-        }
-        diagnostic.teeth.push(dt);
-      })
+    //   this.dataSource.data.forEach(t => {
+    //     const dt: DiagnosticTooth = {
+    //       toothFdiNumber: t.fdiNumber,
+    //       toothParts: t.selectedParts,
+    //     }
+    //     diagnostic.teeth.push(dt);
+    //   })
 
-      await this.diagnosticSvc.save(diagnostic);
-    }
+    //   // await this.diagnosticSvc.save(diagnostic);
+    // }
 
-    if (this.treatmentsControl.value != null) {
-      const treatment: Treatment = {
-        id: null,
-        definitionId: this.treatmentsControl.value['id'],
-        dentistId: dentistId,
-        patientId: this.patientId,
-        startDate: this.date,
-        comment: this.comment,
-        createdOn: new Date(),
-        teeth: new Array<TreatmentTooth>(),
-      }
+    // if (this.treatmentsControl.value != null) {
+    //   const treatment: Treatment = {
+    //     id: null,
+    //     definitionId: this.treatmentsControl.value['id'],
+    //     dentistId: dentistId,
+    //     patientId: this.patientId,
+    //     startDate: this.date,
+    //     comment: this.comment,
+    //     createdOn: new Date(),
+    //     teeth: new Array<TreatmentTooth>(),
+    //   }
 
-      this.dataSource.data.forEach(t => {
-        const dt: TreatmentTooth = {
-          toothFdiNumber: t.fdiNumber,
-          toothParts: t.selectedParts,
-        }
-        treatment.teeth.push(dt);
-      })
+    //   this.dataSource.data.forEach(t => {
+    //     const dt: TreatmentTooth = {
+    //       toothFdiNumber: t.fdiNumber,
+    //       toothParts: t.selectedParts,
+    //     }
+    //     treatment.teeth.push(dt);
+    //   })
 
-      await this.treatmentSvc.save(treatment);
-    }
+    //   // await this.treatmentSvc.save(treatment);
+    // }
 
     const toast = await this.toastCtrl.create({
       message: 'Sauvegardé!',
@@ -406,7 +403,7 @@ export class OdontogramPage implements OnInit {
   /**
    *
    */
-  async remove(e: Event, el: Tooth & { selectedParts: Array<string> }): Promise<void> {
+  async remove(e: Event, el: ToothDto & { selectedParts: Array<string> }): Promise<void> {
     const i: number = this.dataSource.data.findIndex(t => t.fdiNumber = el.fdiNumber);
     console.log(i)
     // if (i > -1) {
@@ -418,7 +415,7 @@ export class OdontogramPage implements OnInit {
    *
    */
   //  async toothDetails(t: any): Promise<void> {
-  //   this.nav.navigateForward(`patients/${this.patientId}/tooth/${t.toothFdiNumber}`);
+  //   this.nav.navigateForward(`patients/${this.patientId}/ToothDto/${t.toothFdiNumber}`);
   // }
 
   /**

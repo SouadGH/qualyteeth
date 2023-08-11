@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<!-- <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
@@ -23,12 +23,6 @@
       <mat-form-field *ngIf="surgeries != null">
         <mat-label>Cabinets</mat-label>
         <mat-select formControlName="surgery" (selectionChange)="onSurgerySelectionChanged($event)">
-          <!-- <mat-select-trigger>
-            {{ calendarForm.controls['surgery'].value.length > 0 ? calendarForm.controls['surgery'].value[0].name : '' }}
-            <span *ngIf="calendarForm.controls['surgery'].value?.length > 1" style="opacity: 0.75; font-size: 0.75em;">
-              (+{{calendarForm.controls['surgery'].value.length - 1}} {{calendarForm.controls['surgery'].value?.length === 2 ? 'autre' : 'autres'}})
-            </span>
-          </mat-select-trigger> -->
           <mat-option value="">Mon calendrier</mat-option>
           <mat-option [value]="s" *ngFor="let s of surgeries">{{ s.name }}</mat-option>
         </mat-select>
@@ -67,6 +61,5 @@
     </div>
   </div>
 
-  <!-- <p-fullCalendar *ngIf="calendarOptions != null" [events]="calendarEvents" [options]="calendarOptions" #calendar></p-fullCalendar> -->
   <full-calendar *ngIf="calendarOptions != null" [deepChangeDetection]="true" [options]="calendarOptions" #calendar></full-calendar>
-</ion-content>
+</ion-content> -->

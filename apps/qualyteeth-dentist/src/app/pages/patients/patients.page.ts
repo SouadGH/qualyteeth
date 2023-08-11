@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavController, PopoverController } from '@ionic/angular';
-import { Patient } from 'libs/shared/src/lib/patient.entity';
-import { DentistService } from 'apps/qualyteeth-dentist/src/app/services/dentist.service';
-import { AddPatientPage } from './add-patient/add-patient.page';
+import { PractitionerService } from 'apps/qualyteeth-dentist/src/app/services/practitioner.service';
+import { PatientDto } from 'libs/shared/src/lib/dto/patient.dto';
 
 @Component({
   selector: 'app-patients',
@@ -12,11 +11,11 @@ import { AddPatientPage } from './add-patient/add-patient.page';
 export class PatientsPage implements OnInit {
 
   loading: boolean = true;
-  allPatients: Array<Patient> = new Array<Patient>();
-  patients: Array<Patient> = new Array<Patient>();
+  allPatients: Array<PatientDto> = new Array<PatientDto>();
+  patients: Array<PatientDto> = new Array<PatientDto>();
 
-  // columns: string[] = ['picture', 'patient', 'age', 'sex', 'email', 'phoneNb', 'calendar', 'control', 'action'];
-  columns: string[] = ['picture', 'patient', 'age', 'sex', 'email', 'phoneNb'];
+  // columns: string[] = ['picture', 'PatientDto', 'age', 'sex', 'email', 'phoneNb', 'calendar', 'control', 'action'];
+  columns: string[] = ['picture', 'PatientDto', 'age', 'sex', 'email', 'phoneNb'];
 
 
   /**
@@ -26,7 +25,7 @@ export class PatientsPage implements OnInit {
     private modalCtrl: ModalController,
     private nav: NavController,
     private popoverCtrl: PopoverController,
-    private dentistSvc: DentistService,
+    private dentistSvc: PractitionerService,
   ) {
 
   }
@@ -50,7 +49,7 @@ export class PatientsPage implements OnInit {
     this.loading = true;
     // this.surgery = await this.surgerySvc.getActiveSurgeryForDentist();
     // this.allPatients = await this.surgerySvc.getPatienstForSurgery(this.surgery.id)
-    this.allPatients = await this.dentistSvc.getPatientsForDentist();
+    // this.allPatients = await this.dentistSvc.getPatientsForDentist();
     this.patients = [...this.allPatients];
     this.loading = false;
   }
@@ -64,14 +63,14 @@ export class PatientsPage implements OnInit {
       return;
     }
     const v = e.detail.value.toLowerCase();
-    this.patients = this.patients.filter(e => e.firstname.toLowerCase().indexOf(v) > -1 || e.lastname.toLowerCase().indexOf(v) > -1);
+    this.patients = this.patients.filter(e => e.user.firstname.toLowerCase().indexOf(v) > -1 || e.user.lastname.toLowerCase().indexOf(v) > -1);
   }
 
   /**
    *
    */
-  // details(patient: Patient): void {
-  //   this.nav.navigateForward('patients/' + patient.id);
+  // details(PatientDto: PatientDto): void {
+  //   this.nav.navigateForward('patients/' + PatientDto.id);
   // }
 
   /**
@@ -94,7 +93,7 @@ export class PatientsPage implements OnInit {
   /**
    *
    */
-  // async action(ev: any, p: Patient): Promise<void> {
+  // async action(ev: any, p: PatientDto): Promise<void> {
   //   const popover = await this.popoverCtrl.create({
   //     component: PatientsPageActionsComponent,
   //     event: ev,
@@ -105,7 +104,7 @@ export class PatientsPage implements OnInit {
   //     if (r.data != null) {
   //       // console.log(r.data, p)
   //       if (r.data === 'visit') {
-  //         this.nav.navigateForward(`patients/patient/${p.id}/visit`);
+  //         this.nav.navigateForward(`patients/PatientDto/${p.id}/visit`);
   //       }
   //       // if (r.data === 'accept') {
   //       //   await this.validate(calendarEvent);
@@ -120,16 +119,16 @@ export class PatientsPage implements OnInit {
   /**
    *
    */
-  // async control(ev: MouseEvent, p: Patient): Promise<void> {
+  // async control(ev: MouseEvent, p: PatientDto): Promise<void> {
   //   ev.stopImmediatePropagation();
-  //   this.nav.navigateForward(`patients/patient/${p.id}/visit`);
+  //   this.nav.navigateForward(`patients/PatientDto/${p.id}/visit`);
   // }
 
   /**
    *
    */
-  async details(p: Patient): Promise<void> {
-    this.nav.navigateForward(`patients/patient/${p.id}`);
+  async details(p: PatientDto): Promise<void> {
+    this.nav.navigateForward(`patients/PatientDto/${p.id}`);
   }
 
 }

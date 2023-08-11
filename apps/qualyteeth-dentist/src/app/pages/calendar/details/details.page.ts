@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, PopoverController, ToastController } from '@ionic/angular';
-import { CalendarEvent } from 'libs/shared/src/lib/calendar.entity';
-import { Surgery } from 'libs/shared/src/lib/surgery.entity';
 import { CalendarService } from 'apps/qualyteeth-dentist/src/app/services/calendar.service';
 import { PatientService } from 'apps/qualyteeth-dentist/src/app/services/patient.service';
 import { ServicingService } from 'apps/qualyteeth-dentist/src/app/services/servicing.service';
@@ -15,7 +13,7 @@ import { SurgeryService } from 'apps/qualyteeth-dentist/src/app/services/surgery
 })
 export class DetailsPage implements OnInit {
 
-  surgeries: Array<Surgery>;
+  // surgeries: Array<Surgery>;
   activeSurgery: any;
 
   requestsDisplayedColumns: string[] = ['startDate', 'patient', 'service', 'action'];
@@ -42,20 +40,20 @@ export class DetailsPage implements OnInit {
    *
    */
   ngOnInit() {
-    this.sseSvc.calendarSubject.subscribe(
-      async (calendarEvent: CalendarEvent) => {
-        // if (calendarEvent.status === 'REQUESTED' || calendarEvent.status === 'CANCELLED' || calendarEvent.status === 'REJECTED') {
-          await this.initEvents();
-        // }
-      })
+    // this.sseSvc.calendarSubject.subscribe(
+    //   async (calendarEvent: CalendarEvent) => {
+    //     // if (calendarEvent.status === 'REQUESTED' || calendarEvent.status === 'CANCELLED' || calendarEvent.status === 'REJECTED') {
+    //       await this.initEvents();
+    //     // }
+    //   })
   }
 
   /**
    *
    */
    async ionViewWillEnter(): Promise<void> {
-    this.surgeries = await this.surgerySvc.getSurgeriesForDentist();
-    this.activeSurgery = this.surgeries.find(s => s.active);
+    // this.surgeries = await this.surgerySvc.getSurgeriesForDentist();
+    // this.activeSurgery = this.surgeries.find(s => s.active);
     if (this.activeSurgery == null) {
       this.activeSurgery = ''
     }
@@ -67,34 +65,34 @@ export class DetailsPage implements OnInit {
    */
   async initEvents(): Promise<void> {
 
-    if (this.activeSurgery == null || this.activeSurgery === '') {
-      this.requestsCalendarEvents = await this.calendarSvc.getCalendarEventsForDentist(null, ['REQUESTED']);
-      this.cancelledCalendarEvents = await this.calendarSvc.getCalendarEventsForDentist(null, ['CANCELLED']);
-      this.missedCalendarEvents = await this.calendarSvc.getCalendarEventsForDentist(null, ['MISSED']);
-    } else {
-      this.requestsCalendarEvents = await this.calendarSvc.getCalendarEventsForSurgery(this.activeSurgery.id, ['REQUESTED']);
-      this.cancelledCalendarEvents = await this.calendarSvc.getCalendarEventsForSurgery(this.activeSurgery.id, ['CANCELLED']);
-      this.missedCalendarEvents = await this.calendarSvc.getCalendarEventsForSurgery(this.activeSurgery.id, ['MISSED']);
-    }
+    // if (this.activeSurgery == null || this.activeSurgery === '') {
+    //   this.requestsCalendarEvents = await this.calendarSvc.getCalendarEventsForDentist(null, ['REQUESTED']);
+    //   this.cancelledCalendarEvents = await this.calendarSvc.getCalendarEventsForDentist(null, ['CANCELLED']);
+    //   this.missedCalendarEvents = await this.calendarSvc.getCalendarEventsForDentist(null, ['MISSED']);
+    // } else {
+    //   this.requestsCalendarEvents = await this.calendarSvc.getCalendarEventsForSurgery(this.activeSurgery.id, ['REQUESTED']);
+    //   this.cancelledCalendarEvents = await this.calendarSvc.getCalendarEventsForSurgery(this.activeSurgery.id, ['CANCELLED']);
+    //   this.missedCalendarEvents = await this.calendarSvc.getCalendarEventsForSurgery(this.activeSurgery.id, ['MISSED']);
+    // }
 
     // console.log('requestsCalendarEvents', this.requestsCalendarEvents);
     // console.log('cancelledCalendarEvents', this.cancelledCalendarEvents);
     // console.log('missedCalendarEvents', this.requestsCalendarEvents);
 
-    this.requestsCalendarEvents.forEach(async c => {
-      c.patient = await this.patientSvc.getPatient(c.patientId);
-      c.service = await this.servicingSvc.getDefinition(c.serviceDefinitionId);
-    })
+    // this.requestsCalendarEvents.forEach(async c => {
+    //   c.patient = await this.patientSvc.getPatient(c.patientId);
+    //   c.service = await this.servicingSvc.getDefinition(c.serviceDefinitionId);
+    // })
     
-    this.cancelledCalendarEvents.forEach(async c => {
-      c.patient = await this.patientSvc.getPatient(c.patientId);
-      c.service = await this.servicingSvc.getDefinition(c.serviceDefinitionId);
-    })
+    // this.cancelledCalendarEvents.forEach(async c => {
+    //   c.patient = await this.patientSvc.getPatient(c.patientId);
+    //   c.service = await this.servicingSvc.getDefinition(c.serviceDefinitionId);
+    // })
 
-    this.missedCalendarEvents.forEach(async c => {
-      c.patient = await this.patientSvc.getPatient(c.patientId);
-      c.service = await this.servicingSvc.getDefinition(c.serviceDefinitionId);
-    })
+    // this.missedCalendarEvents.forEach(async c => {
+    //   c.patient = await this.patientSvc.getPatient(c.patientId);
+    //   c.service = await this.servicingSvc.getDefinition(c.serviceDefinitionId);
+    // })
   }
 
   /**
@@ -131,7 +129,7 @@ export class DetailsPage implements OnInit {
         {
           text: 'Oui', handler: async () => {
             calendarEvent.status = 'VALIDATED';
-            await this.calendarSvc.update(calendarEvent);
+            // await this.calendarSvc.update(calendarEvent);
 
             const toast = await this.toastCtrl.create({
               message: 'Rendez-vous validé!',
@@ -165,7 +163,7 @@ export class DetailsPage implements OnInit {
           text: 'Oui', handler: async (data) => {
             calendarEvent.status = 'REJECTED';
             calendarEvent.notes = data['reason'];
-            await this.calendarSvc.update(calendarEvent);
+            // await this.calendarSvc.update(calendarEvent);
 
             const toast = await this.toastCtrl.create({
               message: 'Rendez-vous rejeté!',

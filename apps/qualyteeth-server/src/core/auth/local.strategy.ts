@@ -25,7 +25,7 @@
 
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { User } from 'libs/shared/src/lib/user.entity';
+import { User } from 'apps/qualyteeth-server/src/core/user/user.entity';
 import { Strategy } from 'passport-local';
 import { AuthService } from './auth.service';
 

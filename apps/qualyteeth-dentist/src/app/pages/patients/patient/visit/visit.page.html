@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title *ngIf="patient != null">
-      {{ patient.firstname }} {{ patient.lastname }}
+      {{ patient.user?.firstname }} {{ patient.user?.lastname }}
     </ion-title>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>

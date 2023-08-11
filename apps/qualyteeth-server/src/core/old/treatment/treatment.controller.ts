@@ -1,7 +1,7 @@
 // import { Body, Controller, Delete, Get, Header, HttpException, HttpStatus, Param, Post, Put, Request, Res, UseGuards, UseInterceptors } from '@nestjs/common';
 // import { JwtAuthGuard } from 'apps/qualyteeth-server/src/core/auth/jwt-auth.guard';
 // import { SnakeToCameInterceptor } from 'apps/qualyteeth-server/src/inteceptors/snake-to-came.interceptor';
-// import { Treatment } from 'libs/shared/src/lib/treatment.entity';
+// import { Predicament } from 'libs/shared/src/lib/predicament.entity';
 // import { TreatmentService } from './treatment.service';
 
 // @Controller('treatment')

@@ -1,9 +1,9 @@
 
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Feedback } from 'libs/shared/src/lib/feedback.entity';
 import { FeedbackController } from './feedback.controller';
 import { FeedbackService } from './feedback.service';
+import { Feedback } from './feedback.entity';
 
 @Module({
   imports: [

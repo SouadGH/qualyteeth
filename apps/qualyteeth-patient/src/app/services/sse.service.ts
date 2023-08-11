@@ -6,10 +6,10 @@ import { Dentist } from 'libs/shared/src/lib/dentist.entity';
 import { Diagnostic } from 'libs/shared/src/lib/diagnostic.entity';
 import { Patient } from 'libs/shared/src/lib/patient.entity';
 import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.entity';
-import { DentistService } from './dentist.service';
+import { PractitionerService } from './dentist.service';
 import { PatientService } from './patient.service';
 import { ServicingService } from './servicing.service';
-import { Treatment } from 'libs/shared/src/lib/treatment.entity';
+import { Predicament } from 'libs/shared/src/lib/predicament.entity';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class SseService {
   constructor(
     private _zone: NgZone,
     private patientSvc: PatientService,
-    private dentistSvc: DentistService,
+    private dentistSvc: PractitionerService,
     private servicingSvc: ServicingService) { }
 
   /**

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Dentist } from 'libs/shared/src/lib/dentist.entity';
-import { DentistService } from 'apps/qualyteeth-patient/src/app/services/dentist.service';
-import { Treatment } from 'libs/shared/src/lib/treatment.entity';
+import { PractitionerService } from 'apps/qualyteeth-patient/src/app/services/practitioner.service';
+import { Predicament } from 'libs/shared/src/lib/predicament.entity';
 import { TreatmentService } from 'apps/qualyteeth-patient/src/app/services/treatment.service';
 import { NavController } from '@ionic/angular';
 import { Diagnostic } from 'libs/shared/src/lib/diagnostic.entity';
@@ -28,7 +28,7 @@ export class DentistPage implements OnInit {
    *
    */
   constructor(
-    private dentistSvc: DentistService,
+    private dentistSvc: PractitionerService,
     private treatmentSvc: TreatmentService,
     private diagnosticSvc: DiagnosticService,
     private nav: NavController,

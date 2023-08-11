@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
-import { User } from 'libs/shared/src/lib/user.entity';
+import { User } from 'apps/qualyteeth-server/src/core/user/user.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()

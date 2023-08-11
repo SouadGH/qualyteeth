@@ -1,14 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ModalController, NavController, ToastController } from '@ionic/angular';
-import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { LoginPage } from '../auth/login/login.page';
-import * as loadImage from 'blueimp-load-image'
-import * as moment from 'moment';
-import { Dentist, DentistTimetable } from 'libs/shared/src/lib/dentist.entity';
-import { DentistService } from 'apps/qualyteeth-dentist/src/app/services/dentist.service';
 import { DateAdapter } from '@angular/material/core';
-import { KeyValue } from '@angular/common';
+import { ModalController, NavController, ToastController } from '@ionic/angular';
+import { PractitionerService } from 'apps/qualyteeth-dentist/src/app/services/practitioner.service';
+import * as loadImage from 'blueimp-load-image';
+import { UserDto } from 'libs/shared/src/lib/dto/user.dto';
+import { AuthService } from '../../services/auth.service';
+import { LoginPage } from '../auth/login/login.page';
 
 
 // interface OpeningHours {
@@ -26,12 +24,12 @@ export class ProfilePage implements OnInit {
 
   @ViewChild('imgChooser', { static: false }) imgChooser: ElementRef;
 
-  user: Dentist;
+  user: UserDto;
   profileForm: FormGroup;
   isSubmitted = false;
   userImgChanged = false;
 
-  dentistTimetables: Array<DentistTimetable>;
+  // dentistTimetables: Array<DentistTimetable>;
 
   hours: Array<number> = new Array<number>();
   minutes: Array<number> = new Array<number>();
@@ -43,7 +41,7 @@ export class ProfilePage implements OnInit {
    */
   constructor(
     public authSvc: AuthService,
-    private dentistSvc: DentistService,
+    private dentistSvc: PractitionerService,
     private modalCtrl: ModalController,
     private toastCtrl: ToastController,
     private fb: FormBuilder,
@@ -79,13 +77,13 @@ export class ProfilePage implements OnInit {
    *
    */
   async ionViewWillEnter() {
-    this.user = await this.dentistSvc.getDentist();
+    this.user = (await this.dentistSvc.getPractitioner()).user;
     this.profileForm.get('firstname').setValue(this.user.firstname);
     this.profileForm.get('lastname').setValue(this.user.lastname);
     this.profileForm.get('phoneNumber').setValue(this.user.phoneNumber);
     this.profileForm.get('email').setValue(this.user.email);
 
-    this.dentistTimetables = await this.dentistSvc.getTimetable();
+    // this.dentistTimetables = await this.dentistSvc.getTimetable();
   }
 
   /**
@@ -213,9 +211,9 @@ export class ProfilePage implements OnInit {
     //   console.log(`${b.size / 1024} kb`);
     // });
 
-    if (this.user.image == null) {
-      this.user.image = {}
-    }
+    // if (this.practitioner.user.image == null) {
+    //   this.practitioner.user.image = ''
+    // }
     this.user.image = c.toDataURL();
     this.userImgChanged = true;
 
@@ -225,34 +223,34 @@ export class ProfilePage implements OnInit {
   /**
    *
    */
-  getDayTimetable(day: string): Array<DentistTimetable> | null {
-    return this.dentistTimetables.filter(dtt => dtt.day === this.days.indexOf(day) + 1);
-  }
+  // getDayTimetable(day: string): Array<DentistTimetable> | null {
+  //   return this.dentistTimetables.filter(dtt => dtt.day === this.days.indexOf(day) + 1);
+  // }
 
   /**
    *
    */
-  async addTimetable(day: string): Promise<void> {
-    this.dentistTimetables.push({ day: this.days.indexOf(day) + 1, fromHour: 8, fromMinute: 0, toHour: 18, toMinute: 0 });
-  }
+  // async addTimetable(day: string): Promise<void> {
+  //   this.dentistTimetables.push({ day: this.days.indexOf(day) + 1, fromHour: 8, fromMinute: 0, toHour: 18, toMinute: 0 });
+  // }
 
   /**
    *
    */
-  async removeTimetable(day: string, i: number): Promise<void> {
-    const original = this.dentistTimetables.filter(dtt => dtt.day !== this.days.indexOf(day) + 1);
-    let dayTt = this.dentistTimetables.filter(dtt => dtt.day === this.days.indexOf(day) + 1);
-    dayTt.splice(i, 1)
+  // async removeTimetable(day: string, i: number): Promise<void> {
+  //   const original = this.dentistTimetables.filter(dtt => dtt.day !== this.days.indexOf(day) + 1);
+  //   let dayTt = this.dentistTimetables.filter(dtt => dtt.day === this.days.indexOf(day) + 1);
+  //   dayTt.splice(i, 1)
 
-    this.dentistTimetables = original.concat(dayTt);
-  }
+  //   this.dentistTimetables = original.concat(dayTt);
+  // }
 
   /**
    *
    */
   async updateTimetables(): Promise<void> {
 
-    await this.dentistSvc.updateTimetables(null, this.dentistTimetables);
+    // await this.dentistSvc.updateTimetables(null, this.dentistTimetables);
     const toast = await this.toastCtrl.create({
       message: 'Vos changements ont été sauvegardés',
       duration: 2000

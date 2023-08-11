@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, ToastController } from '@ionic/angular';
-import { Surgery } from 'libs/shared/src/lib/surgery.entity';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SurgeryService } from 'apps/qualyteeth-dentist/src/app/services/surgery.service';
 import { ActivatedRoute } from '@angular/router';
-import { DentistService } from 'apps/qualyteeth-dentist/src/app/services/dentist.service';
+import { PractitionerService } from 'apps/qualyteeth-dentist/src/app/services/practitioner.service';
 
 @Component({
   selector: 'app-edit-surgery',
@@ -14,7 +13,7 @@ import { DentistService } from 'apps/qualyteeth-dentist/src/app/services/dentist
 export class EditSurgeryPage implements OnInit {
 
   isNew: boolean;
-  surgery: Surgery;
+  // surgery: Surgery;
 
   surgeryForm: FormGroup;
 
@@ -26,7 +25,7 @@ export class EditSurgeryPage implements OnInit {
     private activtedRoute: ActivatedRoute,
     private surgerySvc: SurgeryService,
     private toastCtrl: ToastController,
-    private dentistSvc: DentistService,
+    private dentistSvc: PractitionerService,
     private fb: FormBuilder,
   ) { 
     this.surgeryForm = this.fb.group({
@@ -47,29 +46,29 @@ export class EditSurgeryPage implements OnInit {
     const surgeryId = parseInt(this.activtedRoute.snapshot.paramMap.get('surgery_id'));
     this.isNew = surgeryId == null || Number.isNaN(surgeryId);
 
-    if (this.isNew) {
+    // if (this.isNew) {
 
-      const dentistId = await this.dentistSvc.getDentistId();
+    //   const dentistId = await this.dentistSvc.getDentistId();
 
-      this.surgery = {
-        id: null,
-        name: null,
-        city: null,
-        postalCode: null,
-        createdBy: dentistId,
-        createdOn: null,
-        active: false,
-        deleted: false,
-      };
-    } else {
-      this.surgery = await this.surgerySvc.getSurgery(surgeryId);
-    }
+    //   this.surgery = {
+    //     id: null,
+    //     name: null,
+    //     city: null,
+    //     postalCode: null,
+    //     createdBy: dentistId,
+    //     createdOn: null,
+    //     active: false,
+    //     deleted: false,
+    //   };
+    // } else {
+    //   this.surgery = await this.surgerySvc.getSurgery(surgeryId);
+    // }
 
-    this.surgeryForm.controls['name'].setValue(this.surgery.name);
-    this.surgeryForm.controls['addressLine1'].setValue(this.surgery.addressLine1);
-    this.surgeryForm.controls['addressLine2'].setValue(this.surgery.addressLine2);
-    this.surgeryForm.controls['postalCode'].setValue(this.surgery.postalCode);
-    this.surgeryForm.controls['city'].setValue(this.surgery.city);
+    // this.surgeryForm.controls['name'].setValue(this.surgery.name);
+    // this.surgeryForm.controls['addressLine1'].setValue(this.surgery.addressLine1);
+    // this.surgeryForm.controls['addressLine2'].setValue(this.surgery.addressLine2);
+    // this.surgeryForm.controls['postalCode'].setValue(this.surgery.postalCode);
+    // this.surgeryForm.controls['city'].setValue(this.surgery.city);
   }
 
   /**
@@ -87,21 +86,21 @@ export class EditSurgeryPage implements OnInit {
     const postalCode: string = this.surgeryForm.controls['postalCode'].value;
     const city: string = this.surgeryForm.controls['city'].value.trim();
 
-    this.surgery.name = name;
-    this.surgery.addressLine1 = addressLine1;
-    this.surgery.addressLine2 = addressLine2;
-    this.surgery.city = city;
-    this.surgery.postalCode = postalCode;
+    // this.surgery.name = name;
+    // this.surgery.addressLine1 = addressLine1;
+    // this.surgery.addressLine2 = addressLine2;
+    // this.surgery.city = city;
+    // this.surgery.postalCode = postalCode;
 
     let message: string = '';
-    if (this.isNew) {
-      this.surgery.id = await this.surgerySvc.save(this.surgery);
-      await this.surgerySvc.link(this.surgery);
-      message = 'Cabinet enregistré!';
-    } else {
-      await this.surgerySvc.update(this.surgery);
-      message = 'Cabinet modifié!';
-    }
+    // if (this.isNew) {
+    //   this.surgery.id = await this.surgerySvc.save(this.surgery);
+    //   await this.surgerySvc.link(this.surgery);
+    //   message = 'Cabinet enregistré!';
+    // } else {
+    //   await this.surgerySvc.update(this.surgery);
+    //   message = 'Cabinet modifié!';
+    // }
 
     const toast = await this.toastCtrl.create({
       message: message,

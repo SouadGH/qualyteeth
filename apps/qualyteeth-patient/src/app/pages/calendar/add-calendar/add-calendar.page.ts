@@ -15,7 +15,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { CalendarEvent, CalendarStatus } from 'libs/shared/src/lib/calendar.entity';
 import { StorageService } from 'apps/qualyteeth-patient/src/app/services/storage.service';
-import { DentistService } from '../../../services/dentist.service';
+import { PractitionerService } from '../../../services/practitioner.service';
 
 @Component({
   selector: 'app-add-calendar',
@@ -54,7 +54,7 @@ export class AddCalendarPage implements OnInit {
     private toastCtrl: ToastController,
     private servicingSvc: ServicingService,
     private surgerySvc: SurgeryService,
-    private dentistSvc: DentistService,
+    private dentistSvc: PractitionerService,
     private fb: FormBuilder,
     private adapter: DateAdapter<any>,
     private storageSvc: StorageService

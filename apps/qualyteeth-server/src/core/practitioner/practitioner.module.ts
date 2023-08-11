@@ -6,8 +6,8 @@ import { UtilsModule } from 'apps/qualyteeth-server/src/core/utils/utils.module'
 import { UserModule } from 'apps/qualyteeth-server/src/core/user/user.module';
 import { PatientsModule } from 'apps/qualyteeth-server/src/core/patient/patients.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Practitioner } from 'libs/shared/src/lib/practitioner.entity';
-import { Patient } from 'libs/shared/src/lib/patient.entity';
+import { Practitioner } from './practitioner.entity';
+import { Patient } from '../patient/patient.entity';
 
 @Module({
   imports: [

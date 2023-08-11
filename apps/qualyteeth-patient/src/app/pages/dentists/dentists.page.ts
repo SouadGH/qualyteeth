@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, NavController, PopoverController } from '@ionic/angular';
 import { ToolbarMenuComponent } from 'apps/qualyteeth-patient/src/app/components/toolbar-menu/toolbar-menu.component';
 import { Dentist } from 'libs/shared/src/lib/dentist.entity';
-import { DentistService } from 'apps/qualyteeth-patient/src/app/services/dentist.service';
+import { PractitionerService } from 'apps/qualyteeth-patient/src/app/services/practitioner.service';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { AddDentistPage } from '../dentist/add-dentist/add-dentist.page';
 import { QrScannerPage } from '../qr-scanner/qr-scanner.page';
@@ -20,7 +20,7 @@ export class DentistsPage implements OnInit {
    *
    */
   constructor(
-    private dentistSvc: DentistService,
+    private dentistSvc: PractitionerService,
     private popoverCtrl: PopoverController,
     private nav: NavController,
     private modalCtrl: ModalController,

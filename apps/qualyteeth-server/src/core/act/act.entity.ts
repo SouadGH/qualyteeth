@@ -1,8 +1,8 @@
 import { Column, Entity, JoinTable, ManyToMany } from "typeorm";
-import { Category } from "./category.entity";
-import { Intervention } from "./intervention.entity";
-import { Predicament } from "./predicament.entity";
-import { Base } from "./_base.entity";
+import { Category } from "../category/category.entity";
+import { Intervention } from "../intervention/intervention.entity";
+import { Predicament } from "../predicament/predicament.entity";
+import { Base } from "../_base.entity";
 
 @Entity()
 export class Act extends Base {

@@ -4,11 +4,11 @@ import { FormControl, Validators } from '@angular/forms';
 import { MatTable } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController, NavController, PopoverController } from '@ionic/angular';
-import { Act } from 'libs/shared/src/lib/act.entity';
-import { TreatmentDefinition } from 'libs/shared/src/lib/treatment-definition.entity';
-import { DentistService } from 'apps/qualyteeth-dentist/src/app/services/dentist.service';
+import { PractitionerService } from 'apps/qualyteeth-dentist/src/app/services/practitioner.service';
 import { TreatmentService } from 'apps/qualyteeth-dentist/src/app/services/treatment.service';
 import { AddActPage } from '../add-act/add-act.page';
+import { ActDto } from 'libs/shared/src/lib/dto/act.dto';
+import { PredicamentDto } from 'libs/shared/src/lib/dto/predicament.dto';
 
 @Component({
   selector: 'app-edit-treatment-definition',
@@ -17,9 +17,9 @@ import { AddActPage } from '../add-act/add-act.page';
 })
 export class EditTreatmentDefinitionPage implements OnInit {
 
-  @ViewChild('actsTable') table: MatTable<Act>;
+  @ViewChild('actsTable') table: MatTable<ActDto>;
 
-  t: TreatmentDefinition;
+  t: PredicamentDto;
   private newDefinition: boolean;
 
   private dentistId: number;
@@ -34,7 +34,7 @@ export class EditTreatmentDefinitionPage implements OnInit {
   constructor(
     private treatementSvc: TreatmentService,
     private activtedRoute: ActivatedRoute,
-    private dentistSvc: DentistService,
+    private dentistSvc: PractitionerService,
     private modalCtrl: ModalController,
     private nav: NavController,
   ) {
@@ -52,21 +52,21 @@ export class EditTreatmentDefinitionPage implements OnInit {
   async ionViewWillEnter(): Promise<void> {
     const treatmentDefinitionId = parseInt(this.activtedRoute.snapshot.paramMap.get('def_id'));
 
-    this.dentistId = await this.dentistSvc.getDentistId();
+    this.dentistId = await this.dentistSvc.getPractitionerId();
     this.newDefinition = treatmentDefinitionId == null || Number.isNaN(treatmentDefinitionId);
 
-    if (this.newDefinition) {
-      this.t = {
-        id: null,
-        acts: new Array<Act>(),
-        name: null,
-        createdBy: this.dentistId,
-        createdOn: null
-      }
-    } else {
-      this.t = await this.treatementSvc.getTreatmentDefinition(treatmentDefinitionId)
-      this.t.acts = await this.treatementSvc.getActsForDefinition(this.t.id)
-    }
+    // if (this.newDefinition) {
+    //   this.t = {
+    //     id: null,
+    //     acts: new Array<ActDto>(),
+    //     name: null,
+    //     createdBy: this.dentistId,
+    //     createdOn: null
+    //   }
+    // } else {
+    //   this.t = await this.treatementSvc.getTreatmentDefinition(treatmentDefinitionId)
+    //   this.t.acts = await this.treatementSvc.getActsForDefinition(this.t.id)
+    // }
 
     this.nameCtrl.setValue(this.t.name);
   }
@@ -74,14 +74,14 @@ export class EditTreatmentDefinitionPage implements OnInit {
   /**
    *
    */
-  async delete(act: Act): Promise<void> {
+  async delete(act: ActDto): Promise<void> {
     this.t.acts = this.t.acts.filter(a => a.id !== act.id);
   }
 
   /**
    *
    */
-  dropTable(event: CdkDragDrop<Act[]>) {
+  dropTable(event: CdkDragDrop<ActDto[]>) {
     const prevIndex = this.t.acts.findIndex((a) => a === event.item.data);
     moveItemInArray(this.t.acts, prevIndex, event.currentIndex);
     if (this.table != null) {
@@ -99,11 +99,11 @@ export class EditTreatmentDefinitionPage implements OnInit {
       return;
     }
 
-    if (this.newDefinition) {
-      await this.treatementSvc.saveDefinition(this.t);
-    } else {
-      await this.treatementSvc.updateDefinition(this.t);
-    }
+    // if (this.newDefinition) {
+    //   await this.treatementSvc.saveDefinition(this.t);
+    // } else {
+    //   await this.treatementSvc.updateDefinition(this.t);
+    // }
 
     await this.nav.back();
   }

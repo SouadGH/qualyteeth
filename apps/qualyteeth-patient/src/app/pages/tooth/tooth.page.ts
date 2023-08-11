@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Tooth } from 'libs/shared/src/lib/tooth.entity';
-import { Treatment } from 'libs/shared/src/lib/treatment.entity';
+import { Predicament } from 'libs/shared/src/lib/predicament.entity';
 import { ToothService } from 'apps/qualyteeth-patient/src/app/services/tooth.service';
 import { TreatmentService } from 'apps/qualyteeth-patient/src/app/services/treatment.service';
 import { Diagnostic } from 'libs/shared/src/lib/diagnostic.entity';
 import { DiagnosticService } from '../../services/diagnostic.service';
 import { Dentist } from 'libs/shared/src/lib/dentist.entity';
-import { DentistService } from '../../services/dentist.service';
+import { PractitionerService } from '../../services/practitioner.service';
 import { Subscription } from 'rxjs';
 import { SseService } from '../../services/sse.service';
 
@@ -33,7 +33,7 @@ export class ToothPage implements OnInit {
     private toothSvc: ToothService,
     private diagnosticSvc: DiagnosticService,
     private treatmentSvc: TreatmentService,
-    private dentistSvc: DentistService,
+    private dentistSvc: PractitionerService,
     private sseSvc: SseService,
     private activtedRoute: ActivatedRoute) {
   }

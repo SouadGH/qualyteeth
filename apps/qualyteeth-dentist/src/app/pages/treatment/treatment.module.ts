@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { TreatmentPageRoutingModule } from './treatment-routing.module';
 
-import { TreatmentPage } from './treatment.page';
+import { PredicamentPage } from './treatment.page';
 
 import { ToolbarTitleModule } from 'apps/qualyteeth-dentist/src/app/components/toolbar-title/toolbar-title.module';
 import { MaterialModule } from 'apps/qualyteeth-dentist/src/app/material.module';
@@ -25,6 +25,6 @@ import { DentistPipeModule } from '../../pipes/dentistPipe.module';
     OdontogramModule,
     DentistPipeModule
   ],
-  declarations: [TreatmentPage]
+  declarations: [PredicamentPage]
 })
 export class TreatmentPageModule {}

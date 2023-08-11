@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Patient } from 'libs/shared/src/lib/patient.entity';
-import { Practitioner } from 'libs/shared/src/lib/practitioner.entity';
 import { Repository } from 'typeorm';
+import { Practitioner } from './practitioner.entity';
+import { Patient } from '../patient/patient.entity';
 
 
 @Injectable()

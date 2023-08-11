@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Patient } from 'libs/shared/src/lib/patient.entity';
 import { MatStepper } from '@angular/material/stepper';
-import { Tooth } from 'libs/shared/src/lib/tooth.entity';
-import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
-import { Diagnostic } from 'libs/shared/src/lib/diagnostic.entity';
+import { ActivatedRoute } from '@angular/router';
 import { PatientService } from 'apps/qualyteeth-dentist/src/app/services/patient.service';
+import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
+import { PatientDto } from 'libs/shared/src/lib/dto/patient.dto';
+import { PredicamentDto } from 'libs/shared/src/lib/dto/predicament.dto';
+import { ToothDto } from 'libs/shared/src/lib/dto/tooth.dto';
 
 @Component({
   selector: 'app-visit',
@@ -15,11 +15,11 @@ import { PatientService } from 'apps/qualyteeth-dentist/src/app/services/patient
 export class VisitPage implements OnInit {
 
   @ViewChild('stepper', { read: MatStepper, static: false }) stepper: MatStepper;
-  patient: Patient;
+  patient: PatientDto;
 
-  teeth: Array<Tooth & { selectedParts: Array<string> }> = new Array<Tooth & { selectedParts: Array<string> }>();
+  teeth: Array<ToothDto & { selectedParts: Array<string> }> = new Array<ToothDto & { selectedParts: Array<string> }>();
 
-  diagnostics: Array<Diagnostic> = new Array<Diagnostic>();
+  diagnostics: Array<PredicamentDto> = new Array<PredicamentDto>();
 
   diagnosticColumn: string[] = ['date'];
 

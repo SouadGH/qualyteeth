@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<!-- <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
       <toolbar-title></toolbar-title>
@@ -15,7 +15,6 @@
 
   <mat-tab-group mat-align-tabs="center">
 
-    <!-- DETAILS -->
     <mat-tab label="Détails">
       <ion-grid fixed>
 
@@ -36,7 +35,6 @@
                       </ion-avatar>
                       <ion-label>
                         <h3>{{ p.firstname }} {{ p.lastname }}</h3>
-                        <!-- <p>{{ p.username }}</p> -->
                       </ion-label>
                     </ion-item>
                   </mat-option>
@@ -72,7 +70,6 @@
                     <ion-item>
                       <ion-label>
                         <p>{{ s.category }}</p>
-                        <!-- <h3>{{ s.name }} ({{ s.timing }} minutes)</h3> -->
                       </ion-label>
                     </ion-item>
                   </mat-option>
@@ -86,13 +83,6 @@
 
           </ion-col>
         </ion-row>
-
-        <!-- <ion-row style="margin-top: 8px">
-          <ion-col>
-            <h6>Commentaire</h6>
-            <ion-textarea [formControl]="comment" autoGrow="true" rows="3" class="comment-textarea" (ionChange)="setComment($event)" debounce="250"></ion-textarea>
-          </ion-col>
-        </ion-row> -->
 
         <ion-row style="margin-top: 8px">
           <ion-col style="margin-right: 16px;">
@@ -144,7 +134,6 @@
     </mat-tab>
 
 
-    <!-- REPEATING -->
     <mat-tab label="Répétition" *ngIf="fromDate != null">
       <ion-grid fixed>
         <ion-row>
@@ -339,4 +328,4 @@
 
   </mat-tab-group>
 
-</ion-content>
+</ion-content> -->

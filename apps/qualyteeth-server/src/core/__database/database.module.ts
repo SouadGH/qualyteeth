@@ -2,21 +2,21 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Act } from 'libs/shared/src/lib/act.entity';
-import { Category } from 'libs/shared/src/lib/category.entity';
-import { Comment } from 'libs/shared/src/lib/comment.entity';
-import { Document } from 'libs/shared/src/lib/document.entity';
-import { Feedback } from 'libs/shared/src/lib/feedback.entity';
-import { Intervention } from 'libs/shared/src/lib/intervention.entity';
-import { Material } from 'libs/shared/src/lib/material.entity';
-import { Patient } from 'libs/shared/src/lib/patient.entity';
-import { Practitioner } from 'libs/shared/src/lib/practitioner.entity';
-import { PredicamentPlan } from 'libs/shared/src/lib/predicament-plan.entity';
-import { Predicament } from 'libs/shared/src/lib/predicament.entity';
-import { ToothPart } from 'libs/shared/src/lib/tooth-part.entity';
-import { Tooth } from 'libs/shared/src/lib/tooth.entity';
-import { User } from 'libs/shared/src/lib/user.entity';
+import { Act } from 'apps/qualyteeth-server/src/core/act/act.entity';
+import { Category } from 'apps/qualyteeth-server/src/core/category/category.entity';
+import { Comment } from 'apps/qualyteeth-server/src/core/comment/comment.entity';
+import { User } from 'apps/qualyteeth-server/src/core/user/user.entity';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { Document } from '../document/document.entity';
+import { Feedback } from '../feedback/feedback.entity';
+import { Intervention } from '../intervention/intervention.entity';
+import { Material } from '../material/material.entity';
+import { Patient } from '../patient/patient.entity';
+import { Practitioner } from '../practitioner/practitioner.entity';
+import { PredicamentPlan } from '../predicament/predicament-plan.entity';
+import { Predicament } from '../predicament/predicament.entity';
+import { ToothPart } from '../tooth/tooth-part.entity';
+import { Tooth } from '../tooth/tooth.entity';
 import { DatabaseLogger } from './databaseLogger';
 
 
@@ -41,10 +41,6 @@ import { DatabaseLogger } from './databaseLogger';
           Category,
           Comment,
           Document,
-          // Dentist,
-          // PractitionerTimetable,
-          // Diagnostic,
-          // DiagnosticDefinition,
           Feedback,
           Intervention,
           Material,
@@ -52,16 +48,9 @@ import { DatabaseLogger } from './databaseLogger';
           Practitioner,
           Predicament,
           PredicamentPlan,
-          // Service,
-          // ServiceCategory,
-          // ServiceDefinition,
           Tooth,
           ToothPart,
-          // ToothIntervention,
-          // Treatment,
-          // TreatmentDefinition,
           User,
-          // Visit,
         ],
         synchronize: configService.get('TYPEORM_SYNCHRONIZE') || false,
         namingStrategy: new SnakeNamingStrategy()

@@ -3,8 +3,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ModalController, NavParams, ToastController } from '@ionic/angular';
 import { StorageService } from 'apps/qualyteeth-patient/src/app/services/storage.service';
 import { Dentist } from 'libs/shared/src/lib/dentist.entity';
-import { Treatment } from 'libs/shared/src/lib/treatment.entity';
-import { DentistService } from 'apps/qualyteeth-patient/src/app/services/dentist.service';
+import { Predicament } from 'libs/shared/src/lib/predicament.entity';
+import { PractitionerService } from 'apps/qualyteeth-patient/src/app/services/practitioner.service';
 import { DocumentService } from 'apps/qualyteeth-patient/src/app/services/document.service';
 
 @Component({
@@ -28,7 +28,7 @@ export class TreatmentPage implements OnInit {
   constructor(
     public navParams: NavParams,
     private storageSvc: StorageService,
-    private dentistSvc: DentistService,
+    private dentistSvc: PractitionerService,
     private documentSvc: DocumentService,
     private modalCtrl: ModalController,
     private toastCtrl: ToastController

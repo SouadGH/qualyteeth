@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { NavController } from '@ionic/angular';
-import { SurgeryService } from '../services/surgery.service';
-import { Surgery } from 'libs/shared/src/lib/surgery.entity';
-import { NavigationOptions } from '@ionic/angular/providers/nav-controller';
 import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
+import { SurgeryService } from '../services/surgery.service';
 
 @Injectable({
   providedIn: 'root'

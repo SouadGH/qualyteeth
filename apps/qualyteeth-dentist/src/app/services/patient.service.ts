@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_ENDPOINT } from 'apps/qualyteeth-dentist/src/environments/environment';
-import { Patient } from 'libs/shared/src/lib/patient.entity';
 import { StorageService } from './storage.service';
+import { PatientDto } from 'libs/shared/src/lib/dto/patient.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class PatientService {
   /**
    *
    */
-  public async add(patient: Patient, dentistId?: number): Promise<void> {
+  public async add(patient: PatientDto, dentistId?: number): Promise<void> {
     const accessToken = await this.storageSvc.get('accessTokenQD');
 
     const headers = new HttpHeaders({
@@ -37,7 +37,7 @@ export class PatientService {
   /**
    *
    */
-  public async getPatient(patientId: number): Promise<Patient> {
+  public async getPatient(patientId: number): Promise<PatientDto> {
     // console.trace()
     const accessToken = await this.storageSvc.get('accessTokenQD');
 
@@ -46,6 +46,6 @@ export class PatientService {
       'Authorization': `Bearer ${accessToken}`
     })
 
-    return await this.httpClient.get<Patient>(`${API_ENDPOINT}/patient/${patientId}`, { headers: headers }).toPromise();
+    return await this.httpClient.get<PatientDto>(`${API_ENDPOINT}/patient/${patientId}`, { headers: headers }).toPromise();
   }
 }

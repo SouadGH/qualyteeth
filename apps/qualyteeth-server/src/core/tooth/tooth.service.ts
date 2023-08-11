@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Tooth } from 'libs/shared/src/lib/tooth.entity';
 import { Repository } from 'typeorm';
+import { Tooth } from './tooth.entity';
 
 @Injectable()
 export class ToothService {

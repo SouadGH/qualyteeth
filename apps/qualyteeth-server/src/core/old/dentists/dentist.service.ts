@@ -8,8 +8,8 @@
 
 
 // @Injectable()
-// export class DentistService {
-//     private readonly logger = new Logger(DentistService.name);
+// export class PractitionerService {
+//     private readonly logger = new Logger(PractitionerService.name);
 
 //     /**
 //      *

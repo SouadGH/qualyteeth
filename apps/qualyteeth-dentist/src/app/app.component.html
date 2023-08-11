@@ -28,8 +28,7 @@
       </ion-header>
 
       <ion-content [fullscreen]="true">
-        <div style="width: 100%; padding: 16px; font-size: 1.1em;" *ngIf="surgerySvc.activeSurgery != null">{{
-          surgerySvc.activeSurgery.name }}</div>
+        <!-- <div style="width: 100%; padding: 16px; font-size: 1.1em;" *ngIf="surgerySvc.activeSurgery != null">{{  surgerySvc.activeSurgery.name }}</div> -->
         <ion-list lines="none">
           <ion-item button (click)="go('patients')" [ngClass]="{'active-menu': appSvc.currentPage === '/patients'}">
             <ion-icon name="people-outline" slot="start"></ion-icon>

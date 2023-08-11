@@ -3,7 +3,7 @@
 // import { AccessGuard } from 'apps/qualyteeth-server/src/core/auth/access.guard';
 // import { JwtAuthGuard } from 'apps/qualyteeth-server/src/core/auth/jwt-auth.guard';
 // import { SnakeToCameInterceptor } from 'apps/qualyteeth-server/src/inteceptors/snake-to-came.interceptor';
-// import { DentistService } from './dentist.service';
+// import { PractitionerService } from './dentist.service';
 
 // @Controller('dentist')
 // export class DentistController {
@@ -12,7 +12,7 @@
 //      *
 //      */
 //     constructor(
-//         private dentistSvc: DentistService) { }
+//         private dentistSvc: PractitionerService) { }
 
 //     /**
 //      *

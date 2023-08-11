@@ -1,8 +1,5 @@
-<ion-header [translucent]="true">
+<!-- <ion-header [translucent]="true">
   <ion-toolbar>
-    <!-- <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons> -->
     <ion-title>
       Calendrier - Détails
     </ion-title>
@@ -33,7 +30,6 @@
 
         <mat-tab-group mat-align-tabs="center">
 
-          <!-- REQUESTS -->
           <mat-tab label="Requêtes de RDV">
             <table mat-table [dataSource]="requestsCalendarEvents" class="mat-elevation-z1" *ngIf="requestsCalendarEvents != null && requestsCalendarEvents.length > 0">
 
@@ -74,7 +70,6 @@
             </div>
           </mat-tab>
 
-          <!-- CANCELLED -->
           <mat-tab label="RDVs annulés">
             <table mat-table [dataSource]="cancelledCalendarEvents" class="mat-elevation-z1" *ngIf="cancelledCalendarEvents != null && cancelledCalendarEvents.length > 0">
 
@@ -120,7 +115,6 @@
             </div>
           </mat-tab>
 
-          <!-- MISSED -->
           <mat-tab label="RDVs non honorés">
             <table mat-table [dataSource]="missedCalendarEvents" class="mat-elevation-z1" *ngIf="missedCalendarEvents != null && missedCalendarEvents.length > 0">
 
@@ -172,4 +166,4 @@
     </ion-row>
   </ion-grid>
 
-</ion-content>
+</ion-content> -->

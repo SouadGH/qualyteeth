@@ -2,9 +2,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { DiagnosticService } from 'apps/qualyteeth-dentist/src/app/services/diagnostic.service';
-import { Diagnostic } from 'libs/shared/src/lib/diagnostic.entity';
-import { Treatment } from 'libs/shared/src/lib/treatment.entity';
-import * as moment from 'moment';
+import { PredicamentDto } from 'libs/shared/src/lib/dto/predicament.dto';
 import { TreatmentService } from '../../services/treatment.service';
 
 @Component({
@@ -16,9 +14,9 @@ export class ActivityPage {
 
   loading: boolean;
 
-  private diagnostics: Array<Diagnostic>;
-  private treatments: Array<Treatment>;
-  diagnosticsOrTraitements: Array<Diagnostic & { type: 'DIAGNOSTIC' | 'TREATMENT' } | Treatment & { type: 'DIAGNOSTIC' | 'TREATMENT' }>;
+  private diagnostics: Array<PredicamentDto>;
+  private treatments: Array<PredicamentDto>;
+  diagnosticsOrTraitements: Array<PredicamentDto>;
 
   diagnosticsOrTraitementsColumns = ['select', 'date', 'patient', 'teeth', 'diagnosticTreatment', 'comment'];
 
@@ -41,15 +39,15 @@ export class ActivityPage {
   async ionViewWillEnter(): Promise<void> {
     this.loading = true;
 
-    this.diagnostics = await this.diagnosticSvc.getAllForDentist();
-    this.treatments = await this.treatmentSVc.getForDentist();
+    // this.diagnostics = await this.diagnosticSvc.getAllForDentist();
+    // this.treatments = await this.treatmentSVc.getForDentist();
 
     console.log(this.diagnostics);
     console.log(this.treatments);
 
-    this.diagnosticsOrTraitements = this.diagnostics.map(d => ({ ...d, type: 'DIAGNOSTIC' }));
-    this.diagnosticsOrTraitements = this.diagnosticsOrTraitements.concat(this.treatments.map(t => ({ ...t, type: 'TREATMENT' })));
-    this.diagnosticsOrTraitements = this.diagnosticsOrTraitements.sort((a, b) => moment(b.startDate).valueOf() - moment(a.startDate).valueOf());
+    // this.diagnosticsOrTraitements = this.diagnostics.map(d => ({ ...d, type: 'DIAGNOSTIC' }));
+    // this.diagnosticsOrTraitements = this.diagnosticsOrTraitements.concat(this.treatments.map(t => ({ ...t, type: 'TREATMENT' })));
+    // this.diagnosticsOrTraitements = this.diagnosticsOrTraitements.sort((a, b) => moment(b.startDate).valueOf() - moment(a.startDate).valueOf());
 
     this.loading = false;
   }

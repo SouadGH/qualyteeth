@@ -1,25 +1,20 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController, NavParams, PopoverController, ToastController } from '@ionic/angular';
-import { Patient } from 'libs/shared/src/lib/patient.entity';
 // import Raphael from 'raphael'
-import { CalendarService } from 'apps/qualyteeth-dentist/src/app/services/calendar.service';
-import { DiagnosticService } from 'apps/qualyteeth-dentist/src/app/services/diagnostic.service';
-import { StorageService } from 'apps/qualyteeth-dentist/src/app/services/storage.service';
-import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
-import { TreatmentService } from 'apps/qualyteeth-dentist/src/app/services/treatment.service';
-import { CalendarEvent } from 'libs/shared/src/lib/calendar.entity';
-import { Diagnostic } from 'libs/shared/src/lib/diagnostic.entity';
-import { Tooth } from 'libs/shared/src/lib/tooth.entity';
-// import { Surgery } from 'libs/shared/src/lib/surgery.entity';
-// import { SurgeryService } from 'apps/qualyteeth-dentist/src/app/services/surgery.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
+import { CalendarService } from 'apps/qualyteeth-dentist/src/app/services/calendar.service';
+import { DiagnosticService } from 'apps/qualyteeth-dentist/src/app/services/diagnostic.service';
 import { DocumentService } from 'apps/qualyteeth-dentist/src/app/services/document.service';
 import { SpeechRecognitionService } from 'apps/qualyteeth-dentist/src/app/services/speech-recognition.service';
-import { Treatment } from 'libs/shared/src/lib/treatment.entity';
-import * as moment from 'moment';
+import { StorageService } from 'apps/qualyteeth-dentist/src/app/services/storage.service';
+import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
+import { TreatmentService } from 'apps/qualyteeth-dentist/src/app/services/treatment.service';
+import { PatientDto } from 'libs/shared/src/lib/dto/patient.dto';
+import { PredicamentDto } from 'libs/shared/src/lib/dto/predicament.dto';
+import { ToothDto } from 'libs/shared/src/lib/dto/tooth.dto';
 import { Subscription } from 'rxjs';
 import { PatientService } from '../../../services/patient.service';
 
@@ -48,23 +43,23 @@ export class PatientPage implements OnInit {
 
   private speechCommands: Array<string> = ['profil', 'odontogramme', 'calendrier', 'document', 'facture', 'diagnostic'];
 
-  patient: Patient;
+  patient: PatientDto;
   patientForm: FormGroup;
 
   // treatments: Array<Treatment> = new Array<Treatment>();
 
-  teeth: Array<Tooth & { selectedParts: Array<string>, hasDiagnostic: boolean, hasTreatment: boolean }>;
-  diagnostics: Array<Diagnostic>;
-  treatments: Array<Treatment>;
+  teeth: Array<ToothDto & { selectedParts: Array<string>, hasDiagnostic: boolean, hasTreatment: boolean }>;
+  diagnostics: Array<PredicamentDto>;
+  treatments: Array<PredicamentDto>;
 
-  diagnosticsOrTraitements: Array<Diagnostic & { type: 'DIAGNOSTIC' | 'TREATMENT' } | Treatment & { type: 'DIAGNOSTIC' | 'TREATMENT' }>;
+  diagnosticsOrTraitements: Array<PredicamentDto & { type: 'DIAGNOSTIC' | 'TREATMENT' }>;
   diagnosticsOrTraitementsColumns = ['date', 'dentist', 'teeth', 'diagnosticTreatment', 'comment', 'status', 'more']
 
-  calendarEvents: Array<CalendarEvent>;
-  calendarEventsColumns: string[] = ['date', 'hour', 'dentist', 'service', 'duration', 'reminder'];
+  // calendarEvents: Array<CalendarEvent>;
+  // calendarEventsColumns: string[] = ['date', 'hour', 'dentist', 'service', 'duration', 'reminder'];
 
-  documents: Array<CalendarEvent>;
-  documentsColumns: string[] = ['date', 'name', 'download'];
+  // documents: Array<CalendarEvent>;
+  // documentsColumns: string[] = ['date', 'name', 'download'];
 
   bills: any[] = [];
   billsColumns: string[] = ['date', 'treatment', 'download'];
@@ -81,7 +76,7 @@ export class PatientPage implements OnInit {
    */
   constructor(
     private storageSvc: StorageService,
-    // private dentistSvc: DentistService,
+    // private dentistSvc: PractitionerService,
     private patientSvc: PatientService,
     private nav: NavController,
     private treatmentSvc: TreatmentService,
@@ -135,10 +130,10 @@ export class PatientPage implements OnInit {
     await this.loadCalendar();
     await this.loadDocuments();
 
-    this.patientForm.controls['lastname'].setValue(this.patient.lastname);
-    this.patientForm.controls['firstname'].setValue(this.patient.firstname);
-    this.patientForm.controls['email'].setValue(this.patient.email);
-    this.patientForm.controls['phoneNumber'].setValue(this.patient.phoneNumber);
+    this.patientForm.controls['lastname'].setValue(this.patient.user.lastname);
+    this.patientForm.controls['firstname'].setValue(this.patient.user.firstname);
+    this.patientForm.controls['email'].setValue(this.patient.user.email);
+    this.patientForm.controls['phoneNumber'].setValue(this.patient.user.phoneNumber);
     // this.initTeeth();
   }
 
@@ -146,15 +141,15 @@ export class PatientPage implements OnInit {
    *
    */
   async loadCalendar(): Promise<void> {
-    this.calendarEvents = await this.calendarSvc.getCalendarEventsForPatient(this.patient.id);
-    this.calendarEvents = this.calendarEvents.filter(e => moment(e.startDate).isSameOrAfter(moment()));
+    // this.calendarEvents = await this.calendarSvc.getCalendarEventsForPatient(this.patient.id);
+    // this.calendarEvents = this.calendarEvents.filter(e => moment(e.startDate).isSameOrAfter(moment()));
   }
 
   /**
    *
    */
   async loadDocuments(): Promise<void> {
-    this.documents = await this.documentSvc.getDocuments(this.patient.id);
+    // this.documents = await this.documentSvc.getDocuments(this.patient.id);
 
     // if (this.filteredBy === 'image') {
     //   this.documents = this.documents.filter(d => this.imageSuffixes.some(s => d.filename.toLowerCase().endsWith(s)))
@@ -173,18 +168,18 @@ export class PatientPage implements OnInit {
    *
    */
   async loadDiagnosticsAndTreatments(): Promise<void> {
-    this.diagnostics = await this.diagnosticSvc.getForPatientAndDentist(this.patient.id);
+    // this.diagnostics = await this.diagnosticSvc.getForPatientAndDentist(this.patient.id);
     // diagnostics = diagnostics.sort((a, b) => moment(b.startDate).valueOf() - moment(a.startDate).valueOf());
 
-    this.treatments = await this.treatmentSvc.getForPatientAndDentist(this.patient.id);
+    // this.treatments = await this.treatmentSvc.getForPatientAndDentist(this.patient.id);
     // treatments = treatments.sort((a, b) => moment(b.startDate).valueOf() - moment(a.startDate).valueOf());
 
     // console.log(this.diagnostics)
     // console.log(this.treatments)
 
-    this.diagnosticsOrTraitements = this.diagnostics.map(d => ({ ...d, type: 'DIAGNOSTIC' }));
-    this.diagnosticsOrTraitements = this.diagnosticsOrTraitements.concat(this.treatments.map(t => ({ ...t, type: 'TREATMENT' })));
-    this.diagnosticsOrTraitements = this.diagnosticsOrTraitements.sort((a, b) => moment(b.startDate).valueOf() - moment(a.startDate).valueOf());
+    // this.diagnosticsOrTraitements = this.diagnostics.map(d => ({ ...d, type: 'DIAGNOSTIC' }));
+    // this.diagnosticsOrTraitements = this.diagnosticsOrTraitements.concat(this.treatments.map(t => ({ ...t, type: 'TREATMENT' })));
+    // this.diagnosticsOrTraitements = this.diagnosticsOrTraitements.sort((a, b) => moment(b.startDate).valueOf() - moment(a.startDate).valueOf());
 
     // console.log(this.diagnosticsOrTraitements);
   }
@@ -192,9 +187,9 @@ export class PatientPage implements OnInit {
   /**
    *
    */
-  getDurationStr(calendarEvent: CalendarEvent): string {
-    return moment.duration(moment(calendarEvent.endDate).diff(moment(calendarEvent.startDate))).asMinutes().toLocaleString() + '\'';
-  }
+  // getDurationStr(calendarEvent: CalendarEvent): string {
+  //   return moment.duration(moment(calendarEvent.endDate).diff(moment(calendarEvent.startDate))).asMinutes().toLocaleString() + '\'';
+  // }
 
   /**
    *
@@ -352,21 +347,21 @@ export class PatientPage implements OnInit {
    *
    */
   async mail(): Promise<void> {
-    document.location.href = 'mailto:' + this.patient.email;
+    document.location.href = 'mailto:' + this.patient.user.email;
   }
 
   /**
    *
    */
   async phoneCall(): Promise<void> {
-    document.location.href = 'tel:' + this.patient.phoneNumber;
+    document.location.href = 'tel:' + this.patient.user.phoneNumber;
   }
 
   /**
    *
    */
   async sms(): Promise<void> {
-    document.location.href = 'sms:' + this.patient.phoneNumber;
+    document.location.href = 'sms:' + this.patient.user.phoneNumber;
   }
 
   /**
@@ -629,7 +624,7 @@ export class PatientPage implements OnInit {
   /**
    *
    */
-  async edit(ev: any, el: Diagnostic & { type: 'DIAGNOSTIC' | 'TREATMENT' } | Treatment & { type: 'DIAGNOSTIC' | 'TREATMENT' }): Promise<void> {
+  async edit(ev: any, el: PredicamentDto): Promise<void> {
 
     const popover = await this.popoverCtrl.create({
       component: EditDiagnosticPopover,
@@ -660,12 +655,12 @@ export class PatientPage implements OnInit {
 @Component({
   template: `
   <ion-list lines="none">
-    <ion-item button (click)="popoverCtrl.dismiss('deactivate')" *ngIf="diagnostic.endDate == null">
+    <!--ion-item button (click)="popoverCtrl.dismiss('deactivate')" *ngIf="diagnostic.endDate == null">
       <ion-label>Désactiver</ion-label>
-    </ion-item>
-    <ion-item button (click)="popoverCtrl.dismiss('activate')" *ngIf="diagnostic.endDate != null">
+    </ion-item-->
+    <!--ion-item button (click)="popoverCtrl.dismiss('activate')" *ngIf="diagnostic.endDate != null">
       <ion-label>Activer</ion-label>
-    </ion-item>
+    </ion-item-->
     <ion-item button (click)="popoverCtrl.dismiss('edit')">
       <ion-label>Editer</ion-label>
     </ion-item>
@@ -678,7 +673,7 @@ export class PatientPage implements OnInit {
 })
 export class EditDiagnosticPopover {
 
-  diagnostic: Diagnostic;
+  diagnostic: PredicamentDto;
 
   /**
    *

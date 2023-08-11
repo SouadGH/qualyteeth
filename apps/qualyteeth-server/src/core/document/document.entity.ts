@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne } from "typeorm";
-import { Patient } from "./patient.entity";
-import { Practitioner } from "./practitioner.entity";
-import { Base } from "./_base.entity";
+import { Patient } from "../patient/patient.entity";
+import { Practitioner } from "../practitioner/practitioner.entity";
+import { Base } from "../_base.entity";
 
 @Entity()
 export class Document extends Base {

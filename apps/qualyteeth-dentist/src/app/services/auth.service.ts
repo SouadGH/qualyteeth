@@ -2,10 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { API_ENDPOINT } from '../../environments/environment';
-import { User, UserType } from 'libs/shared/src/lib/user.entity';
 import { StorageService } from './storage.service';
 import { SurgeryService } from './surgery.service';
 import { lastValueFrom } from 'rxjs';
+import { UserDto, UserType } from 'libs/shared/src/lib/dto/user.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -81,7 +81,7 @@ export class AuthService {
   /**
    *
    */
-  public async signin(data: User): Promise<void> {
+  public async signin(data: UserDto): Promise<void> {
     await lastValueFrom(this.httpClient.post(`${API_ENDPOINT}/auth/signin`, data));
   }
 
@@ -89,7 +89,19 @@ export class AuthService {
    *
    */
   public async login(username: string, password: string): Promise<void> {
-    const data = await lastValueFrom(this.httpClient.post(`${API_ENDPOINT}/auth/login`, { 'username': username, 'password': password, 'type': UserType.PRACTITIONER }));
+    const body = {
+      email: username.toLowerCase(),
+      password: password,
+    };
+
+    const headers = new HttpHeaders({
+      'content-type': 'application/json',
+    });
+
+    const data = await lastValueFrom(this.httpClient.post(`${API_ENDPOINT}/auth/login`, body, {
+      headers: headers,
+      withCredentials: true,
+    }));
     await this.storageSvc.set('accessTokenQD', data['access_token']);
     // await this.storageSvc.set('useridQD', data['userid']);
 

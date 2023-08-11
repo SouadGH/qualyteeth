@@ -23,7 +23,7 @@ export class LoginPage implements OnInit {
     private nav: NavController,
     private fb: FormBuilder,
     // private surgerySvc: SurgeryService,
-    // private dentistSvc: DentistService,
+    // private dentistSvc: PractitionerService,
     private alertCtrl: AlertController) {
 
     this.loginForm = this.fb.group({

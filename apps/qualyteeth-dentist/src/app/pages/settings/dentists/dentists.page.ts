@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavController, PopoverController } from '@ionic/angular';
-import { AppComponent } from 'apps/qualyteeth-dentist/src/app/app.component';
+import { NavController, PopoverController } from '@ionic/angular';
 import { ToolbarMenuComponent } from 'apps/qualyteeth-dentist/src/app/components/toolbar-menu/toolbar-menu.component';
-import { Dentist } from 'libs/shared/src/lib/dentist.entity';
-import { Surgery } from 'libs/shared/src/lib/surgery.entity';
-import { AppService } from 'apps/qualyteeth-dentist/src/app/services/app.service';
-import { DentistService } from 'apps/qualyteeth-dentist/src/app/services/dentist.service';
-import { ServicingService } from 'apps/qualyteeth-dentist/src/app/services/servicing.service';
+import { PractitionerService } from 'apps/qualyteeth-dentist/src/app/services/practitioner.service';
 import { SurgeryService } from 'apps/qualyteeth-dentist/src/app/services/surgery.service';
-import { LinkServicePage } from './link-service/link-service.page';
+import { PractitionerDto } from 'libs/shared/src/lib/dto/practitioner.dto';
 
 @Component({
   selector: 'app-dentists',
@@ -27,13 +22,10 @@ export class DentistsPage implements OnInit {
    *
    */
   constructor(
-    private appSvc: AppService,
     private popoverCtrl: PopoverController,
     public surgerySvc: SurgeryService,
-    private dentistSvc: DentistService,
+    private dentistSvc: PractitionerService,
     private nav: NavController,
-    private servicingSvc: ServicingService,
-    private modalCtrl: ModalController
   ) {
   }
 
@@ -118,9 +110,9 @@ export class DentistsPage implements OnInit {
   /**
    *
    */
-  async onColorPickerChanged(e: string, d: Dentist): Promise<void> {
+  async onColorPickerChanged(e: string, d: PractitionerDto): Promise<void> {
     // console.log(e)
-    d.color = e === 'none' ? null: e;
+    // d.color = e === 'none' ? null: e;
     // console.log(d.color)
     await this.dentistSvc.update(d);
   }
@@ -135,21 +127,21 @@ export class DentistsPage implements OnInit {
   /**
    *
    */
-   async edit(d: Dentist): Promise<void> {
+   async edit(d: PractitionerDto): Promise<void> {
     this.nav.navigateForward(`admin/dentists/edit-dentist/${d.id}`)
   }
 
   /**
    *
    */
-   async services(d: Dentist): Promise<void> {
+   async services(d: PractitionerDto): Promise<void> {
     this.nav.navigateForward(`admin/dentists/edit-dentist/${d.id}`)
   }
 
   /**
    *
    */
-   async more(ev: Event, d: Dentist): Promise<void> {
+   async more(ev: Event, d: PractitionerDto): Promise<void> {
     ev.stopImmediatePropagation();
 
     const popover = await this.popoverCtrl.create({

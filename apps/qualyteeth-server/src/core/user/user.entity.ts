@@ -1,14 +1,10 @@
 import { Exclude } from "class-transformer";
 import { Column, Entity, OneToMany } from "typeorm";
-import { Practitioner } from "./practitioner.entity";
-import { Patient } from "./patient.entity";
-import { Base } from "./_base.entity";
-import { Feedback } from "./feedback.entity";
-
-export enum UserType {
-  PRACTITIONER,
-  PATIENT
-}
+import { Practitioner } from "../practitioner/practitioner.entity";
+import { Patient } from "../patient/patient.entity";
+import { Base } from "../_base.entity";
+import { Feedback } from "../feedback/feedback.entity";
+import { UserType } from "../../../../../libs/shared/src/lib/dto/user.dto";
 
 @Entity()
 export class User extends Base {

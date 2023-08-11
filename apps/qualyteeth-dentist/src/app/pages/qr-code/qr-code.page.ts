@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { toDataURL } from 'qrcode'
-import { Dentist } from 'libs/shared/src/lib/dentist.entity';
-import { DentistService } from 'apps/qualyteeth-dentist/src/app/services/dentist.service';
+import { PractitionerService } from 'apps/qualyteeth-dentist/src/app/services/practitioner.service';
+import { PractitionerDto } from 'libs/shared/src/lib/dto/practitioner.dto';
 
 @Component({
   selector: 'app-qr-code',
@@ -11,7 +11,7 @@ import { DentistService } from 'apps/qualyteeth-dentist/src/app/services/dentist
 })
 export class QrCodePage implements OnInit {
 
-  dentist: Dentist;
+  dentist: PractitionerDto;
   qrCode: string;
   loading: boolean;
 
@@ -20,7 +20,7 @@ export class QrCodePage implements OnInit {
    */
   constructor(
     private modalCtrl: ModalController,
-    private dentistSvc: DentistService) { }
+    private dentistSvc: PractitionerService) { }
 
   /**
    *
@@ -32,14 +32,14 @@ export class QrCodePage implements OnInit {
    */
   async ionViewWillEnter() {
     this.loading = true;
-    this.dentist = await this.dentistSvc.getDentist();
+    this.dentist = await this.dentistSvc.getPractitioner();
   }
 
   /**
    *
    */
   async ionViewDidEnter() {
-    await this.generateQR(this.dentist.id + ';' + this.dentist.email);
+    await this.generateQR(this.dentist.id + ';' + this.dentist.user.email);
     this.loading = false;
   }
 

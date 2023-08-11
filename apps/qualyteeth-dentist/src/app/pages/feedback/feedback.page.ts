@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
-import { Feedback } from 'libs/shared/src/lib/feedback.entity';
 import { FeedbackService } from 'apps/qualyteeth-dentist/src/app/services/feedback.service';
+import { FeedbackDto } from 'libs/shared/src/lib/dto/feedback.dto';
 
 @Component({
   selector: 'app-feedback',
@@ -60,7 +60,7 @@ export class FeedbackPage implements OnInit {
    */
   async save(): Promise<void> {
 
-    const feedback: Feedback = {
+    const feedback: FeedbackDto = {
       id: null,
       stars: this.nbStars,
       comment: this.comment

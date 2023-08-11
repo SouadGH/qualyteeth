@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, ModalController, NavController } from '@ionic/angular';
 import { AuthService } from 'apps/qualyteeth-dentist/src/app/services/auth.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DiagnosticService } from '../../../services/diagnostic.service';
 import { TreatmentService } from '../../../services/treatment.service';
-import { User, UserType } from 'libs/shared/src/lib/user.entity';
+import { UserDto, UserType } from 'libs/shared/src/lib/dto/user.dto';
 
 @Component({
   selector: 'qualyteeth-app-signin',
@@ -80,7 +80,7 @@ export class SigninPage implements OnInit {
     // const postalCode = this.signinForm.controls['postalCode'].value;
     // const city = this.signinForm.controls['city'].value;
 
-    const user: User = {
+    const user: UserDto = {
       type: UserType.PRACTITIONER,
       firstname: this.signinForm.controls['firstname'].value,
       lastname: this.signinForm.controls['lastname'].value,
@@ -96,7 +96,7 @@ export class SigninPage implements OnInit {
       // await this.authSvc.signin(firstname, lastname, street, streetNb, postalCode, city, password, email, UserType.PRACTITIONER);
       await this.authSvc.signin(user);
       await this.authSvc.login(user.email, user.password);
-      await this.diagnosticSvc.init();
+      // await this.diagnosticSvc.init();
       // await this.treatmentSvc.init();
       this.nav.navigateRoot('patients');
       // await this.next();

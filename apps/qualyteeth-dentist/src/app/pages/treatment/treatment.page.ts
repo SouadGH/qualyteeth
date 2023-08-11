@@ -1,31 +1,27 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDateRangePicker } from '@angular/material/datepicker';
 import { MatTableDataSource } from '@angular/material/table';
-import { Tooth } from 'libs/shared/src/lib/tooth.entity';
-import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
 import { ActivatedRoute } from '@angular/router';
-import { OdontogramComponent } from '../../components/odontogram/odontogram.component';
-import { Treatment } from 'libs/shared/src/lib/treatment.entity';
-import { FormControl } from '@angular/forms';
-import { TreatmentDefinition } from 'libs/shared/src/lib/treatment-definition.entity';
-import { Subscription } from 'rxjs';
 import { AlertController, NavController, ToastController } from '@ionic/angular';
-import { TreatmentService } from '../../services/treatment.service';
-import { StorageService } from '../../services/storage.service';
-import { SpeechRecognitionService } from '../../services/speech-recognition.service';
-import { ToothIntervention } from 'libs/shared/src/lib/tooth-intervention.entity';
-import { ToothPart } from 'libs/shared/src/lib/tooth-part.entity';
-import { DentistService } from '../../services/dentist.service';
+import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
+import { PredicamentDto } from 'libs/shared/src/lib/dto/predicament.dto';
+import { ToothDto } from 'libs/shared/src/lib/dto/tooth.dto';
+import { Subscription } from 'rxjs';
+import { OdontogramComponent } from '../../components/odontogram/odontogram.component';
 import { PatientService } from '../../services/patient.service';
-import { Comment } from 'libs/shared/src/lib/treatment-comment.entity';
+import { PractitionerService } from '../../services/practitioner.service';
+import { SpeechRecognitionService } from '../../services/speech-recognition.service';
+import { StorageService } from '../../services/storage.service';
+import { TreatmentService } from '../../services/treatment.service';
 
 @Component({
   selector: 'app-treatment',
   templateUrl: './treatment.page.html',
   styleUrls: ['./treatment.page.scss'],
 })
-export class TreatmentPage implements OnInit {
+export class PredicamentPage implements OnInit {
 
   @ViewChild('datePicker') datePicker: MatDateRangePicker<any>;
   @ViewChild('odontogram') odontogram: OdontogramComponent;
@@ -34,20 +30,20 @@ export class TreatmentPage implements OnInit {
   comment: string;
 
   patientId: number;
-  teeth: Array<Tooth & { selectedParts: Array<string>, hasDiagnostic: boolean, hasTreatment: boolean }>;
-  treatments: Array<Treatment>;
-  treatmentsColumns = ['date', 'dentist', 'teeth', 'treatment', 'comment', 'status']
+  teeth: Array<ToothDto & { selectedParts: Array<string>, hasDiagnostic: boolean, hasPredicament: boolean }>;
+  predicaments: Array<PredicamentDto>;
+  PredicamentsColumns = ['date', 'dentist', 'teeth', 'PredicamentDto', 'comment', 'status']
 
-  treatmentsControl = new FormControl();
-  treatmentsList: Array<TreatmentDefinition> = new Array<TreatmentDefinition>();
+  predicamentsControl = new FormControl();
+  predicamentsList: Array<PredicamentDto> = new Array<PredicamentDto>();
 
-  private teethSelectedParts: Array<Tooth & { selectedParts: Array<string> }> = new Array<Tooth & { selectedParts: Array<string> }>();
-  dataSource: MatTableDataSource<Tooth & { selectedParts: Array<string> }>;
+  private teethSelectedParts: Array<ToothDto & { selectedParts: Array<string> }> = new Array<ToothDto & { selectedParts: Array<string> }>();
+  dataSource: MatTableDataSource<ToothDto & { selectedParts: Array<string> }>;
 
   speechRecognitionStarted: boolean;
   speechSubscription: Subscription;
   speechCommentStarted: boolean = false;
-  speechTreatmentStarted: boolean = false;
+  speechPredicamentStarted: boolean = false;
   speechSelectionStarted: boolean = false;
 
   /**
@@ -58,22 +54,22 @@ export class TreatmentPage implements OnInit {
     private adapter: DateAdapter<any>,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
-    private treatmentSvc: TreatmentService,
+    private predicamentSvc: TreatmentService,
     private storageSvc: StorageService,
     private toothSvc: ToothService,
     private speechSvc: SpeechRecognitionService,
     private activtedRoute: ActivatedRoute,
-    private dentistSvc: DentistService,
+    private dentistSvc: PractitionerService,
     private patientSvc: PatientService,
   ) {
     this.adapter.setLocale('fr-CH');
 
     this.patientId = parseInt(this.activtedRoute.snapshot.paramMap.get('patient_id'));
 
-    this.dataSource = new MatTableDataSource<Tooth & { selectedParts: Array<string> }>();
+    this.dataSource = new MatTableDataSource<ToothDto & { selectedParts: Array<string> }>();
 
     this.toothSvc.toothSelectedParts.subscribe(
-      (t: Tooth & { selectedParts: Array<string> }) => {
+      (t: ToothDto & { selectedParts: Array<string> }) => {
         const i = this.teethSelectedParts.findIndex(tt => tt.fdiNumber === t.fdiNumber);
         if (i > -1) {
           this.teethSelectedParts.splice(i, 1);
@@ -106,10 +102,10 @@ export class TreatmentPage implements OnInit {
     });
     await toast.present();
 
-    this.treatmentsList = await this.treatmentSvc.getDefinitionsForDentist();
-    this.treatments = await this.treatmentSvc.getForPatientAndDentist(this.patientId);
+    // this.predicamentsList = await this.predicamentSvc.getDefinitionsForDentist();
+    // this.predicaments = await this.predicamentSvc.getForPatientAndDentist(this.patientId);
 
-    console.log(this.treatmentsList)
+    console.log(this.predicamentsList)
   }
 
   /**
@@ -155,13 +151,13 @@ export class TreatmentPage implements OnInit {
 
         if (this.speechSvc.matches('selection', m.messages)) {
           this.speechSelectionStarted = !this.speechCommentStarted;
-          this.speechTreatmentStarted = false;
+          this.speechPredicamentStarted = false;
           this.speechCommentStarted = false;
           return;
         }
 
         if (this.speechSvc.matches('traitement', m.messages)) {
-          this.speechTreatmentStarted = !this.speechTreatmentStarted;
+          this.speechPredicamentStarted = !this.speechPredicamentStarted;
           this.speechSelectionStarted = false;
           this.speechCommentStarted = false;
           return;
@@ -170,7 +166,7 @@ export class TreatmentPage implements OnInit {
         if (this.speechSvc.matches('commentaire', m.messages)) {
           this.speechCommentStarted = !this.speechCommentStarted;
           this.speechSelectionStarted = false;
-          this.speechTreatmentStarted = false;
+          this.speechPredicamentStarted = false;
           return;
         }
 
@@ -187,15 +183,15 @@ export class TreatmentPage implements OnInit {
           return;
         }
 
-        // treatments
-        if (this.speechTreatmentStarted) {
-          const maxKey = this.speechSvc.maxSimilarities(m.messages, this.treatmentsList.map(d => d.name));
+        // Predicaments
+        if (this.speechPredicamentStarted) {
+          const maxKey = this.speechSvc.maxSimilarities(m.messages, this.predicamentsList.map(d => d.name));
           if (!maxKey) {
             return
           }
 
-          const value = this.treatmentsList.find(v => v.name.toLowerCase() === maxKey.toLowerCase());
-          this.treatmentsControl.setValue(value);
+          const value = this.predicamentsList.find(v => v.name.toLowerCase() === maxKey.toLowerCase());
+          this.predicamentsControl.setValue(value);
           return;
         }
 
@@ -206,7 +202,7 @@ export class TreatmentPage implements OnInit {
         }
 
         // save
-        if (!this.speechSelectionStarted && !this.speechTreatmentStarted && !this.speechCommentStarted) {
+        if (!this.speechSelectionStarted && !this.speechPredicamentStarted && !this.speechCommentStarted) {
           if (this.speechSvc.matches('sauvegarder', m.messages)) {
             await this.save();
           }
@@ -256,7 +252,7 @@ export class TreatmentPage implements OnInit {
    */
   async save(): Promise<void> {
 
-    if (this.treatmentsControl.value == null) {
+    if (this.predicamentsControl.value == null) {
       const alert = await this.alertCtrl.create({
         header: 'Erreur',
         message: 'Veuillez sélectionner un traitement',
@@ -268,24 +264,24 @@ export class TreatmentPage implements OnInit {
 
     // const dentistId = await this.storageSvc.getUserid();
 
-    const treatment: Treatment = {
-      definition: this.treatmentsControl.value,
-      dentist: await this.dentistSvc.getDentist(),
-      patient: await this.patientSvc.getPatient(this.patientId),
-      creationDate: this.date,
-      comments: [{ text: this.comment }],
-      interventions: new Array<ToothIntervention>(),
-    }
+    // const PredicamentDto: PredicamentDto = {
+    //   // definition: this.predicamentsControl.value,
+    //   practitioner: await this.dentistSvc.getPractitioner(),
+    //   patient: await this.patientSvc.getPatient(this.patientId),
+    //   creationDate: this.date,
+    //   comments: [{ text: this.comment }],
+    //   interventions: new Array<Intervention>(),
+    // }
 
-    this.dataSource.data.forEach(t => {
-      const dt: ToothIntervention = {
-        tooth: t,
-        parts: t.selectedParts.map(p => { const tp: ToothPart = { name: p }; return tp }),
-      }
-      treatment.interventions.push(dt);
-    })
+    // this.dataSource.data.forEach(t => {
+    //   const dt: Intervention = {
+    //     tooth: [t],
+    //     parts: t.selectedParts.map(p => { const tp: ToothPart = { name: p }; return tp }),
+    //   }
+    //   PredicamentDto.interventions.push(dt);
+    // })
 
-    await this.treatmentSvc.save(treatment);
+    // await this.predicamentSvc.save(PredicamentDto);
 
     const toast = await this.toastCtrl.create({
       message: 'Traitement enregistré!',
@@ -300,7 +296,7 @@ export class TreatmentPage implements OnInit {
   /**
    *
    */
-  async remove(e: Event, el: Tooth & { selectedParts: Array<string> }): Promise<void> {
+  async remove(e: Event, el: ToothDto & { selectedParts: Array<string> }): Promise<void> {
     const i: number = this.dataSource.data.findIndex(t => t.fdiNumber = el.fdiNumber);
     console.log(i)
     // if (i > -1) {

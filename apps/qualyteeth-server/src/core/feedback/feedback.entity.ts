@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne } from "typeorm";
-import { User } from "./user.entity";
-import { Base } from "./_base.entity";
+import { User } from "../user/user.entity";
+import { Base } from "../_base.entity";
 
 @Entity()
 export class Feedback extends Base {

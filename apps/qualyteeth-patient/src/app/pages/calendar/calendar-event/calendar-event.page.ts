@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import { ServiceDefinition } from 'libs/shared/src/lib/service-definition.entity';
 import { Dentist } from 'libs/shared/src/lib/dentist.entity';
 import { ServicingService } from 'apps/qualyteeth-patient/src/app/services/servicing.service';
-import { DentistService } from 'apps/qualyteeth-patient/src/app/services/dentist.service';
+import { PractitionerService } from 'apps/qualyteeth-patient/src/app/services/practitioner.service';
 import { CalendarService } from 'apps/qualyteeth-patient/src/app/services/calendar.service';
 import { DateAdapter } from '@angular/material/core';
 
@@ -26,7 +26,7 @@ export class CalendarEventPage implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private navParams: NavParams,
-    private dentistSvc: DentistService,
+    private dentistSvc: PractitionerService,
     private servicingSvc: ServicingService,
     private calendarSvc: CalendarService,
     private alertCtrl: AlertController,

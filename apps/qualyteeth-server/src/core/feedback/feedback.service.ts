@@ -1,8 +1,8 @@
 
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Feedback } from 'libs/shared/src/lib/feedback.entity';
 import { Repository } from 'typeorm';
+import { Feedback } from './feedback.entity';
 
 @Injectable()
 export class FeedbackService {

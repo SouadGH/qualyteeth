@@ -1,9 +1,8 @@
-import { AfterViewInit, Component, ElementRef, Inject, Input, OnInit, ViewChild, Renderer2 } from '@angular/core';
-import { Tooth } from 'libs/shared/src/lib/tooth.entity';
-import { OdontogramComponent } from '../odontogram.component';
-import { Observable, Subject } from 'rxjs';
-import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
+import { AfterViewInit, Component, ElementRef, Inject, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
+import { OdontogramComponent } from '../odontogram.component';
+import { ToothDto } from 'libs/shared/src/lib/dto/tooth.dto';
 
 @Component({
   selector: 'app-odontogram-tooth',
@@ -17,7 +16,7 @@ export class OdontogramToothComponent implements OnInit, AfterViewInit {
   @ViewChild('wm', { static: false }) wm: ElementRef;
   @ViewChild('c', { static: false }) c: ElementRef;
 
-  @Input() tooth: Tooth & { selectedParts: Array<string>, hasDiagnostic: boolean, hasTreatment: boolean };
+  @Input() tooth: ToothDto & { selectedParts: Array<string>, hasDiagnostic: boolean, hasTreatment: boolean };
   @Input() editable: boolean;
   partOver: string;
 

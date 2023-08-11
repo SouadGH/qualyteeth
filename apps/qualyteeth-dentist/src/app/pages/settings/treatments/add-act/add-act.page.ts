@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
-import { Act } from 'libs/shared/src/lib/act.entity';
 import { TreatmentService } from 'apps/qualyteeth-dentist/src/app/services/treatment.service';
+import { ActDto } from 'libs/shared/src/lib/dto/act.dto';
 
 @Component({
   selector: 'app-add-act',
@@ -10,8 +10,8 @@ import { TreatmentService } from 'apps/qualyteeth-dentist/src/app/services/treat
 })
 export class AddActPage implements OnInit {
 
-  private allActs: Array<Act>;
-  acts: Array<Act>;
+  private allActs: Array<ActDto>;
+  acts: Array<ActDto>;
 
   columns = ['id', 'name']
 
@@ -62,7 +62,7 @@ export class AddActPage implements OnInit {
   /**
    *
    */
-   async select(act: Act): Promise<void> {
+   async select(act: ActDto): Promise<void> {
     this.modalCtrl.dismiss(act);
    }
 

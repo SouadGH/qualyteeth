@@ -10,7 +10,7 @@ import { CalendarEvent } from 'libs/shared/src/lib/calendar.entity';
 import { SseService } from 'apps/qualyteeth-patient/src/app/services/sse.service';
 import { MatSelectChange } from '@angular/material/select';
 import { CalendarEventPage } from './calendar-event/calendar-event.page';
-import { DentistService } from '../../services/dentist.service';
+import { PractitionerService } from '../../services/practitioner.service';
 
 @Component({
   selector: 'app-calendar',
@@ -32,7 +32,7 @@ export class CalendarPage implements OnInit {
     private calendarSvc: CalendarService,
     private modalCtrl: ModalController,
     // private surgerySvc: SurgeryService,
-    private dentistSvc: DentistService,
+    private dentistSvc: PractitionerService,
     private popoverCtrl: PopoverController,
     private alertCtrl: AlertController,
     private sseService: SseService,

@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Dentist } from 'libs/shared/src/lib/dentist.entity';
-import { DentistService } from '../services/dentist.service';
+import { PractitionerService } from '../services/practitioner.service';
+import { PractitionerDto } from 'libs/shared/src/lib/dto/practitioner.dto';
 
 
 @Pipe({
@@ -11,17 +11,17 @@ export class DentistPipe implements PipeTransform {
   /**
    *
    */
-  constructor(private dentistSvc: DentistService) { }
+  constructor(private dentistSvc: PractitionerService) { }
 
   /**
    *
    */
   async transform(dentistId: number): Promise<string> {
-    const d: Dentist = await this.dentistSvc.getDentist(dentistId)
+    const d: PractitionerDto = await this.dentistSvc.getPractitioner(dentistId)
     // console.log(d)
     if (d == null) {
       return null;
     }
-    return `${d.userData.firstname} ${d.userData.lastname}`;
+    return `${d.user.firstname} ${d.user.lastname}`;
   }
 }

@@ -1,7 +1,7 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { Tooth } from 'libs/shared/src/lib/tooth.entity';
 import { ToothService } from 'apps/qualyteeth-dentist/src/app/services/tooth.service';
 import { OdontogramComponent } from '../odontogram.component';
+import { ToothDto } from 'libs/shared/src/lib/dto/tooth.dto';
 
 @Component({
   selector: 'app-odontogram-tooth-area',
@@ -10,7 +10,7 @@ import { OdontogramComponent } from '../odontogram.component';
 })
 export class OdontogramToothAreaComponent implements OnInit {
 
-  @Input() tooth: Tooth & { selectedParts: Array<string> };
+  @Input() tooth: ToothDto & { selectedParts: Array<string> };
   @Input() editable: boolean;
 
   partOver: string;
