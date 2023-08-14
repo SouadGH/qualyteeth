@@ -15,7 +15,7 @@ export class PatientsPage implements OnInit {
   patients: Array<PatientDto> = new Array<PatientDto>();
 
   // columns: string[] = ['picture', 'PatientDto', 'age', 'sex', 'email', 'phoneNb', 'calendar', 'control', 'action'];
-  columns: string[] = ['picture', 'PatientDto', 'age', 'sex', 'email', 'phoneNb'];
+  columns: string[] = ['picture', 'patient', 'age', 'sex', 'email', 'phoneNb'];
 
 
   /**
@@ -49,7 +49,9 @@ export class PatientsPage implements OnInit {
     this.loading = true;
     // this.surgery = await this.surgerySvc.getActiveSurgeryForDentist();
     // this.allPatients = await this.surgerySvc.getPatienstForSurgery(this.surgery.id)
-    // this.allPatients = await this.dentistSvc.getPatientsForDentist();
+    this.allPatients = await this.dentistSvc.getPatientsForPractitioner();
+    console.log(this.allPatients)
+
     this.patients = [...this.allPatients];
     this.loading = false;
   }
@@ -128,7 +130,7 @@ export class PatientsPage implements OnInit {
    *
    */
   async details(p: PatientDto): Promise<void> {
-    this.nav.navigateForward(`patients/PatientDto/${p.id}`);
+    this.nav.navigateForward(`patients/patient/${p.id}`);
   }
 
 }

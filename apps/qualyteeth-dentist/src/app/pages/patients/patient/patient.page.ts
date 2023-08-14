@@ -117,8 +117,10 @@ export class PatientPage implements OnInit {
    *
    */
   async ionViewWillEnter() {
-    const patientId = parseInt(this.activtedRoute.snapshot.paramMap.get('patient_id'));
+    const patientId = this.activtedRoute.snapshot.paramMap.get('patient_id');
     this.patient = await this.patientSvc.getPatient(patientId);
+
+    console.log(this.patient)
 
     // const userId = await this.storageSvc.getUserid();
     // this.treatments = await this.treatmentSvc.getTreatmentsForPatientAndDentist(patientId, userId);
@@ -130,10 +132,10 @@ export class PatientPage implements OnInit {
     await this.loadCalendar();
     await this.loadDocuments();
 
-    this.patientForm.controls['lastname'].setValue(this.patient.user.lastname);
-    this.patientForm.controls['firstname'].setValue(this.patient.user.firstname);
-    this.patientForm.controls['email'].setValue(this.patient.user.email);
-    this.patientForm.controls['phoneNumber'].setValue(this.patient.user.phoneNumber);
+    this.patientForm.controls['lastname'].setValue(this.patient.lastname);
+    this.patientForm.controls['firstname'].setValue(this.patient.firstname);
+    this.patientForm.controls['email'].setValue(this.patient.email);
+    this.patientForm.controls['phoneNumber'].setValue(this.patient.phoneNumber);
     // this.initTeeth();
   }
 

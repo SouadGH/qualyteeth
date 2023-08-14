@@ -58,16 +58,19 @@ export class AddPatientPage implements OnInit {
     //   return
     // }
 
-    const userData: UserDto = {
-      type: UserType.PATIENT,
-      firstname: firstname,
-      lastname: lastname,
-      email: email,
-      phoneNumber: phoneNumber,
-    }
+    // const userData: UserDto = {
+    //   type: UserType.PATIENT,
+    //   firstname: firstname,
+    //   lastname: lastname,
+    //   email: email,
+    //   phoneNumber: phoneNumber,
+    // }
 
     const patient: PatientDto = {
-      user: userData
+      email: email,
+      firstname: firstname,
+      lastname: lastname,
+      // user: userData
     }
 
     try {

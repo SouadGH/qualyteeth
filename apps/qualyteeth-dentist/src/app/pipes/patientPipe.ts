@@ -16,7 +16,7 @@ export class PatientPipe implements PipeTransform {
   /**
    *
    */
-  async transform(patientId: number): Promise<string> {
+  async transform(patientId: string): Promise<string> {
     const p: PatientDto = await this.patientSvc.getPatient(patientId);
     // console.log(d)
     if (p == null) {

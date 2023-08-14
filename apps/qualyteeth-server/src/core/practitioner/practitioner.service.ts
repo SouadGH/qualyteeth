@@ -23,7 +23,6 @@ export class PractitionerService {
      */
     async getById(id: string): Promise<Practitioner> {
         let qb = this.practitionerRepo.createQueryBuilder('t');
-        qb = qb.leftJoinAndSelect('t.user', 'u');
         qb = qb.where('t.id = :id', { id: id });
 
         const t = await qb.getOne();
@@ -31,6 +30,21 @@ export class PractitionerService {
             return t;
         }
         throw new HttpException('Practitioner with this id does not exist', HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     *
+     */
+    async getByUserId(userId: string): Promise<Practitioner | null> {
+        let qb = this.practitionerRepo.createQueryBuilder('t');
+        qb = qb.leftJoinAndSelect('t.user', 'u');
+        qb = qb.where('u.id = :id', { id: userId });
+
+        const t = await qb.getOne();
+        if (t) {
+            return t;
+        }
+        throw new HttpException('Practitioner with this user id does not exist', HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -99,12 +113,12 @@ export class PractitionerService {
     /**
      *
      */
-    async findPatients(practitionerId: number): Promise<Array<Patient>> {
+    async findPatients(userId: string): Promise<Array<Patient>> {
 
         let qb = this.patientRepo.createQueryBuilder('p');
-        qb = qb.leftJoinAndSelect('p.user', 'u');
         qb = qb.leftJoin('p.practitioners', 'pr')
-        qb = qb.where('pr.id = :practitionerId', { practitionerId: practitionerId });
+        qb = qb.leftJoinAndSelect('pr.user', 'u');
+        qb = qb.where('u.id = :userId', { userId: userId });
 
         return await qb.getMany();
     }

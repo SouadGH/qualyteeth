@@ -7,12 +7,13 @@ import { UserModule } from 'apps/qualyteeth-server/src/core/user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Patient } from './patient.entity';
 import { Practitioner } from '../practitioner/practitioner.entity';
+import { PractitionerModule } from '../practitioner/practitioner.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Patient, Practitioner]),
     UtilsModule,
-    UserModule
+    UserModule,
   ],
   providers: [PatientsService],
   exports: [PatientsService],

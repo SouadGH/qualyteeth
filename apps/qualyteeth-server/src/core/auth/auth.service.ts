@@ -178,12 +178,18 @@ export class AuthService {
 
         if (user.type == UserType.PRACTITIONER) {
           const practitioner: Practitioner = {
+            email: data.email,
+            firstname: data.firstname,
+            lastname: data.lastname,
             user: user
           };
           await this.practitionerSvc.save(practitioner);
         }
         else {
           const patient: Patient = {
+            email: data.email,
+            firstname: data.firstname,
+            lastname: data.lastname,
             user: user
           }
           await this.patientSvc.save(patient);

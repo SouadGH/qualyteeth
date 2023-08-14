@@ -5,6 +5,7 @@ import { PractitionerDto } from 'libs/shared/src/lib/dto/practitioner.dto';
 import { API_ENDPOINT } from '../../environments/environment';
 import { AuthService } from './auth.service';
 import { StorageService } from './storage.service';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class PractitionerService {
   /**
    *
    */
-  public async getPractitionerId(): Promise<number> {
+  public async getPractitionerId(): Promise<string> {
     const accessToken = await this.storageSvc.get('accessTokenQD');
     return await this.storageSvc.getUserid(accessToken);
   }
@@ -30,7 +31,7 @@ export class PractitionerService {
   /**
    *
    */
-  public async getPractitioner(PractitionerId?: number): Promise<PractitionerDto> {
+  public async getPractitioner(practitionerId?: string): Promise<PractitionerDto> {
     const accessToken = await this.storageSvc.get('accessTokenQD');
 
     const headers = new HttpHeaders({
@@ -38,16 +39,16 @@ export class PractitionerService {
       'Authorization': `Bearer ${accessToken}`
     })
 
-    if (PractitionerId == null) {
-      PractitionerId = await this.storageSvc.getUserid(accessToken);
+    if (practitionerId == null) {
+      practitionerId = await this.storageSvc.getUserid(accessToken);
     }
-    return await this.httpClient.get<PractitionerDto>(`${API_ENDPOINT}/PractitionerDto/${PractitionerId}`, { headers: headers }).toPromise();
+    return await this.httpClient.get<PractitionerDto>(`${API_ENDPOINT}/practitioner/${practitionerId}`, { headers: headers }).toPromise();
   }
 
   /**
    *
    */
-  public async update(PractitionerDto: PractitionerDto): Promise<void> {
+  public async getByUserId(userId?: string): Promise<PractitionerDto> {
     const accessToken = await this.storageSvc.get('accessTokenQD');
 
     const headers = new HttpHeaders({
@@ -55,13 +56,17 @@ export class PractitionerService {
       'Authorization': `Bearer ${accessToken}`
     })
 
-    await this.httpClient.post(`${API_ENDPOINT}/PractitionerDto/update`, { PractitionerDto: PractitionerDto }, { headers: headers }).toPromise();
+    if (userId == null) {
+      userId = await this.storageSvc.getUserid(accessToken);
+    }
+    
+    return await lastValueFrom(this.httpClient.get<PractitionerDto>(`${API_ENDPOINT}/practitioner/user/${userId}`, { headers: headers }));
   }
 
   /**
    *
    */
-  public async getPatientsForPractitioner(PractitionerId?: number): Promise<Array<PatientDto>> {
+  public async update(practitioner: PractitionerDto): Promise<void> {
     const accessToken = await this.storageSvc.get('accessTokenQD');
 
     const headers = new HttpHeaders({
@@ -69,10 +74,22 @@ export class PractitionerService {
       'Authorization': `Bearer ${accessToken}`
     })
 
-    if (PractitionerId == null) {
-      PractitionerId = await this.storageSvc.getUserid(accessToken);
-    }
-    const patients: Array<PatientDto> = await this.httpClient.get<Array<PatientDto>>(`${API_ENDPOINT}/PractitionerDto/${PractitionerId}/patient/all`, { headers: headers }).toPromise();
+    await this.httpClient.post(`${API_ENDPOINT}/PractitionerDto/update`, { practitioner: practitioner }, { headers: headers }).toPromise();
+  }
+
+  /**
+   *
+   */
+  public async getPatientsForPractitioner(): Promise<Array<PatientDto>> {
+    const accessToken = await this.storageSvc.get('accessTokenQD');
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`
+    })
+
+    const userId = await this.storageSvc.getUserid(accessToken);
+    const patients: Array<PatientDto> = await this.httpClient.get<Array<PatientDto>>(`${API_ENDPOINT}/practitioner/${userId}/patient/all`, { headers: headers }).toPromise();
 
     return patients;
   }

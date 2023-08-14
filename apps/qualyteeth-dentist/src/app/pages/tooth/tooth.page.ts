@@ -18,7 +18,7 @@ export class ToothPage implements OnInit {
 
   tooth: ToothDto;
   patient: PatientDto;
-  dentistId: number;
+  dentistId: string;
   treatments: Array<PredicamentDto> = new Array<PredicamentDto>();
 
   /**
@@ -38,7 +38,7 @@ export class ToothPage implements OnInit {
    *
    */
   async ionViewWillEnter(): Promise<void> {
-    const patientId = parseInt(this.activtedRoute.snapshot.paramMap.get('patient_id'));
+    const patientId = this.activtedRoute.snapshot.paramMap.get('patient_id');
     const fdiNumber = parseInt(this.activtedRoute.snapshot.paramMap.get('fdi_number'));
     this.dentistId = await this.storageSvc.getUserid();
 

@@ -22,7 +22,7 @@ export class EditTreatmentDefinitionPage implements OnInit {
   t: PredicamentDto;
   private newDefinition: boolean;
 
-  private dentistId: number;
+  private dentistId: string;
 
   columns = ['nb', 'position', 'actId', 'name', 'more']
 

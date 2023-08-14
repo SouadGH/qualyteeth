@@ -48,7 +48,7 @@ export class DocumentService {
   /**
    *
    */
-  public upload(accessToken: string, file: File, patientId: string, dentistId: number, treatmentId?: number): Observable<any> {
+  public upload(accessToken: string, file: File, patientId: string, dentistId: string, treatmentId?: string): Observable<any> {
 
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${accessToken}`

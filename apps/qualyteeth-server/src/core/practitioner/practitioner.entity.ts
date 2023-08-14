@@ -1,12 +1,12 @@
 import { Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
-import { Predicament } from '../predicament/predicament.entity';
+import { Actor } from '../_actor.entity';
 import { Document } from '../document/document.entity';
-import { User } from '../user/user.entity';
-import { Base } from '../_base.entity';
 import { Patient } from '../patient/patient.entity';
+import { Predicament } from '../predicament/predicament.entity';
+import { User } from '../user/user.entity';
 
 @Entity()
-export class Practitioner extends Base {
+export class Practitioner extends Actor {
 
     @ManyToOne(() => User, user => user.practitioners, { nullable: true })
     user?: User;

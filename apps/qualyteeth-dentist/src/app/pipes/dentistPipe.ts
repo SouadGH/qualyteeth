@@ -16,7 +16,7 @@ export class DentistPipe implements PipeTransform {
   /**
    *
    */
-  async transform(dentistId: number): Promise<string> {
+  async transform(dentistId: string): Promise<string> {
     const d: PractitionerDto = await this.dentistSvc.getPractitioner(dentistId)
     // console.log(d)
     if (d == null) {

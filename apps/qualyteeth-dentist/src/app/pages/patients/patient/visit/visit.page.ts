@@ -44,7 +44,7 @@ export class VisitPage implements OnInit {
    *
    */
   async ionViewWillEnter() {
-    const patientId = parseInt(this.activtedRoute.snapshot.paramMap.get('patient_id'));
+    const patientId = this.activtedRoute.snapshot.paramMap.get('patient_id');
     this.patient = await this.patientSvc.getPatient(patientId);
   }
 

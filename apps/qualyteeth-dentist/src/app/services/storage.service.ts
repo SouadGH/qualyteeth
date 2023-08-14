@@ -37,9 +37,9 @@ export class StorageService {
   /**
    *
    */
-  public async getUserid(accessToken?: string): Promise<number | null> {
+  public async getUserid(accessToken?: string): Promise<string | null> {
     accessToken = accessToken == null ? await this.get('accessTokenQD') : accessToken;
     const token = this.jwtHelper.decodeToken(accessToken);
-    return token != null ? parseInt(token['sub']) : null;
+    return token != null ? token['sub'] : null;
   }
 }

@@ -249,7 +249,7 @@ export class TreatmentService {
   /**
    *
    */
-  public async init(dentistId?: number): Promise<void> {
+  public async init(dentistId?: string): Promise<void> {
     const accessToken = await this.storageSvc.get('accessTokenQD');
 
     const headers = new HttpHeaders({

@@ -4,9 +4,10 @@ import { User } from "../user/user.entity";
 import { Base } from "../_base.entity";
 import { Document } from '../document/document.entity';
 import { Practitioner } from "../practitioner/practitioner.entity";
+import { Actor } from "../_actor.entity";
 
 @Entity()
-export class Patient extends Base {
+export class Patient extends Actor {
 
     @ManyToOne(() => User, user => user.patients, { nullable: true })
     user?: User;

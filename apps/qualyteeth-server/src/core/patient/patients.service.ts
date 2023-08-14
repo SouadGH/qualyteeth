@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Patient } from './patient.entity';
 import { Practitioner } from '../practitioner/practitioner.entity';
+import { PractitionerService } from '../practitioner/practitioner.service';
 
 @Injectable()
 export class PatientsService {
@@ -13,8 +14,8 @@ export class PatientsService {
      */
     constructor(
         @InjectRepository(Patient) private patientRepo: Repository<Patient>,
-        @InjectRepository(Practitioner) private practitionerRepo: Repository<Practitioner>
-        ) { }
+        @InjectRepository(Practitioner) private practitionerRepo: Repository<Practitioner>,
+    ) { }
 
     // /**
     //  *
@@ -119,10 +120,33 @@ export class PatientsService {
     /**
      *
      */
-    async save(data: Patient): Promise<Patient> {
-        const newT = this.patientRepo.create({ ...data, });
+    async save(data: any): Promise<Patient> {
+        const patient: Patient = data['patient'];
+
+        const practitioner: Practitioner = await this.getByUserId(data['userId'])
+
+        patient.practitioners = patient.practitioners == null ? [] : patient.practitioners;
+        patient.practitioners.push(practitioner)
+
+        const newT = this.patientRepo.create({ ...patient, });
         await this.patientRepo.save(newT);
+
         return newT;
+    }
+
+    /**
+     *
+     */
+    async getByUserId(userId: string): Promise<Practitioner | null> {
+        let qb = this.practitionerRepo.createQueryBuilder('t');
+        qb = qb.leftJoinAndSelect('t.user', 'u');
+        qb = qb.where('u.id = :id', { id: userId });
+
+        const t = await qb.getOne();
+        if (t) {
+            return t;
+        }
+        throw new HttpException('Practitioner with this user id does not exist', HttpStatus.NOT_FOUND);
     }
 
     /**
