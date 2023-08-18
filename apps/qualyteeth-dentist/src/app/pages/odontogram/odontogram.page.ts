@@ -28,7 +28,7 @@ export class OdontogramPage implements OnInit {
   date: Date = new Date();
   comment: string;
 
-  patientId: number;
+  patientId: string;
   teeth: Array<ToothDto & { selectedParts: Array<string>, hasDiagnostic: boolean, hasTreatment: boolean }>;
 
   diagnostics: Array<PredicamentDto>;
@@ -72,7 +72,7 @@ export class OdontogramPage implements OnInit {
   ) {
     this.adapter.setLocale('fr-CH');
 
-    this.patientId = parseInt(this.activtedRoute.snapshot.paramMap.get('patient_id'));
+    this.patientId = this.activtedRoute.snapshot.paramMap.get('patient_id');
 
     this.dataSource = new MatTableDataSource<ToothDto & { selectedParts: Array<string> }>();
 

@@ -14,7 +14,7 @@ import { PredicamentDto } from 'libs/shared/src/lib/dto/predicament.dto';
 export class OdontogramComponent implements OnInit {
 
   @ViewChildren(OdontogramToothComponent) toothComponents: QueryList<OdontogramToothComponent>;
-  @Input() patientId: number;
+  @Input() patientId: string;
   @Input() teeth: Array<ToothDto & { selectedParts: Array<string>, hasDiagnostic: boolean, hasTreatment: boolean }>;
   @Input() editable: boolean;
 

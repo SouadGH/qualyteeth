@@ -155,7 +155,7 @@
               Odontogramme
               <!-- <ion-icon name="mic-outline" style="width: 24px; height: 24px; padding-left: 16px;" (click)="toggleSpeechRecognition()" [ngClass]="speechRecognitionStarted ? 'speech-icon-started': 'speech-icon-ended'" *ngIf="selectedTab == 1"></ion-icon> -->
             </ng-template>
-            <!-- <app-odontogram [patientId]="patient.id" [editable]="false" [teeth]="teeth" *ngIf="teeth != null"></app-odontogram> -->
+            <app-odontogram [patientId]="patient.id" [editable]="false" [teeth]="teeth" *ngIf="teeth != null"></app-odontogram>
             <div style="position: relative; height: 56px;">
               <!-- <mat-fab-menu #matFabMenu color="primary" [fabButtons]="odontogramBtns" direction="left" (onFabMenuItemSelected)="onFabMenuItemSelected($event)" style="position: absolute; right: 16px; bottom: 12px;"></mat-fab-menu> -->
               <button mat-fab color="primary" (click)="newExamination()" style="position: absolute; right: 16px; bottom: 30px;">
