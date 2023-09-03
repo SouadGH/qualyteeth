@@ -17,6 +17,7 @@ import { PredicamentDto } from 'libs/shared/src/lib/dto/predicament.dto';
 import { ToothDto } from 'libs/shared/src/lib/dto/tooth.dto';
 import { Subscription } from 'rxjs';
 import { PatientService } from '../../../services/patient.service';
+import { AudioService } from '../../../services/audio.service';
 
 @Component({
   selector: 'app-patient',
@@ -71,6 +72,11 @@ export class PatientPage implements OnInit {
   //   // { id: 4, icon: 'mic', tooltip: 'A la voix', tooltipPosition: 'above', iconColor: 'primary' },
   // ];
 
+  recording: boolean = false;
+
+  private mediaRecorder: MediaRecorder;
+  private recordedChunks: Blob[] = [];
+
   /**
    *
    */
@@ -90,7 +96,9 @@ export class PatientPage implements OnInit {
     private toastCtrl: ToastController,
     private speechSvc: SpeechRecognitionService,
     private fb: FormBuilder,
-    private adapter: DateAdapter<any>) {
+    private adapter: DateAdapter<any>,
+    private audioSvc: AudioService,
+    ) {
 
     this.adapter.setLocale('fr-CH');
 
@@ -650,6 +658,66 @@ export class PatientPage implements OnInit {
    */
   async toothDetails(t: any): Promise<void> {
     this.nav.navigateForward(`patients/${this.patient.id}/tooth/${t.toothFdiNumber}`);
+  }
+
+  /**
+   *
+   */
+  async test(): Promise<void> {
+    this.recording = !this.recording;
+
+    // if (this.recording === true) {
+    //   await this.startRecording();
+    // }
+    // else {
+    //   await this.stopRecording();
+    // }
+  }
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.audioSvc.modifyAndConvertAudio(file).subscribe(async (audioBlob) => {
+        // await this.audioSvc.streamCompressedAudio(audioBlob);
+        await this.audioSvc.streamAudio(audioBlob);
+      });
+    }
+  }
+
+  /**
+   *
+   */
+  async startRecording(): Promise<void> {
+    if (!('mediaDevices' in navigator)) {
+      throw Error('Cannot access media')
+    }
+    console.log(await navigator.mediaDevices.enumerateDevices())
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    this.mediaRecorder = new MediaRecorder(stream);
+    this.mediaRecorder.ondataavailable = event => {
+      if (event.data.size > 0) {
+        this.recordedChunks.push(event.data);
+      }
+    };
+    this.mediaRecorder.start();
+  }
+
+  /**
+   *
+   */
+  async stopRecording(): Promise<void> {
+    this.mediaRecorder.stop();
+    this.mediaRecorder.onstop = async () => {
+      const audioBlob = new Blob(this.recordedChunks, { type: 'audio/wav' });
+      this.recordedChunks = [];
+
+      try {
+        await this.audioSvc.streamCompressedAudio(audioBlob);
+        console.log('Audio streamed successfully');
+      } catch (error) {
+        console.error('Error streaming audio:', error);
+      }
+    };
   }
 
 }
