@@ -663,26 +663,27 @@ export class PatientPage implements OnInit {
   /**
    *
    */
-  async test(): Promise<void> {
+  async toggle_recording(): Promise<void> {
     this.recording = !this.recording;
 
-    // if (this.recording === true) {
-    //   await this.startRecording();
-    // }
-    // else {
-    //   await this.stopRecording();
-    // }
-  }
-
-  onFileSelected(event: any) {
-    const file: File = event.target.files[0];
-    if (file) {
-      this.audioSvc.modifyAndConvertAudio(file).subscribe(async (audioBlob) => {
-        // await this.audioSvc.streamCompressedAudio(audioBlob);
-        await this.audioSvc.streamAudio(audioBlob);
-      });
+    if (this.recording === true) {
+      await this.startRecording();
+    }
+    else {
+      await this.stopRecording();
     }
   }
+
+  // async onFileSelected(event: any): Promise<void> {
+  //   const file: File = event.target.files[0];
+  //   if (file) {
+  //     await this.audioSvc.streamAudioFile(file);
+  //     // this.audioSvc.modifyAndConvertAudio(file).subscribe(async (audioBlob) => {
+  //     //   // await this.audioSvc.streamCompressedAudio(audioBlob);
+  //     //   await this.audioSvc.streamAudio(audioBlob, file.name);
+  //     // });
+  //   }
+  // }
 
   /**
    *
@@ -691,10 +692,14 @@ export class PatientPage implements OnInit {
     if (!('mediaDevices' in navigator)) {
       throw Error('Cannot access media')
     }
-    console.log(await navigator.mediaDevices.enumerateDevices())
+    // console.log(await navigator.mediaDevices.enumerateDevices())
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+    // console.log(stream)
+
     this.mediaRecorder = new MediaRecorder(stream);
     this.mediaRecorder.ondataavailable = event => {
+      // console.log(event)
       if (event.data.size > 0) {
         this.recordedChunks.push(event.data);
       }
@@ -712,8 +717,10 @@ export class PatientPage implements OnInit {
       this.recordedChunks = [];
 
       try {
-        await this.audioSvc.streamCompressedAudio(audioBlob);
-        console.log('Audio streamed successfully');
+        // await this.audioSvc.streamCompressedAudio(audioBlob);
+        const r = await this.audioSvc.streamAudio(audioBlob);
+        console.log('Transcription result:');
+        console.log(r)
       } catch (error) {
         console.error('Error streaming audio:', error);
       }

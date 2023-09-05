@@ -103,9 +103,19 @@ export class AudioService {
     /**
      *
      */
-    streamAudio(audioBlob: Blob): Promise<void> {
+    async streamAudio(audioBlob: Blob): Promise<void> {
         const formData = new FormData();
-        formData.append('audio', audioBlob, 'audio.wav');
+        formData.append('audio', audioBlob, 'audio.mp3');
+
+        return lastValueFrom(this.http.post<any>(`${PYTHON_API_ENDPOINT}/stream-audio`, formData));
+    }
+
+    /**
+     *
+     */
+    streamAudioFile(file: File): Promise<void> {
+        const formData = new FormData();
+        formData.append('audio', file, file.name);
 
         return lastValueFrom(this.http.post<any>(`${PYTHON_API_ENDPOINT}/stream-audio`, formData));
     }

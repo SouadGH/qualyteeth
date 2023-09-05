@@ -29,13 +29,13 @@
 
           <mat-tab label="Profil">
 
-            <button mat-fab color="primary" (click)="test()" style="position: absolute; right: 16px; top: 32px;">
+            <button mat-fab color="primary" (click)="toggle_recording()" style="position: absolute; right: 16px; top: 32px;">
               <mat-icon [ngStyle]="{'color': recording ? 'red': 'white'}">mic</mat-icon>
             </button>
 
-            <div>
+            <!-- <div>
               <input type="file" (change)="onFileSelected($event)" accept="audio/*">
-            </div>
+            </div> -->
 
             <div style="display: flex; flex-direction: column; align-items: center; max-width: 720px; margin: 0 auto;">
               <h6>Informations personnelles</h6>
