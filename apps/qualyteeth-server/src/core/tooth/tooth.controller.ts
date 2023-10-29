@@ -3,7 +3,7 @@ import { JwtAuthGuard } from 'apps/qualyteeth-server/src/core/auth/jwt-auth.guar
 import { SnakeToCameInterceptor } from 'apps/qualyteeth-server/src/inteceptors/snake-to-came.interceptor';
 import { ToothService } from './tooth.service';
 
-@Controller('tooth')
+@Controller('teeth')
 export class ToothController {
 
     /**

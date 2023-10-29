@@ -3,7 +3,7 @@ import { Controller, Get, Param, Post, Request, UseGuards } from '@nestjs/common
 import { JwtAuthGuard } from 'apps/qualyteeth-server/src/core/auth/jwt-auth.guard';
 import { PatientsService } from './patients.service';
 
-@Controller('patient')
+@Controller('patients')
 export class PatientsController {
 
     /**

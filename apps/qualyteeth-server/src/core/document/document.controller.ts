@@ -5,7 +5,7 @@ import { JwtAuthGuard } from 'apps/qualyteeth-server/src/core/auth/jwt-auth.guar
 import { Response } from 'express';
 import { DocumentService } from './document.service';
 
-@Controller('document')
+@Controller('documents')
 export class DocumentController {
 
     constructor(private documentSvc: DocumentService) { }

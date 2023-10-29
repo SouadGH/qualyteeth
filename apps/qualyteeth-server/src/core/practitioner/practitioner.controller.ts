@@ -4,7 +4,7 @@ import { ApiBearerAuth, ApiParam } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'apps/qualyteeth-server/src/core/auth/jwt-auth.guard';
 import { PractitionerService } from './practitioner.service';
 
-@Controller('practitioner')
+@Controller('practitioners')
 export class PractitionerController {
 
     /**

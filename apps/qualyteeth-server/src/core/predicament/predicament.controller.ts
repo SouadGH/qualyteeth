@@ -2,7 +2,7 @@
 import { Controller } from '@nestjs/common';
 import { PredicamentService } from './predicament.service';
 
-@Controller('predicament')
+@Controller('predicaments')
 export class PredicamentController {
 
     /**
