@@ -77,6 +77,8 @@ export class PatientPage implements OnInit {
   private mediaRecorder: MediaRecorder;
   private recordedChunks: Blob[] = [];
 
+  private timer;
+
   /**
    *
    */
@@ -98,7 +100,7 @@ export class PatientPage implements OnInit {
     private fb: FormBuilder,
     private adapter: DateAdapter<any>,
     private audioSvc: AudioService,
-    ) {
+  ) {
 
     this.adapter.setLocale('fr-CH');
 
@@ -666,12 +668,28 @@ export class PatientPage implements OnInit {
   async toggle_recording(): Promise<void> {
     this.recording = !this.recording;
 
-    if (this.recording === true) {
-      await this.startRecording();
+    if (this.recording === false) {
+      await this.stopRecording();
+      if (this.timer) {
+        clearInterval(this.timer)
+      }
     }
     else {
-      await this.stopRecording();
+      await this.startRecording();
+      this.timer = setInterval(async () => {
+        await this.stopRecording();
+        await this.startRecording();
+      }, 2000);
     }
+
+    
+
+    // if (this.recording === true) {
+    //   await this.startRecording();
+    // }
+    // else {
+    //   await this.stopRecording();
+    // }
   }
 
   // async onFileSelected(event: any): Promise<void> {
@@ -692,14 +710,15 @@ export class PatientPage implements OnInit {
     if (!('mediaDevices' in navigator)) {
       throw Error('Cannot access media')
     }
+    console.log('Starting recoring...')
     // console.log(await navigator.mediaDevices.enumerateDevices())
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
     // console.log(stream)
 
     this.mediaRecorder = new MediaRecorder(stream);
-    this.mediaRecorder.ondataavailable = event => {
-      // console.log(event)
+    this.mediaRecorder.ondataavailable = async event => {
+      console.log(event.data)
       if (event.data.size > 0) {
         this.recordedChunks.push(event.data);
       }
@@ -711,8 +730,15 @@ export class PatientPage implements OnInit {
    *
    */
   async stopRecording(): Promise<void> {
+    if (this.mediaRecorder == undefined) {
+      return
+    }
+    console.log('Stopping recoring and sending transcript...')
     this.mediaRecorder.stop();
     this.mediaRecorder.onstop = async () => {
+      if (this.recordedChunks.length === 0) {
+        return;
+      }
       const audioBlob = new Blob(this.recordedChunks, { type: 'audio/wav' });
       this.recordedChunks = [];
 
