@@ -4,11 +4,7 @@ import { AlertController, ModalController, NavController } from '@ionic/angular'
 import { AuthService } from 'apps/qualyteeth-dentist/src/app/services/auth.service';
 import { DiagnosticService } from '../../../services/diagnostic.service';
 import { TreatmentService } from '../../../services/treatment.service';
-<<<<<<< HEAD
 import { GenderType, UserDto, UserType } from 'libs/shared/src/lib/dto/user.dto';
-=======
-import { UserDto, UserType } from 'libs/shared/src/lib/dto/user.dto';
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 @Component({
   selector: 'qualyteeth-app-signin',
@@ -94,10 +90,7 @@ export class SigninPage implements OnInit {
       streetNb: this.signinForm.controls['streetNb'].value,
       postalCode: this.signinForm.controls['postalCode'].value,
       city: this.signinForm.controls['city'].value,
-<<<<<<< HEAD
       //gender: GenderType.FEMME
-=======
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     }
 
     try {

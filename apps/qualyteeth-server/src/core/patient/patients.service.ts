@@ -4,27 +4,19 @@ import { Repository } from 'typeorm';
 import { Patient } from './patient.entity';
 import { Practitioner } from '../practitioner/practitioner.entity';
 import { PractitionerService } from '../practitioner/practitioner.service';
-<<<<<<< HEAD
 import { User } from '../user/user.entity';
 import { any } from '@hapi/joi';
-=======
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 @Injectable()
 export class PatientsService {
     private readonly logger = new Logger(PatientsService.name);
 
     /**
-<<<<<<< HEAD
      *Constructor
-=======
-     *
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
      */
     constructor(
         @InjectRepository(Patient) private patientRepo: Repository<Patient>,
         @InjectRepository(Practitioner) private practitionerRepo: Repository<Practitioner>,
-<<<<<<< HEAD
         @InjectRepository(User) private userRepo: Repository<User>,
 
     ) { }
@@ -146,10 +138,6 @@ export class PatientsService {
     }
     /**************to be continued*********************** */
 
-=======
-    ) { }
-
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     // /**
     //  *
     //  */
@@ -238,85 +226,6 @@ export class PatientsService {
     /**
      *
      */
-<<<<<<< HEAD
-=======
-    async getById(id: string): Promise<Patient> {
-        let qb = this.patientRepo.createQueryBuilder('t');
-        qb = qb.leftJoinAndSelect('t.user', 'u');
-        qb = qb.where('t.id = :id', { id: id });
-
-        const t = await qb.getOne();
-        if (t) {
-            return t;
-        }
-        throw new HttpException('Patient with this id does not exist', HttpStatus.NOT_FOUND);
-    }
-
-    /**
-     *
-     */
-    async save(data: any): Promise<Patient> {
-        const patient: Patient = data['patient'];
-
-        const practitioner: Practitioner = await this.getByUserId(data['userId'])
-
-        patient.practitioners = patient.practitioners == null ? [] : patient.practitioners;
-        patient.practitioners.push(practitioner)
-
-        const newT = this.patientRepo.create({ ...patient, });
-        await this.patientRepo.save(newT);
-
-        return newT;
-    }
-
-    /**
-     *
-     */
-    async getByUserId(userId: string): Promise<Practitioner | null> {
-        let qb = this.practitionerRepo.createQueryBuilder('t');
-        qb = qb.leftJoinAndSelect('t.user', 'u');
-        qb = qb.where('u.id = :id', { id: userId });
-
-        const t = await qb.getOne();
-        if (t) {
-            return t;
-        }
-        throw new HttpException('Practitioner with this user id does not exist', HttpStatus.NOT_FOUND);
-    }
-
-    /**
-     *
-     */
-    async update(data: Patient): Promise<Patient> {
-        const t: Patient = await this.getById(data.id);
-
-        const newT = this.patientRepo.create({ ...t, ...data, });
-        await this.patientRepo.save(newT);
-        return newT;
-    }
-
-    /**
-     *
-     */
-    async findConnectedPractitioners(patientId: number): Promise<Array<Practitioner>> {
-        // let qb = this.practitionerRepo.createQueryBuilder('pr');
-        // qb = qb.leftJoin('pr.predicaments', 'pred')
-        // qb = qb.leftJoin('pred.plan', 'plan')
-        // qb = qb.leftJoin('plan.patient', 'p')
-        // qb = qb.where('p.id = :patientId', { patientId: patientId });
-
-        let qb = this.practitionerRepo.createQueryBuilder('pr');
-        qb = qb.leftJoinAndSelect('pr.user', 'u');
-        qb = qb.leftJoin('pr.patients', 'p')
-        qb = qb.where('p.id = :patientId', { patientId: patientId });
-
-        return await qb.getMany();
-    }
-
-    /**
-     *
-     */
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     // async getConnectedSurgeries(patientId: number): Promise<Array<Surgery>> {
     //     try {
     //         const query = `

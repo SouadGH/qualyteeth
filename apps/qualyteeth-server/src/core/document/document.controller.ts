@@ -5,11 +5,7 @@ import { JwtAuthGuard } from 'apps/qualyteeth-server/src/core/auth/jwt-auth.guar
 import { Response } from 'express';
 import { DocumentService } from './document.service';
 
-<<<<<<< HEAD
 @Controller('document')
-=======
-@Controller('documents')
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 export class DocumentController {
 
     constructor(private documentSvc: DocumentService) { }
@@ -43,11 +39,7 @@ export class DocumentController {
     //     }
     // }
 
-<<<<<<< HEAD
    // @UseGuards(JwtAuthGuard)
-=======
-    @UseGuards(JwtAuthGuard)
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     @Post('upload')
     @UseInterceptors(FileInterceptor('document'))
     async addDocument(@UploadedFile() file, @Request() req) {

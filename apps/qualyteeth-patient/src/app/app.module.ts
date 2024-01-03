@@ -20,10 +20,7 @@ import { ToolbarTitleModule } from './components/toolbar-title/toolbar-title.mod
 import { FeedbackPage } from './pages/feedback/feedback.page';
 import { StorageService } from './services/storage.service';
 import { LoginPage } from './pages/auth/login/login.page';
-<<<<<<< HEAD
 import { TreatmentPage } from './pages/treatment/treatment.page';
-=======
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 @NgModule({
   declarations: [
@@ -31,11 +28,7 @@ import { TreatmentPage } from './pages/treatment/treatment.page';
     ToolbarMenuComponent,
     ProfilePage,
     FeedbackPage,
-<<<<<<< HEAD
     LoginPage,
-=======
-    LoginPage
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     // TreatmentPage
   ],
   entryComponents: [],

@@ -3,10 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { User } from 'apps/qualyteeth-server/src/core/user/user.entity';
 import { Repository } from 'typeorm';
-<<<<<<< HEAD
 import { Practitioner } from '../practitioner/practitioner.entity';
-=======
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 @Injectable()
 export class UserService {
@@ -107,11 +104,7 @@ export class UserService {
    */
   async getById(id: string): Promise<User> {
     // const user = await this.userRepository.findOne({ id });
-<<<<<<< HEAD
     const user = await this.userRepo.findOne({ where: { id: id },relations :['practitioners'] });
-=======
-    const user = await this.userRepo.findOne({ where: { id: id } });
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     if (user) {
       return user;
     }
@@ -131,7 +124,6 @@ export class UserService {
     }
     throw new HttpException('User with this email does not exist', HttpStatus.NOT_FOUND);
   }
-<<<<<<< HEAD
   /**
    *Collecte a practitioner according to his userId
    */
@@ -144,9 +136,6 @@ throw new HttpException('User with this id does not exist', HttpStatus.NOT_FOUND
  
 }
   
-=======
-
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
   /**
    *
    */

@@ -12,15 +12,12 @@ import { UserModule } from './core/user/user.module';
 import { UtilsModule } from './core/utils/utils.module';
 import { UtilsService } from './core/utils/utils.service';
 import { DatabaseModule } from './core/__database/database.module';
-<<<<<<< HEAD
 import * as Joi from '@hapi/joi';
 import { PredicamentModule } from './core/predicament/predicament.module';
 import { CommentModule } from './core/comment/comment.module';
 import { MaterialModule } from './core/material/material.module';
 import { PredicamentPlanModule } from './core/predicamentplan/predicament-plan.module';
 import { SurgeryModule } from './core/surgery/surgery.module';
-=======
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 @Module({
   imports: [
@@ -28,7 +25,6 @@ import { SurgeryModule } from './core/surgery/surgery.module';
     AuthModule,
     UserModule,
     ConfigModule.forRoot({ isGlobal: true }),
-<<<<<<< HEAD
    /* ConfigModule.forRoot({
       validationSchema: Joi.object({
         POSTGRES_HOST: Joi.string().required(),
@@ -52,16 +48,6 @@ import { SurgeryModule } from './core/surgery/surgery.module';
     InterventionModule,
     FeedbackModule,
 
-=======
-    UtilsModule,
-    PatientsModule,
-    PractitionerModule,
-    ToothModule,
-    DocumentModule,
-    FeedbackModule,
-    InterventionModule,
-    PractitionerModule,
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
   ],
   controllers: [AppController],
   providers: [UtilsService],

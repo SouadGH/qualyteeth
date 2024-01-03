@@ -12,18 +12,10 @@ export enum PredicamentType {
 
 export class PredicamentDto extends BaseDto {
     practitioner?: PractitionerDto;
-<<<<<<< HEAD
    // plan?: PredicamentPlanDto;
     type!: PredicamentType;
     name!: string;
     //categories: CategoryDto[];
     //acts: ActDto[];
-=======
-    plan?: PredicamentPlanDto;
-    type!: PredicamentType;
-    name!: string;
-    categories: CategoryDto[];
-    acts: ActDto[];
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     interventions: InterventionDto[]
 }

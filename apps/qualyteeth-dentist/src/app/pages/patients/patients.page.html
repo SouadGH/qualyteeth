@@ -60,11 +60,7 @@
 
           <ng-container matColumnDef="phoneNb">
             <th mat-header-cell *matHeaderCellDef> Tél </th>
-<<<<<<< HEAD
             <td mat-cell *matCellDef="let element"> {{ element.phoneNumber || '' }} </td>
-=======
-            <td mat-cell *matCellDef="let element"> {{ element.phoneNb || '' }} </td>
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
           </ng-container>
 
           <!-- <ng-container matColumnDef="calendar">
@@ -83,33 +79,20 @@
                 <mat-icon>medical_services</mat-icon>
               </button>
             </td>
-<<<<<<< HEAD
           </ng-container>-->
 
           <!--<ng-container matColumnDef="action">
-=======
-          </ng-container>
-
-          <ng-container matColumnDef="action">
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
             <th mat-header-cell *matHeaderCellDef style="text-align: right; width: 56px;"> </th>
             <td mat-cell *matCellDef="let element" style="text-align: right;">
               <button mat-icon-button (click)="action($event, element)">
                 <mat-icon>more_vert</mat-icon>
               </button>
             </td>
-<<<<<<< HEAD
           </ng-container>--> 
 
           <tr mat-header-row *matHeaderRowDef="columns"></tr>
           <tr mat-row *matRowDef="let row; columns: columns;" style="cursor: pointer;" (click)="details(row)"></tr>
           
-=======
-          </ng-container> -->
-
-          <tr mat-header-row *matHeaderRowDef="columns"></tr>
-          <tr mat-row *matRowDef="let row; columns: columns;" style="cursor: pointer;" (click)="details(row)"></tr>
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
         </table>
 
         <div *ngIf="patients != null && patients.length === 0" style="margin-top: 32px;">

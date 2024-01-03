@@ -16,25 +16,14 @@ export class Act extends Base {
     @Column({ nullable: true })
     vat?: number;
 
-<<<<<<< HEAD
    /* @ManyToMany(() => Predicament, p => p.acts)
     @JoinTable()
     predicaments: Predicament[];*/
-=======
-    @ManyToMany(() => Predicament, p => p.acts)
-    @JoinTable()
-    predicaments: Predicament[];
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
     @ManyToMany(() => Category, c => c.acts)
     @JoinTable()
     categories: Category[];
 
-<<<<<<< HEAD
     /*@ManyToMany(() => Intervention, i => i.acts)
     interventions: Intervention[];*/
-=======
-    @ManyToMany(() => Intervention, i => i.acts)
-    interventions: Intervention[];
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 }

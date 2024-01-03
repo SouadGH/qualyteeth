@@ -4,18 +4,11 @@ import { Practitioner } from "../practitioner/practitioner.entity";
 import { Patient } from "../patient/patient.entity";
 import { Base } from "../_base.entity";
 import { Feedback } from "../feedback/feedback.entity";
-<<<<<<< HEAD
 import { GenderType, UserType } from "../../../../../libs/shared/src/lib/dto/user.dto";
 
 @Entity()
 export class User extends Base {
   
-=======
-import { UserType } from "../../../../../libs/shared/src/lib/dto/user.dto";
-
-@Entity()
-export class User extends Base {
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
   @Column({ type: 'enum', enum: UserType, nullable: false })
   type: UserType;
@@ -29,12 +22,9 @@ export class User extends Base {
   @Column({ nullable: false })
   email!: string;
 
-<<<<<<< HEAD
   @Column({ type: 'enum', enum: GenderType, nullable: true })
   gender!: GenderType;
 
-=======
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
   @Column({ nullable: true, select: false })
   @Exclude()
   password?: string;

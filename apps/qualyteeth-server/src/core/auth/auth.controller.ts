@@ -1,17 +1,10 @@
 
-<<<<<<< HEAD
 import { Body, Controller, Get, Header, HttpCode, Post, Req, Request, Res, Sse, UseGuards } from '@nestjs/common';
-=======
-import { Body, Controller, Get, Header, Post, Request, Res, Sse, UseGuards } from '@nestjs/common';
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 import { AuthService } from 'apps/qualyteeth-server/src/core/auth/auth.service';
 import { LocalAuthGuard } from 'apps/qualyteeth-server/src/core/auth/local-auth.guard';
 import { Subject } from 'rxjs';
 import { JwtAuthGuard } from './jwt-auth.guard';
-<<<<<<< HEAD
 import RequestWithUser from './requestWithUser.interface';
-=======
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 @Controller('auth')
 export class AuthController {
@@ -21,12 +14,8 @@ export class AuthController {
     /**
      *
      */
-<<<<<<< HEAD
     constructor(
         private readonly authService: AuthService) { }
-=======
-    constructor(private authService: AuthService) { }
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
     /**
      *
@@ -41,7 +30,6 @@ export class AuthController {
      */
     @UseGuards(LocalAuthGuard)
     @Post('login')
-<<<<<<< HEAD
     async login(@Request() req: RequestWithUser) {
         const { user } = req;
         
@@ -49,11 +37,6 @@ export class AuthController {
        
         //console.log(user);
         //return user;
-=======
-    async login(@Request() req) {
-        return await this.authService.login(req.user);
-
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
         // try {
         //     return await this.authService.login(req.user, req.body['type']);
         // } catch (e) {
@@ -65,10 +48,7 @@ export class AuthController {
         //     }
         // }
     }
-<<<<<<< HEAD
     
-=======
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
     /**
      *

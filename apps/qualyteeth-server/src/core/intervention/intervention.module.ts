@@ -13,13 +13,8 @@ import { Intervention } from './intervention.entity';
   imports: [
     TypeOrmModule.forFeature([Intervention]),
     UtilsModule,
-<<<<<<< HEAD
    // UserModule,
    // PatientsModule,
-=======
-    UserModule,
-    PatientsModule,
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     PractitionerModule
   ],
   controllers: [InterventionController],

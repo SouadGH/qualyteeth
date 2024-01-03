@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 INSERT INTO tooth (fdi_number,name) VALUES (11,"dent 11");
 INSERT INTO tooth (fdi_number,name) VALUES (12,"dent 12");
 INSERT INTO tooth (fdi_number,name) VALUES (13,"dent 13");
@@ -34,40 +33,3 @@ INSERT INTO tooth (fdi_number,name) VALUES (45,"dent 45");
 INSERT INTO tooth (fdi_number,name) VALUES (46,"dent 46");
 INSERT INTO tooth (fdi_number,name) VALUES (47,"dent 47");
 INSERT INTO tooth (fdi_number,name) VALUES (48,"dent 48");
-=======
-INSERT INTO tooth (fdi_number) VALUES (11);
-INSERT INTO tooth (fdi_number) VALUES (12);
-INSERT INTO tooth (fdi_number) VALUES (13);
-INSERT INTO tooth (fdi_number) VALUES (14);
-INSERT INTO tooth (fdi_number) VALUES (15);
-INSERT INTO tooth (fdi_number) VALUES (16);
-INSERT INTO tooth (fdi_number) VALUES (17);
-INSERT INTO tooth (fdi_number) VALUES (18);
-
-INSERT INTO tooth (fdi_number) VALUES (21);
-INSERT INTO tooth (fdi_number) VALUES (22);
-INSERT INTO tooth (fdi_number) VALUES (23);
-INSERT INTO tooth (fdi_number) VALUES (24);
-INSERT INTO tooth (fdi_number) VALUES (25);
-INSERT INTO tooth (fdi_number) VALUES (26);
-INSERT INTO tooth (fdi_number) VALUES (27);
-INSERT INTO tooth (fdi_number) VALUES (28);
-
-INSERT INTO tooth (fdi_number) VALUES (31);
-INSERT INTO tooth (fdi_number) VALUES (32);
-INSERT INTO tooth (fdi_number) VALUES (33);
-INSERT INTO tooth (fdi_number) VALUES (34);
-INSERT INTO tooth (fdi_number) VALUES (35);
-INSERT INTO tooth (fdi_number) VALUES (36);
-INSERT INTO tooth (fdi_number) VALUES (37);
-INSERT INTO tooth (fdi_number) VALUES (38);
-
-INSERT INTO tooth (fdi_number) VALUES (41);
-INSERT INTO tooth (fdi_number) VALUES (42);
-INSERT INTO tooth (fdi_number) VALUES (43);
-INSERT INTO tooth (fdi_number) VALUES (44);
-INSERT INTO tooth (fdi_number) VALUES (45);
-INSERT INTO tooth (fdi_number) VALUES (46);
-INSERT INTO tooth (fdi_number) VALUES (47);
-INSERT INTO tooth (fdi_number) VALUES (48);
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617

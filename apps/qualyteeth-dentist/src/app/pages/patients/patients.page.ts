@@ -47,10 +47,7 @@ export class PatientsPage implements OnInit {
    */
   private async loadData(): Promise<void> {
     this.loading = true;
-<<<<<<< HEAD
     
-=======
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     // this.surgery = await this.surgerySvc.getActiveSurgeryForDentist();
     // this.allPatients = await this.surgerySvc.getPatienstForSurgery(this.surgery.id)
     this.allPatients = await this.dentistSvc.getPatientsForPractitioner();
@@ -69,11 +66,7 @@ export class PatientsPage implements OnInit {
       return;
     }
     const v = e.detail.value.toLowerCase();
-<<<<<<< HEAD
     this.patients = this.patients.filter(e => e.firstname.toLowerCase().indexOf(v) > -1 || e.lastname.toLowerCase().indexOf(v) > -1);
-=======
-    this.patients = this.patients.filter(e => e.user.firstname.toLowerCase().indexOf(v) > -1 || e.user.lastname.toLowerCase().indexOf(v) > -1);
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
   }
 
   /**
@@ -103,7 +96,6 @@ export class PatientsPage implements OnInit {
   /**
    *
    */
-<<<<<<< HEAD
    async action(ev: any, p: PatientDto): Promise<void> {
      const popover = await this.popoverCtrl.create({
        component: PatientsPageActionsComponent,
@@ -126,30 +118,6 @@ export class PatientsPage implements OnInit {
        }
      })
    }
-=======
-  // async action(ev: any, p: PatientDto): Promise<void> {
-  //   const popover = await this.popoverCtrl.create({
-  //     component: PatientsPageActionsComponent,
-  //     event: ev,
-  //     translucent: true
-  //   });
-  //   await popover.present();
-  //   popover.onDidDismiss().then(async r => {
-  //     if (r.data != null) {
-  //       // console.log(r.data, p)
-  //       if (r.data === 'visit') {
-  //         this.nav.navigateForward(`patients/PatientDto/${p.id}/visit`);
-  //       }
-  //       // if (r.data === 'accept') {
-  //       //   await this.validate(calendarEvent);
-  //       // }
-  //       // else if (r.data === 'reject') {
-  //       //   await this.reject(calendarEvent);
-  //       // }
-  //     }
-  //   })
-  // }
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
   /**
    *
@@ -171,11 +139,7 @@ export class PatientsPage implements OnInit {
 @Component({
   template: `
   <ion-list lines="none">
-<<<<<<< HEAD
     <ion-item button   (click)="popoverCtrl.dismiss('visit')">
-=======
-    <ion-item button (click)="popoverCtrl.dismiss('visit')">
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
       <ion-icon name="add-circle-outline" slot="start"></ion-icon>
       <ion-label>Nouvelle visite</ion-label>
     </ion-item>

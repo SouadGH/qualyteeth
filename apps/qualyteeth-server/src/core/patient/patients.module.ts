@@ -8,18 +8,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Patient } from './patient.entity';
 import { Practitioner } from '../practitioner/practitioner.entity';
 import { PractitionerModule } from '../practitioner/practitioner.module';
-<<<<<<< HEAD
 import { User } from '../user/user.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Patient, Practitioner, User]),
-=======
-
-@Module({
-  imports: [
-    TypeOrmModule.forFeature([Patient, Practitioner]),
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     UtilsModule,
     UserModule,
   ],

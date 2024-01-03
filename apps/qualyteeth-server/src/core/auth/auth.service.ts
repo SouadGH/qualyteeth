@@ -76,7 +76,6 @@ export class AuthService {
    *
    */
   async login(user: User) {
-<<<<<<< HEAD
 
     try {
       const payload = { email: user.email, sub: user.id };
@@ -85,13 +84,6 @@ export class AuthService {
         access_token: this.jwtSvc.sign(payload, { secret: this.configSvc.get('JWT_ACCESS_TOKEN_SECRET'), }),
         userid: user.id
         
-=======
-    try {
-      const payload = { email: user.email, sub: user.id };
-      return {
-        access_token: this.jwtSvc.sign(payload, { secret: this.configSvc.get('JWT_ACCESS_TOKEN_SECRET'), }),
-        userid: user.id
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
       };
     } catch (e) {
       this.logger.error(e.message, new Error(e).stack)
@@ -123,7 +115,6 @@ export class AuthService {
     //   throw e;
     // }
   }
-<<<<<<< HEAD
   public getCookieWithJwtAccessToken(userId: string ) {
     //const payload: TokenPayload = { userId,isSecondFactorAuthenticated };
     const payload = { userid: userId };
@@ -142,9 +133,6 @@ export class AuthService {
     };
    
 }
-=======
-
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
   /**
   *
   */

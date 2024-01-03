@@ -30,11 +30,7 @@ export class DocumentService {
   /**
    *
    */
-<<<<<<< HEAD
   public async getDocuments(patientId: string, treatmentId?: string): Promise<Array<any>> {
-=======
-  public async getDocuments(patientId: number, treatmentId?: number): Promise<Array<any>> {
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     const accessToken = await this.storageSvc.get('accessTokenQD');
 
     const headers = new HttpHeaders({
@@ -52,11 +48,7 @@ export class DocumentService {
   /**
    *
    */
-<<<<<<< HEAD
   public upload(accessToken: string, file: File, patientId: string, userId: string, treatmentId?: string): Observable<any> {
-=======
-  public upload(accessToken: string, file: File, patientId: string, dentistId: string, treatmentId?: string): Observable<any> {
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${accessToken}`
@@ -66,13 +58,8 @@ export class DocumentService {
     if (treatmentId != null) {
       formData.append('treatmentId', treatmentId.toString());
     }
-<<<<<<< HEAD
     formData.append('patientId', patientId);
     formData.append('userId', userId );
-=======
-    formData.append('patientId', patientId.toString());
-    formData.append('dentistId', dentistId.toString());
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
     const req = new HttpRequest('POST', `${API_ENDPOINT}/document/upload`, formData, {
       headers: headers,

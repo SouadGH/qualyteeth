@@ -1,15 +1,9 @@
 
-<<<<<<< HEAD
 import { Body, Controller, Delete, Get, Param, Post, Put, Request, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'apps/qualyteeth-server/src/core/auth/jwt-auth.guard';
 import { PatientsService } from './patients.service';
 import { PatientDto } from 'libs/shared/src/lib/dto/patient.dto';
 import { Patient } from './patient.entity';
-=======
-import { Controller, Get, Param, Post, Request, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'apps/qualyteeth-server/src/core/auth/jwt-auth.guard';
-import { PatientsService } from './patients.service';
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 @Controller('patients')
 export class PatientsController {
@@ -19,7 +13,6 @@ export class PatientsController {
      */
     constructor(private patientSvc: PatientsService) { }
 
-<<<<<<< HEAD
 
     /**
     *Collects all patients
@@ -91,36 +84,6 @@ export class PatientsController {
     async findConnectedPractitioners(@Param('id') id: string) {
         return await this.patientSvc.findConnectedPractitioners(id);
     }
-=======
-    /**
-     *
-     */
-    @UseGuards(JwtAuthGuard)
-    // @UseInterceptors(SnakeToCameInterceptor)
-    @Get(':id')
-    async find(@Param() params) {
-        return await this.patientSvc.getById(params.id);
-    }
-
-    /**
-     *
-     */
-    @UseGuards(JwtAuthGuard)
-    @Post('add')
-    async add(@Request() req) {
-        await this.patientSvc.save(req.body);
-    }
-
-    /**
-     *
-     */
-    @UseGuards(JwtAuthGuard)
-    @Post('update')
-    async update(@Request() req) {
-        await this.patientSvc.update(req.body.patient);
-    }
-
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     /**
      *
      */
@@ -131,18 +94,6 @@ export class PatientsController {
     //     return await this.patientSvc.getConnectedSurgeries(params.id);
     // }
 
-<<<<<<< HEAD
     
-=======
-    /**
-     *
-     */
-    @UseGuards(JwtAuthGuard)
-    // @UseInterceptors(SnakeToCameInterceptor)
-    @Get(':id/dentists')
-    async findConnectedPractitioners(@Param() params) {
-        return await this.patientSvc.findConnectedPractitioners(params.id);
-    }
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 }

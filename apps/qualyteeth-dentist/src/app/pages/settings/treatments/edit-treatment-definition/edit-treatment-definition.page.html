@@ -90,15 +90,9 @@
           <ng-container matColumnDef="more">
             <th mat-header-cell *matHeaderCellDef> &nbsp; </th>
             <td mat-cell *matCellDef="let element" style="text-align: right;">
-<<<<<<< HEAD
                <button mat-icon-button (click)="editAct($event, element)">
                 <mat-icon style="color: black;">more_vert</mat-icon>
               </button> 
-=======
-              <!-- <button mat-icon-button (click)="editAct($event, element)">
-                <mat-icon style="color: black;">more_vert</mat-icon>
-              </button> -->
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
               <button mat-icon-button (click)="delete(element)">
                 <mat-icon style="color: red;">cancel</mat-icon>
               </button>
@@ -111,11 +105,7 @@
 
         <div *ngIf="t != null && (t.acts == null || t.acts.length === 0)" style="margin-top: 32px;">
           Aucun acte pour ce traitement
-<<<<<<< HEAD
         </div>-->
-=======
-        </div>
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
       </ion-col>
     </ion-row>

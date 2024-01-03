@@ -2,11 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController, NavController } from '@ionic/angular';
 import { AuthService } from 'apps/qualyteeth-dentist/src/app/services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-<<<<<<< HEAD
 import { StorageService } from '../../../services/storage.service';
 import { UserDto } from 'libs/shared/src/lib/dto/user.dto';
-=======
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 
 @Component({
@@ -23,10 +20,7 @@ export class LoginPage implements OnInit {
    *
    */
   constructor(
-<<<<<<< HEAD
     private storageSvc: StorageService,
-=======
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     private modalCtrl: ModalController,
     private authSvc: AuthService,
     private nav: NavController,
@@ -50,11 +44,8 @@ export class LoginPage implements OnInit {
    * 
    */
   async ionViewWillEnter(): Promise<void> {
-<<<<<<< HEAD
     this.loginForm.controls['email'].setValue("dentiste1@gmail.com");
     this.loginForm.controls['password'].setValue("123456789");
-=======
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     if (this.authSvc.isAuthenticated) {
       this.nav.navigateRoot('patients');
       // const user: Dentist = await this.dentistSvc.getDentist();
@@ -81,7 +72,6 @@ export class LoginPage implements OnInit {
    *
    */
   async login(): Promise<void> {
-<<<<<<< HEAD
     
 
     this.isSubmitted = true;
@@ -89,12 +79,6 @@ export class LoginPage implements OnInit {
      let user:UserDto =  await this.authSvc.login(this.loginForm.controls['email'].value, this.loginForm.controls['password'].value);
      
       this.nav.navigateRoot('patients');
-=======
-    this.isSubmitted = true;
-    try {
-      await this.authSvc.login(this.loginForm.controls['email'].value, this.loginForm.controls['password'].value);
-      this.nav.navigateRoot('patients')
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     } catch (e) {
       if (!e.ok && e.status === 401) {
         const alert = await this.alertCtrl.create({

@@ -2,10 +2,7 @@ import { MatFabMenu } from '@angular-material-extensions/fab-menu';
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController, NavParams, PopoverController } from '@ionic/angular';
 import { SurgeryService } from 'apps/qualyteeth-dentist/src/app/services/surgery.service';
-<<<<<<< HEAD
 import { Surgery } from 'apps/qualyteeth-server/src/core/surgery/surgery.entity';
-=======
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 import { PatientDto } from 'libs/shared/src/lib/dto/patient.dto';
 
 @Component({
@@ -18,12 +15,8 @@ export class SurgeryPage implements OnInit {
   selectedTab = 0;
 
   loading: boolean = true;
-<<<<<<< HEAD
   surgeries: Array<Surgery> = new Array<Surgery>();
   // surgeries: Array<any> = new Array<any>();
-=======
-  // surgeries: Array<Surgery> = new Array<Surgery>();
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
   dentists: Array<any> = new Array<any>();
   patients: Array<PatientDto> = new Array<PatientDto>();
 
@@ -57,7 +50,6 @@ export class SurgeryPage implements OnInit {
    */
   async loadData(): Promise<void> {
     this.loading = true;
-<<<<<<< HEAD
      this.surgeries = await this.surgerySvc.getSurgeriesForPractitioner();
      console.log(this.surgeries);
      this.surgeries = this.surgeries.sort((a, b) => {
@@ -66,15 +58,6 @@ export class SurgeryPage implements OnInit {
 
        return aName < bName ? -1 : aName > bName ? 1 : 0;
      });
-=======
-    // this.surgeries = await this.surgerySvc.getSurgeriesForDentist();
-    // this.surgeries = this.surgeries.sort((a, b) => {
-    //   const aName = a.name.toLowerCase();
-    //   const bName = b.name.toLowerCase();
-
-    //   return aName < bName ? -1 : aName > bName ? 1 : 0;
-    // });
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
     // this.surgeries.forEach(async (s: any) => {
     //   // s.dentists = await this.surgerySvc.getDentistsForSurgery(s.id);
@@ -102,20 +85,13 @@ export class SurgeryPage implements OnInit {
   /**
    *
    */
-<<<<<<< HEAD
   async edit(s: Surgery): Promise<void> {
     this.nav.navigateForward(`admin/surgery/edit-surgery/${s.id}`)
   }
-=======
-  // async edit(s: Surgery): Promise<void> {
-  //   this.nav.navigateForward(`admin/surgery/edit-surgery/${s.id}`)
-  // }
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
   /**
    *
    */
-<<<<<<< HEAD
   async more(ev: Event, s: Surgery): Promise<void> {
     
     ev.stopImmediatePropagation();
@@ -163,51 +139,6 @@ export class SurgeryPage implements OnInit {
       }
     })
   }
-=======
-  // async more(ev: Event, s: Surgery): Promise<void> {
-  //   ev.stopImmediatePropagation();
-
-  //   const popover = await this.popoverCtrl.create({
-  //     component: EditSurgeryPopover,
-  //     event: ev,
-  //     translucent: true,
-  //     componentProps: {
-  //       isActive: s.active
-  //     }
-  //   });
-  //   await popover.present();
-
-  //   popover.onDidDismiss().then(async r => {
-  //     if (r.data != null) {
-  //       if (r.data === 'edit') {
-  //         await this.edit(s);
-  //       }
-  //       else if (r.data === 'set') {
-  //         // await this.surgerySvc.activate(s);
-  //         await this.loadData();
-  //       }
-  //       else if (r.data === 'unset') {
-  //         // await this.surgerySvc.deactivate(s);
-  //         await this.loadData();
-  //       }
-  //       else if (r.data === 'delete') {
-  //         if (s.active) {
-  //           const alert = await this.alertCtrl.create({
-  //             header: 'Erreur',
-  //             message: 'Impossible de supprimer un cabinet actif',
-  //             buttons: ['OK']
-  //           });
-  //           await alert.present();
-  //           return;
-  //         }
-  //         s.deleted = true;
-  //         // await this.surgerySvc.update(s);
-  //         await this.loadData();
-  //       }
-  //     }
-  //   })
-  // }
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
   /**
    *

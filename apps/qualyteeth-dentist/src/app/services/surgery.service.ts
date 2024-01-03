@@ -1,28 +1,17 @@
-<<<<<<< HEAD
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
 import { API_ENDPOINT } from '../../environments/environment';
 import { SurgeryDto } from 'libs/shared/src/lib/dto/surgery.dto';
 import { Surgery } from 'apps/qualyteeth-server/src/core/surgery/surgery.entity';
-=======
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { StorageService } from './storage.service';
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 @Injectable({
   providedIn: 'root'
 })
 export class SurgeryService {
 
-<<<<<<< HEAD
    //public surgerySubject: Subject<Surgery> = new Subject<Surgery>();
    //public activeSurgery: Surgery;
-=======
-  // public surgerySubject: Subject<Surgery> = new Subject<Surgery>();
-  // public activeSurgery: Surgery;
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
   /**
    *
@@ -35,7 +24,6 @@ export class SurgeryService {
 //   /**
 //    *
 //    */
-<<<<<<< HEAD
   public async save(surgery: Surgery): Promise<void> {
     const accessToken = await this.storageSvc.get('accessTokenQD');
 
@@ -53,24 +41,6 @@ export class SurgeryService {
     // this.surgerySubject.next(surgery)
     //return surgery.id;
   }
-=======
-//   public async save(surgery: Surgery): Promise<number> {
-//     const accessToken = await this.storageSvc.get('accessTokenQD');
-
-//     const headers = new HttpHeaders({
-//       'Content-Type': 'application/json',
-//       'Authorization': `Bearer ${accessToken}`
-//     })
-
-//     const body = {
-//       surgery: surgery
-//     }
-
-//     surgery.id = await this.httpClient.post<number>(`${API_ENDPOINT}/surgery/add`, body, { headers: headers }).toPromise();
-//     // this.surgerySubject.next(surgery)
-//     return surgery.id;
-//   }
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 //   /**
 //    *
@@ -90,7 +60,6 @@ export class SurgeryService {
 //   /**
 //    *
 //    */
-<<<<<<< HEAD
   public async link(surgery: Surgery): Promise<void> {
     const accessToken = await this.storageSvc.get('accessTokenQD');
 
@@ -122,22 +91,6 @@ public async unlink(surgery: Surgery): Promise<void> {
 
   return await this.httpClient.post<void>(`${API_ENDPOINT}/surgery/practitioner/unlink`, { surgery: surgery, userId: userId }, { headers: headers }).toPromise();
 }
-=======
-//   public async link(surgery: Surgery, dentistId?: number): Promise<number> {
-//     const accessToken = await this.storageSvc.get('accessTokenQD');
-
-//     const headers = new HttpHeaders({
-//       'Content-Type': 'application/json',
-//       'Authorization': `Bearer ${accessToken}`
-//     })
-
-//     if (dentistId == null) {
-//       dentistId = await this.storageSvc.getUserid(accessToken);
-//     }
-
-//     return await this.httpClient.post<number>(`${API_ENDPOINT}/surgery/dentist/link`, { surgeryId: surgery.id, dentistId: dentistId }, { headers: headers }).toPromise();
-//   }
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 //   /**
 //    *
@@ -162,7 +115,6 @@ public async unlink(surgery: Surgery): Promise<void> {
 //   /**
 //    *
 //    */
-<<<<<<< HEAD
    public async update(surgery: Surgery): Promise<void> {
     const accessToken = await this.storageSvc.get('accessTokenQD');
 
@@ -208,43 +160,10 @@ public async getSurgeries():Promise<Array<SurgeryDto>>{
 
     return await this.httpClient.get<Surgery>(`${API_ENDPOINT}/surgery/${id}`, { headers: headers }).toPromise();
   }
-=======
-//    public async deactivate(surgery: Surgery, dentistId?: number): Promise<void> {
-//     const accessToken = await this.storageSvc.get('accessTokenQD');
-
-//     const headers = new HttpHeaders({
-//       'Content-Type': 'application/json',
-//       'Authorization': `Bearer ${accessToken}`
-//     })
-
-//     if (dentistId == null) {
-//       dentistId = await this.storageSvc.getUserid(accessToken);
-//     }
-
-//     await this.httpClient.post<void>(`${API_ENDPOINT}/surgery/deactivate`, { surgeryId: surgery.id, dentistId: dentistId }, { headers: headers }).toPromise();
-//     this.activeSurgery = null;
-//     // this.surgerySubject.next(surgery)
-//   }
 
 //   /**
 //    *
 //    */
-//   public async getSurgery(id: number): Promise<Surgery> {
-//     const accessToken = await this.storageSvc.get('accessTokenQD');
-
-//     const headers = new HttpHeaders({
-//       'Content-Type': 'application/json',
-//       'Authorization': `Bearer ${accessToken}`
-//     })
-
-//     return await this.httpClient.get<Surgery>(`${API_ENDPOINT}/surgery/${id}`, { headers: headers }).toPromise();
-//   }
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
-
-//   /**
-//    *
-//    */
-<<<<<<< HEAD
   public async getActiveSurgeryForDentist(): Promise<Surgery> {
     const accessToken = await this.storageSvc.get('accessTokenQD');
 
@@ -259,27 +178,10 @@ public async getSurgeries():Promise<Array<SurgeryDto>>{
 
     return await this.httpClient.get<Surgery>(`${API_ENDPOINT}/surgery/practitioner/${practitionerId}`, { headers: headers }).toPromise();
   }
-=======
-//   public async getActiveSurgeryForDentist(dentistId?: number): Promise<Surgery> {
-//     const accessToken = await this.storageSvc.get('accessTokenQD');
-
-//     const headers = new HttpHeaders({
-//       'Content-Type': 'application/json',
-//       'Authorization': `Bearer ${accessToken}`
-//     })
-
-//     if (dentistId == null) {
-//       dentistId = await this.storageSvc.getUserid(accessToken);
-//     }
-
-//     return await this.httpClient.get<Surgery>(`${API_ENDPOINT}/surgery/dentist/${dentistId}`, { headers: headers }).toPromise();
-//   }
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 //   /**
 //    *
 //    */
-<<<<<<< HEAD
    public async getSurgeriesForPractitioner(): Promise<Array<SurgeryDto>> {
      const accessToken = await this.storageSvc.get('accessTokenQD');
 
@@ -315,22 +217,6 @@ public async getSurgeries():Promise<Array<SurgeryDto>>{
  //   return await this.httpClient.get<Array<SurgeryDto>>(`${API_ENDPOINT}/surgery`, { headers: headers }).toPromise();
   
    }
-=======
-//   public async getSurgeriesForDentist(dentistId?: number): Promise<Array<Surgery>> {
-//     const accessToken = await this.storageSvc.get('accessTokenQD');
-
-//     const headers = new HttpHeaders({
-//       'Content-Type': 'application/json',
-//       'Authorization': `Bearer ${accessToken}`
-//     })
-
-//     if (dentistId == null) {
-//       dentistId = await this.storageSvc.getUserid(accessToken);
-//     }
-
-//     return await this.httpClient.get<Array<Surgery>>(`${API_ENDPOINT}/surgery/dentist/${dentistId}/all`, { headers: headers }).toPromise();
-//   }
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 //   /**
 //    *

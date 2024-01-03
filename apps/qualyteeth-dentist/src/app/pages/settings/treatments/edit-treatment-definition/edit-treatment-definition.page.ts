@@ -50,11 +50,7 @@ export class EditTreatmentDefinitionPage implements OnInit {
    *
    */
   async ionViewWillEnter(): Promise<void> {
-<<<<<<< HEAD
     const treatmentDefinitionId = this.activtedRoute.snapshot.paramMap.get('def_id');
-=======
-    const treatmentDefinitionId = parseInt(this.activtedRoute.snapshot.paramMap.get('def_id'));
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
     this.dentistId = await this.dentistSvc.getPractitionerId();
     this.newDefinition = treatmentDefinitionId == null || Number.isNaN(treatmentDefinitionId);
@@ -78,34 +74,20 @@ export class EditTreatmentDefinitionPage implements OnInit {
   /**
    *
    */
-<<<<<<< HEAD
   /*async delete(act: ActDto): Promise<void> {
     this.t.acts = this.t.acts.filter(a => a.id !== act.id);
   }*/
-=======
-  async delete(act: ActDto): Promise<void> {
-    this.t.acts = this.t.acts.filter(a => a.id !== act.id);
-  }
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
   /**
    *
    */
-<<<<<<< HEAD
   /*dropTable(event: CdkDragDrop<ActDto[]>) {
-=======
-  dropTable(event: CdkDragDrop<ActDto[]>) {
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     const prevIndex = this.t.acts.findIndex((a) => a === event.item.data);
     moveItemInArray(this.t.acts, prevIndex, event.currentIndex);
     if (this.table != null) {
       this.table.renderRows();
     }
-<<<<<<< HEAD
   }*/
-=======
-  }
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
   /**
    *
@@ -148,11 +130,7 @@ export class EditTreatmentDefinitionPage implements OnInit {
   /**
    *
    */
-<<<<<<< HEAD
   /*async addAct(ev: MouseEvent): Promise<void> {
-=======
-  async addAct(ev: MouseEvent): Promise<void> {
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     const modal = await this.modalCtrl.create({
       component: AddActPage,
       componentProps: {
@@ -167,11 +145,7 @@ export class EditTreatmentDefinitionPage implements OnInit {
         this.table.renderRows();
       }
     }
-<<<<<<< HEAD
   }*/
-=======
-  }
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 }
 

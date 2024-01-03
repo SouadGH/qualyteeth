@@ -8,17 +8,12 @@ export const environment = {
 
 // export const API_ENDPOINT= 'http://localhost:20251';
 // export const API_ENDPOINT= 'http://192.168.52.128:20251';
-<<<<<<< HEAD
 /*Daniel connexion
 export const API_ENDPOINT= 'http://ubuntu-local:3000';
 export const PYTHON_API_ENDPOINT= 'http://ubuntu-local:5000';*/
 /*Souad connexion*/
 export const API_ENDPOINT= 'http://localhost:3000';
 export const PYTHON_API_ENDPOINT= 'http://localhost:5000';
-=======
-export const API_ENDPOINT= 'http://ubuntu-local:3000';
-export const PYTHON_API_ENDPOINT= 'http://ubuntu-local:5000';
->>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 /*
  * For easier debugging in development mode, you can import the following file
