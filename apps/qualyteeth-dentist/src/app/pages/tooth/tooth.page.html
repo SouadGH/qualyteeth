@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <toolbar-title></toolbar-title>
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <!-- <ion-fab vertical="top" horizontal="end" edge="true" slot="fixed" (click)="newTreatment()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab> -->
+
+  <ion-grid fixed *ngIf="tooth != null">
+    <ion-row>
+      <ion-col>
+        <h3>Dent #{{ tooth.fdiNumber }}</h3>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        
+        <ion-item lines="none">
+          <ion-label>
+            <ion-text>
+              <h2>{{ tooth.name }}</h2>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+
+        <ion-item *ngIf="treatments.length === 0" lines="none">
+          <ion-label>Aucun traitement pour cette dent</ion-label>
+        </ion-item>
+
+        <!-- <ion-list lines="full">
+          <treatment [treatment]="treatment" [patient]="patient" *ngFor="let treatment of treatments"></treatment>
+        </ion-list> -->
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

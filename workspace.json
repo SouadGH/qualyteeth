@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "projects": {
+    "qualyteeth-dentist": "apps/qualyteeth-dentist",
+    "qualyteeth-patient": "apps/qualyteeth-patient",
+    "qualyteeth-server": "apps/qualyteeth-server",
+    "qualyteeth-web": "apps/qualyteeth-web"
+  }
+}

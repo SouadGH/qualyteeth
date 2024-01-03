@@ -1,0 +1,137 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Dentists
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <button mat-fab color="primary" (click)="add()" style="position: absolute; right: 16px; bottom: 32px;">
+    <mat-icon>add</mat-icon>
+  </button>
+
+  <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
+
+  <div style="padding: 16px;">
+
+    <ion-grid fixed style="max-width: 760px; width: 100%;">
+      <ion-row>
+        <ion-col>
+          <h5>Dentists</h5>
+
+          <table mat-table [dataSource]="dentists" class="mat-elevation-z1" *ngIf="dentists.length > 0">
+
+            <ng-container matColumnDef="lastname">
+              <th mat-header-cell *matHeaderCellDef> Nom </th>
+              <td mat-cell *matCellDef="let d">{{ d.lastname }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="firstname">
+              <th mat-header-cell *matHeaderCellDef> Prénom </th>
+              <td mat-cell *matCellDef="let d">{{ d.firstname }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="color">
+              <th mat-header-cell *matHeaderCellDef> Couleur </th>
+              <td mat-cell *matCellDef="let d">
+                <mcc-color-picker hideemptyusedcolors [usedColorLabel]="'Couleurs récentes'" [selectedColor]="d.color" [btnConfirmLabel]="'OK'" [btnCancelLabel]="'Annuler'" (selected)="onColorPickerChanged($event, d)"></mcc-color-picker>
+              </td>
+            </ng-container>
+
+            <!-- <ng-container matColumnDef="delete">
+              <th mat-header-cell *matHeaderCellDef> &nbsp; </th>
+              <td mat-cell *matCellDef="let t" style="text-align: right;">
+                <button mat-icon-button (click)="delete($event, t)">
+                  <mat-icon style="color: red;">cancel</mat-icon>
+                </button>
+              </td>
+            </ng-container> -->
+
+            <ng-container matColumnDef="edit">
+              <th mat-header-cell *matHeaderCellDef> &nbsp; </th>
+              <td mat-cell *matCellDef="let d" style="text-align: right;">
+                <button mat-icon-button (click)="more($event, d)">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columns"></tr>
+            <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+          </table>
+
+          <div *ngIf="dentists.length === 0" style="margin-top: 32px;">
+            Aucun dentiste
+          </div>
+
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+
+  </div>
+
+</ion-content>
+
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Dentistes
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
+
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size-sm="12" size-md="6" size-xl="4" *ngFor="let d of dentists">
+        <mat-card class="example-card">
+          <mat-card-header style="position: relative;">
+            <img mat-card-avatar *ngIf="d.image == null" src="/assets/img/profile.png">
+            <img mat-card-avatar *ngIf="d.image != null" [src]="d.image">
+            <mat-card-title>{{ d.firstname }}</mat-card-title>
+            <mat-card-subtitle>{{ d.lastname }}</mat-card-subtitle>
+            <button mat-icon-button style="position: absolute; right: 0px;" (click)="edit($event, d)">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          </mat-card-header>
+          <mat-card-content style="margin-top: 24px;">
+            <div style="display: flex; align-items: center;">
+              <h6>Couleur</h6>
+              <mcc-color-picker style="margin-left: 16px;" hideemptyusedcolors [usedColorLabel]="'Couleurs récentes'" [selectedColor]="d.color" [btnConfirmLabel]="'OK'" [btnCancelLabel]="'Annuler'" (selected)="onColorPickerChanged($event, d)"></mcc-color-picker>
+            </div>
+
+            <h6>Services</h6>
+            <div class="dentists-services" *ngIf="d.services != null">
+              <ion-list lines="none" style="border-radius: 8px;" *ngIf="d.services.length > 0">
+                <ion-item *ngFor="let s of d.services">
+                  <ion-label>
+                    <h5>{{ s.name }} ({{ s.timing }}')</h5>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+
+              <ion-item *ngIf="d.services.length === 0" lines="none" style="border-radius: 8px;">
+                <ion-label>
+                  <h5>Aucun service</h5>
+                </ion-label>
+              </ion-item>
+            </div>
+
+          </mat-card-content>
+        </mat-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content> -->

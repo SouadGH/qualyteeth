@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Actes</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-searchbar showCancelButton="never" debounce="200" animated (ionChange)="search($event)"></ion-searchbar>
+
+  <!-- <ion-list lines="none" *ngIf="acts != null">
+    <ion-item button *ngFor="let a of acts" (click)="add(a)">
+      <ion-label>
+        <p>{{ a.name }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-item *ngIf="acts == null || acts.length === 0" lines="none">
+    <ion-label>Aucun acte</ion-label>
+  </ion-item> -->
+
+  <table mat-table [dataSource]="acts" class="mat-elevation-z1" *ngIf="acts != null && acts.length > 0">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Nom </th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns;" style="cursor: pointer;" (click)="select(row)"></tr>
+  </table>
+
+  <div *ngIf="acts != null && acts.length === 0" style="margin-top: 32px;">
+    Aucun acte trouvé
+  </div>
+
+</ion-content>

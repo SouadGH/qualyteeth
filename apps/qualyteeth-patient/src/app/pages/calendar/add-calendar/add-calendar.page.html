@@ -1,0 +1,121 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <toolbar-title></toolbar-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-grid style="width: 100%; margin: 0 auto;" class="ion-text-center">
+
+    <ion-row>
+      <ion-col>
+        <h3>Nouvelle demande de <span style="white-space: nowrap">Rendez-Vous</span></h3>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <form novalidate [formGroup]="calendarForm">
+
+          <!-- <mat-form-field style="width: 100%; margin-top: 24px;" *ngIf="surgeries.length === 1">
+            <mat-label>Cabinet</mat-label>
+            <input matInput formControlName="surgery">
+          </mat-form-field> -->
+
+          <!-- <mat-form-field *ngIf="surgeries.length > 1" style="width: 100%;">
+            <mat-label>Cabinet</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let s of surgeries" [value]="s.id">
+                {{ s.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field> -->
+
+          <mat-form-field *ngIf="dentists.length > 1" style="width: 100%;">
+            <mat-label>Dentiste</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let d of dentists" [value]="d.id">
+                {{ d.firstname }} {{ d.lastname }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field style="width: 100%;">
+            <mat-label>Prestation</mat-label>
+            <input type="text" matInput formControlName="service" [matAutocomplete]="serviceAuto">
+            <mat-autocomplete autoActiveFirstOption #serviceAuto="matAutocomplete" [displayWith]="displayService" (closed)="serviceSelected()">
+              <mat-option *ngFor="let s of filteredServices| async" [value]="s" style="padding: 0px;">
+                <ion-item>
+                  <ion-label>
+                    <p>{{ s.category }}</p>
+                    <h3>{{ s.name }}</h3>
+                  </ion-label>
+                </ion-item>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field style="width: 100%;">
+            <mat-label>Dentiste</mat-label>
+            <input type="text" matInput formControlName="dentist" [matAutocomplete]="auto">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayDentist" (closed)="dentistSelected()">
+              <mat-option *ngFor="let d of filteredDentists | async" [value]="d" style="padding: 0px;">
+                <ion-item>
+                  <ion-avatar slot="start" style="width: 24px; height: 24px; display: flex;">
+                    <img *ngIf="d.image == null" src="/assets/img/profile.png">
+                    <img *ngIf="d.image != null" [src]="d.image">
+                  </ion-avatar>
+                  <ion-label>
+                    <h3>{{ d.firstname }} {{ d.lastname }}</h3>
+                    <p>{{ d.timing }} minutes</p>
+                  </ion-label>
+                </ion-item>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field style="margin-top: 32px; width: 100%;">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepickerFilter]="datesFilter" formControlName="date" [matDatepicker]="datePicker" [min]="minDate" [max]="maxDate" (dateChange)="dateChanged($event)">
+            <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-datepicker #datePicker></mat-datepicker>
+          </mat-form-field>
+
+          <!-- <mat-form-field style="width: 100%;">
+            <mat-label>Disponibilités</mat-label>
+            <mat-select formControlName="slot">
+              <mat-option *ngFor="let slot of availableSlots" [value]="slot">
+                {{ formatSlot(slot) }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field> -->
+
+          <ion-grid style="padding: 0px; margin-top: 16px;">
+            <ion-row>
+              <span *ngIf="availableSlots != null">Choisissez votre crénaux horaire</span>
+            </ion-row>
+            <ion-row style="margin-top: 16px;">
+              <ion-col size="6" size-md="4" *ngFor="let slot of availableSlots">
+                <ion-button fill="outline" shape="round" (click)="book(slot)">{{ formatSlot(slot) }}</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+        </form>
+      </ion-col>
+    </ion-row>
+
+    <!-- <ion-row style="margin-top: 16px;">
+      <ion-col>
+        <ion-button (click)="save()" expand="block" [disabled]="!calendarForm.valid">Ajouter</ion-button>
+      </ion-col>
+    </ion-row> -->
+
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,74 @@
+ <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Cabinets
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <mat-fab-menu #matFabMenu color="primary" [fabButtons]="addBtns" direction="top" (onFabMenuItemSelected)="onFabMenuItemSelected($event)" style="position: absolute; right: 16px; bottom: 32px;"></mat-fab-menu>
+
+  <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
+
+  <div style="padding: 16px;">
+
+    <ion-grid fixed style="max-width: 760px; width: 100%;">
+      <ion-row>
+        <ion-col>
+          <h5>Cabinets</h5>
+
+          <table mat-table [dataSource]="surgeries" class="mat-elevation-z1" *ngIf="surgeries.length > 0">
+
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef> Identifiant </th>
+              <td mat-cell *matCellDef="let s">{{ s.id }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Nom </th>
+              <td mat-cell *matCellDef="let s">{{ s.name }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="dentists">
+              <th mat-header-cell *matHeaderCellDef> Dentistes </th>
+              <td mat-cell *matCellDef="let s">{{ s.practitioners != null ? s.practitioners.length : '' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="default">
+              <th mat-header-cell *matHeaderCellDef> Actif </th>
+              <td mat-cell *matCellDef="let s">
+                <mat-icon *ngIf="s.active" style="color: green;">check_circle</mat-icon>
+                <mat-icon *ngIf="!s.active">cancel</mat-icon>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="edit">
+              <th mat-header-cell *matHeaderCellDef> &nbsp; </th>
+              <td mat-cell *matCellDef="let s" style="text-align: right;">
+                <button mat-icon-button (click)="more($event, s)">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columns"></tr>
+            <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+          </table>
+
+          <div *ngIf="surgeries.length === 0" style="margin-top: 32px;">
+            Aucun cabinet - Ajoutez un cabinet en cliquant sur le bouton +
+          </div>
+
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+
+  </div>
+
+</ion-content> 

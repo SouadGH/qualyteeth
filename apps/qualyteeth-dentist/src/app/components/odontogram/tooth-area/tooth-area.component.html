@@ -1,0 +1,21 @@
+<div *ngIf="editable">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" width="32px" height="32px" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" id="svg_document" style="zoom: 0.75;">
+    <rect stroke="#000000" x="0px" y="0px" height="32px" width="32px" stroke-width="1px" fill="#ffffff"></rect>
+    <rect stroke="#000000" x="10px" y="10px" height="12px" width="12px" stroke-width="0.5px" fill="#ffffff" (click)="select($event, 'i')" class="clickable" (mouseover)="partOver = 'i'" (mouseleave)="partOver = null" [class.focused-part]="partOver === 'i'" [class.ondontogram-tooth-area-selected]="tooth.selectedParts.includes('i')"></rect>
+    <polygon points="32,32 0,32 10,22 22,22" stroke="#000000" stroke-width="1px" fill="#ffffff" (click)="select($event, 'b')" class="clickable" (mouseover)="partOver = 'b'" (mouseleave)="partOver = null" [class.focused-part]="partOver === 'b'" [class.ondontogram-tooth-area-selected]="tooth.selectedParts.includes('b')"></polygon>
+    <polygon points="32,0 32,32 22,22 22,10" stroke="#000000" stroke-width="1px" fill="#ffffff" (click)="select($event, 'm')" class="clickable" (mouseover)="partOver = 'm'" (mouseleave)="partOver = null" [class.focused-part]="partOver === 'm'" [class.ondontogram-tooth-area-selected]="tooth.selectedParts.includes('m')"></polygon>
+    <polygon points="0,0 32,0 22,10 10,10" stroke="#000000" stroke-width="1px" fill="#ffffff" (click)="select($event, 'l')" class="clickable" (mouseover)="partOver = 'l'" (mouseleave)="partOver = null" [class.focused-part]="partOver === 'l'" [class.ondontogram-tooth-area-selected]="tooth.selectedParts.includes('l')"></polygon>
+    <polygon points="0,32 0,0 10,10 10,22" stroke="#000000" stroke-width="1px" fill="#ffffff" (click)="select($event, 'd')" class="clickable" (mouseover)="partOver = 'd'" (mouseleave)="partOver = null" [class.focused-part]="partOver === 'd'" [class.ondontogram-tooth-area-selected]="tooth.selectedParts.includes('d')"></polygon>
+  </svg>
+</div>
+
+<div *ngIf="!editable">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" width="32px" height="32px" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" id="svg_document" style="zoom: 0.75;">
+    <rect stroke="#000000" x="0px" y="0px" height="32px" width="32px" stroke-width="1px" fill="#ffffff"></rect>
+    <rect stroke="#000000" x="10px" y="10px" height="12px" width="12px" stroke-width="0.5px" fill="#ffffff"></rect>
+    <polygon points="32,32 0,32 10,22 22,22" stroke="#000000" stroke-width="1px" fill="#ffffff" (click)="select($event, 'b')"></polygon>
+    <polygon points="32,0 32,32 22,22 22,10" stroke="#000000" stroke-width="1px" fill="#ffffff" (click)="select($event, 'm')"></polygon>
+    <polygon points="0,0 32,0 22,10 10,10" stroke="#000000" stroke-width="1px" fill="#ffffff" (click)="select($event, 'l')"></polygon>
+    <polygon points="0,32 0,0 10,10 10,22" stroke="#000000" stroke-width="1px" fill="#ffffff" (click)="select($event, 'd')"></polygon>
+  </svg>
+</div>

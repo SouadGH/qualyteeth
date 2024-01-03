@@ -1,0 +1,126 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Cabinet - Joindre</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <div style="padding: 16px;">
+
+    <ion-grid fixed style="max-width: 760px; width: 100%;">
+      <ion-row>
+        <ion-col>
+          <h5>Cabinets jointes</h5>
+
+          <table mat-table [dataSource]="surgeriesJoined" class="mat-elevation-z1" *ngIf="surgeriesJoined.length > 0">
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Nom </th>
+              <td mat-cell *matCellDef="let s">{{ s.name }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="city">
+              <th mat-header-cell *matHeaderCellDef> City </th>
+              <td mat-cell *matCellDef="let s" >{{ s.city }}</td>
+              
+            </ng-container>
+
+            
+
+            <!--<ng-container matColumnDef="dentists">
+              <th mat-header-cell *matHeaderCellDef> Dentistes </th>
+              <td mat-cell *matCellDef="let s">{{ s.practitioners != null ? s.practitioners.length : '' }}</td>
+            </ng-container>-->
+
+            <ng-container matColumnDef="default">
+              <th mat-header-cell *matHeaderCellDef> Actif </th>
+              <td mat-cell *matCellDef="let s">
+                <mat-icon *ngIf="s.active" style="color: green;">check_circle</mat-icon>
+                <mat-icon *ngIf="!s.active">cancel</mat-icon>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="edit">
+              <th mat-header-cell *matHeaderCellDef> &nbsp; </th>
+              <td mat-cell *matCellDef="let s" style="text-align: right;">
+                <button mat-icon-button (click)="more($event, s)">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columns"></tr>
+            <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+          </table>
+          <h5>Cabinets non jointes</h5>
+          <table mat-table [dataSource]="surgeries" class="mat-elevation-z1" *ngIf="surgeries.length > 0">
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Nom </th>
+              <td mat-cell *matCellDef="let s">{{ s.name }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="city">
+              <th mat-header-cell *matHeaderCellDef> City </th>
+              <td mat-cell *matCellDef="let s" >{{ s.city }}</td>
+              
+            </ng-container>
+
+            
+
+            <!--<ng-container matColumnDef="dentists">
+              <th mat-header-cell *matHeaderCellDef> Dentistes </th>
+              <td mat-cell *matCellDef="let s">{{ s.practitioners != null ? s.practitioners.length : '' }}</td>
+            </ng-container>-->
+
+            <ng-container matColumnDef="default">
+              <th mat-header-cell *matHeaderCellDef> Actif </th>
+              <td mat-cell *matCellDef="let s">
+                <mat-icon *ngIf="s.active" style="color: green;">check_circle</mat-icon>
+                <mat-icon *ngIf="!s.active">cancel</mat-icon>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="edit">
+              <th mat-header-cell *matHeaderCellDef> &nbsp; </th>
+              <td mat-cell *matCellDef="let s" style="text-align: right;">
+                <button mat-icon-button (click)="more($event, s)">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columns"></tr>
+            <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+          </table>
+          <div *ngIf="surgeries.length === 0" style="margin-top: 32px;">
+            Aucun cabinet - Ajoutez un cabinet en cliquant sur le bouton +
+          </div>
+
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+
+  </div>
+  <button mat-fab color="primary" (click)="join()" style="position: absolute; right: 16px; bottom: 32px;">
+    <mat-icon>done</mat-icon>
+  </button>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <h4>Rejoindre un cabinet</h4>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <mat-form-field style="width: 100%;">
+          <mat-label>Identifiant du cabinet</mat-label>
+          <input type="number" matInput [(ngModel)]="surgeryCode">
+        </mat-form-field>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

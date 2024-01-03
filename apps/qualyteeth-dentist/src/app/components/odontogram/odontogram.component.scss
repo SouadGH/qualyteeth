@@ -1,0 +1,94 @@
+.odontogram {
+    display: flex;
+}
+
+.quadrants-container {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.quadrant {
+    justify-content: space-around;
+    display: flex;
+    min-height: 160px;
+}
+
+.quadrant-top {
+    border-bottom: 1px solid lightgray;
+}
+
+.quadrant-left {
+    border-right: 1px solid lightgray;
+}
+
+.tooth {
+    // border: solid 1px lightgray;
+    border: solid 1px white;
+    display: flex;
+    // flex: 0 1 72px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.cursor {
+    cursor: pointer;
+}
+
+.tooth-bottom {
+    flex-direction: column-reverse;
+}
+
+.tooth-img {
+    height: 144px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    // border: solid 1px red;
+    // margin-top: 8px;
+    // margin-bottom: 8px;
+    width: 100%;
+    padding: 8px;
+}
+
+.tooth-reversed {
+    flex-direction: column-reverse;
+}
+
+.tooth-area {
+
+}
+
+.tooth-selected {
+    border: solid 1px darkgray;
+    background-color: lightgray;
+}
+
+.tooth-number {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    border: solid 1px black;
+    border-radius: 50%;
+    padding: 4px;
+    font-size: 0.7em;
+    cursor: pointer;
+    background-color: white;
+}
+
+.focused-tooth {
+    border: solid 1px grey;
+}
+
+.focused-part {
+    fill: lightgray;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+app-odontogram-tooth {
+    width: 100%;
+}

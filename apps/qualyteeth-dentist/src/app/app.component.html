@@ -1,0 +1,152 @@
+<ion-app>
+  <ion-split-pane contentId="main" *ngIf="authSvc.isAuthenticated">
+
+    <!--  the side menu  -->
+    <ion-menu contentId="main">
+
+      <!-- <ion-header style="height: 240px;">
+        <img *ngIf="surgery != null && surgery.image != null" [src]="surgery.image" alt="Cabinet" style="object-fit: cover; position: absolute; width: 100%; height: 100%;" />
+        <div class="menu-header">
+          <toolbar-title style="position:absolute; top: 0; left: 0; right: 0; background-color: white; height: 56px; padding: 16px; opacity: 0.7;"></toolbar-title>
+          <div style="background-color: #333333; opacity: 0.5; width: 100%; padding: 8px; font-size: 1.1em;" *ngIf="surgery != null">{{ surgery.name }}</div>
+          <button mat-icon-button (click)="pop($event)" style="position: absolute; right: 8px; top: 8px;">
+            <mat-icon style="color: black;">more_vert</mat-icon>
+          </button>
+        </div>
+      </ion-header> -->
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>
+            <toolbar-title></toolbar-title>
+          </ion-title>
+          <ion-buttons slot="end">
+            <button mat-icon-button (click)="pop($event)">
+              <mat-icon style="color: black;">more_vert</mat-icon>
+            </button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content [fullscreen]="true">
+        <!-- <div style="width: 100%; padding: 16px; font-size: 1.1em;" *ngIf="surgerySvc.activeSurgery != null">{{  surgerySvc.activeSurgery.name }}</div> -->
+        <ion-list lines="none">
+          <ion-item button (click)="go('patients')" [ngClass]="{'active-menu': appSvc.currentPage === '/patients'}">
+            <ion-icon name="people-outline" slot="start"></ion-icon>
+            <ion-label>Patients</ion-label>
+          </ion-item>
+          <ion-item button (click)="go('calendar')" [ngClass]="{'active-menu': appSvc.currentPage === '/calendar'}">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <ion-label>Calendrier</ion-label>
+          </ion-item>
+          <ion-item button (click)="go('activity')" [ngClass]="{'active-menu': appSvc.currentPage === '/activity'}">
+            <ion-icon name="search-outline" slot="start"></ion-icon>
+            <ion-label>Activité</ion-label>
+          </ion-item>
+          <!-- <ion-item button (click)="go('diagnostics')"
+            [ngClass]="{'active-menu': appSvc.currentPage === '/diagnostics'}" disabled>
+            <ion-icon name="search-outline" slot="start"></ion-icon>
+            <ion-label>Diagnostiques effectués</ion-label>
+          </ion-item>
+          <ion-item button (click)="go('treatments')" [ngClass]="{'active-menu': appSvc.currentPage === '/treatments'}"
+            disabled>
+            <ion-icon name="easel-outline" slot="start"></ion-icon>
+            <ion-label>Traitements effectués</ion-label>
+          </ion-item> -->
+          <!-- <ion-item button (click)="go('calendar/details')" class="sub-menu" [ngClass]="{'active-menu': appSvc.currentPage === '/calendar/details'}">
+            <ion-icon name="search-outline" slot="start"></ion-icon>
+            <ion-label>Détails</ion-label>
+          </ion-item> -->
+          <!-- <ion-item button (click)="go('calendar/requests')" class="sub-menu" [ngClass]="{'active-menu': appSvc.currentPage === '/calendar/requests'}">
+            <ion-icon name="push-outline" slot="start"></ion-icon>
+            <ion-label>Requêtes de RDV</ion-label>
+          </ion-item> -->
+          <!-- <ion-item button (click)="go('calendar/cancellations')" class="sub-menu" [ngClass]="{'active-menu': appSvc.currentPage === '/calendar/cancellations'}">
+            <ion-icon name="trash-bin-outline" slot="start"></ion-icon>
+            <ion-label>Rendez-vous annulés</ion-label>
+          </ion-item> -->
+          <!-- <ion-item button [ngClass]="{'active-menu': appSvc.currentPage === '/invoicing'}" disabled>
+            <ion-icon name="cash-outline" slot="start"></ion-icon>
+            <ion-label>Facturation</ion-label>
+          </ion-item> -->
+          <ion-item button [ngClass]="{'active-menu': appSvc.currentPage === '/analytics'}" disabled>
+            <ion-icon name="trending-up-outline" slot="start"></ion-icon>
+            <ion-label>Dashboard</ion-label>
+          </ion-item>
+
+          <hr style="background-color: darkgray; margin-left: 8px; margin-right: 8px; margin-top: 32px; margin-bottom: 32px;" />
+
+          <ion-item>
+            <ion-label>Configuration</ion-label>
+          </ion-item>
+
+          <ion-item button (click)="go('admin/surgery')" [ngClass]="{'active-menu': appSvc.currentPage === 'admin/surgery'}">
+            <ion-icon name="business-outline" slot="start"></ion-icon>
+            <ion-label>Cabinets</ion-label>
+          </ion-item>
+
+          <!-- <ion-item disabled>
+            <ion-icon name="business-outline" slot="start"></ion-icon>
+            <ion-label>Cabinets</ion-label>
+          </ion-item>
+          <ion-item button (click)="go('admin/surgery')" [ngClass]="{'active-menu': appSvc.currentPage === 'admin/surgery'}" disabled>
+            <ion-icon style="margin-left: 16px; width: 20px; height: 20px;" name="home-outline" slot="start"></ion-icon>
+            <ion-label style="font-size: 0.9em;">Details</ion-label>
+          </ion-item>
+          <ion-item button (click)="go('admin/dentists')" [ngClass]="{'active-menu': appSvc.currentPage === 'admin/dentists'}" disabled>
+            <ion-icon style="margin-left: 16px; width: 20px; height: 20px;" name="medkit-outline" slot="start"></ion-icon>
+            <ion-label style="font-size: 0.9em;">Dentistes</ion-label>
+          </ion-item> -->
+          <ion-item button (click)="go('admin/services')" [ngClass]="{'active-menu': appSvc.currentPage === 'admin/services'}">
+            <ion-icon name="hammer-outline" slot="start"></ion-icon>
+            <ion-label>Services</ion-label>
+          </ion-item>
+          <ion-item button (click)="go('admin/diagnostics')" [ngClass]="{'active-menu': appSvc.currentPage === 'admin/diagnostics'}">
+            <ion-icon name="glasses-outline" slot="start"></ion-icon>
+            <ion-label>Diagnostiques (définitions)</ion-label>
+          </ion-item>
+          <ion-item button (click)="go('admin/treatments')" [ngClass]="{'active-menu': appSvc.currentPage === 'admin/treatments'}">
+            <ion-icon name="bandage-outline" slot="start"></ion-icon>
+            <ion-label>Traitements (définitions)</ion-label>
+          </ion-item>
+
+          <!-- <hr style="background-color: darkgray; margin-left: 8px; margin-right: 8px;" />
+
+          <ion-item button (click)="go('admin/settings')" [ngClass]="{'active-menu': appSvc.currentPage === 'admin/settings'}">
+            <ion-icon name="settings-outline" slot="start"></ion-icon>
+            <ion-label>Paramètres</ion-label>
+          </ion-item> -->
+
+        </ion-list>
+
+        <!-- <ion-item [ngClass]="{'active-menu': appSvc.currentPage === 'marketplace'}" style="margin-top: 24px;">
+            <ion-icon name="pulse-outline" slot="start"></ion-icon>
+            <ion-label>Market Place</ion-label>
+          </ion-item>
+          <ion-list lines="none" style="margin-left: 24px;">
+            <ion-item button (click)="go('marketplace')">
+              <ion-icon name="grid-outline" slot="start"></ion-icon>
+              <ion-label>Home</ion-label>
+            </ion-item>
+            <ion-item button disabled>
+              <ion-icon name="flash-outline" slot="start"></ion-icon>
+              <ion-label>Tendances</ion-label>
+            </ion-item>
+            <ion-item button disabled>
+              <ion-icon name="heart-outline" slot="start"></ion-icon>
+              <ion-label>Favoris</ion-label>
+            </ion-item>
+            <ion-item button disabled>
+              <ion-icon name="cart-outline" slot="start"></ion-icon>
+              <ion-label>Panier</ion-label>
+              <ion-badge slot="end">0</ion-badge>
+            </ion-item>
+          </ion-list> -->
+      </ion-content>
+    </ion-menu>
+
+    <!-- the main content -->
+    <ion-router-outlet id="main"></ion-router-outlet>
+  </ion-split-pane>
+
+  <ion-router-outlet *ngIf="!authSvc.isAuthenticated"></ion-router-outlet>
+</ion-app>

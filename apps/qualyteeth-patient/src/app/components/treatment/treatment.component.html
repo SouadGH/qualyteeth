@@ -1,0 +1,13 @@
+<ion-item button (click)="details()" detail="true">
+  <ion-label class="ion-text-wrap">
+    <ion-text>
+      <h6>Date: {{ treatment.startDate | date : "dd.MM.yyyy" }}</h6>
+      <h4>Dent traîtée: </h4>
+      <!-- <h5>Commentaire: {{ treatment.comment || 'N/A' }}</h5>
+      <h5 *ngIf="treatment.toothTreatments != null">
+        Status: <span *ngFor="let t of treatment.toothTreatments, index as i" style="font-size: 0.8em;"> {{ t.status }} <span *ngIf="i < treatment.toothTreatments.length - 1">|</span></span>
+      </h5> -->
+    </ion-text>
+  </ion-label>
+  <!-- <ion-icon name="document-outline" slot="end"></ion-icon> -->
+</ion-item>

@@ -1,0 +1,80 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Traitements - Définitions
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <button mat-fab color="primary" (click)="add()" style="position: absolute; right: 16px; bottom: 32px;">
+    <mat-icon>add</mat-icon>
+  </button>
+
+  <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
+
+  <div style="padding: 16px;">
+
+    <ion-grid fixed style="max-width: 760px; width: 100%;">
+      <ion-row>
+        <ion-col>
+          <h5>Traitements</h5>
+
+          <table mat-table [dataSource]="treatments" class="mat-elevation-z1" *ngIf="treatments.length > 0">
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Name </th>
+              <td mat-cell *matCellDef="let t">{{ t.name }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="creator">
+              <th mat-header-cell *matHeaderCellDef> Créateur </th>
+              <td mat-cell *matCellDef="let t">
+                <p *ngIf="t.practitioner !=null">{{ t.practitioner.firstname }} {{ t.practitioner.lastname   }}</p></td>
+         
+                <!--{{ t.createdBy | dentist | async }}</td>-->
+            </ng-container>
+
+            <ng-container matColumnDef="created">
+              <th mat-header-cell *matHeaderCellDef> Créé le </th>
+              <td mat-cell *matCellDef="let t">{{ t.creationDate  | date : "dd.MM.yyyy • HH:mm" }}</td>
+            </ng-container>
+
+            <!-- <ng-container matColumnDef="delete">
+              <th mat-header-cell *matHeaderCellDef> &nbsp; </th>
+              <td mat-cell *matCellDef="let t" style="text-align: right;">
+                <button mat-icon-button (click)="delete($event, t)">
+                  <mat-icon style="color: red;">cancel</mat-icon>
+                </button>
+              </td>
+            </ng-container> -->
+
+            <ng-container matColumnDef="edit">
+              <th mat-header-cell *matHeaderCellDef> &nbsp; </th>
+              <td mat-cell *matCellDef="let t" style="text-align: right;">
+                <button mat-icon-button (click)="more($event, t)" *ngIf="t.practitioner != null">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columns"></tr>
+            <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+          </table>
+
+          <div *ngIf="treatments.length === 0" style="margin-top: 32px;">
+            Aucun traitement
+          </div>
+
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+
+  </div>
+
+</ion-content>

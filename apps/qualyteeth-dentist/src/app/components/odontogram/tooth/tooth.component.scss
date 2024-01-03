@@ -1,0 +1,40 @@
+.tooth-part {
+    border: solid 1px #333333;
+    margin: 1px;
+    width: 100%;
+    background-color: white;
+}
+
+.tooth-part-root {
+    height: 40px;
+}
+
+.tooth-part-top {
+    height: 24px;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+// .focused-part {
+//     background-color: lightgray;
+// }
+
+// .ondontogram-tooth-selected {
+//     border: solid 1px #333333;
+//     background-color: lightgray;
+// }
+
+.focused-out {
+    fill: white;
+}
+
+.focused-part {
+    fill: lightgray;
+}
+
+.ondontogram-tooth-selected {
+    border: solid 1px #333333;
+    fill: #c3c3c3;
+}

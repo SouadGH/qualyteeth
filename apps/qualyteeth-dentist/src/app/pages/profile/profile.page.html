@@ -1,0 +1,169 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <toolbar-title></toolbar-title>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <input type="file" hidden #imgChooser (change)="onImageChosen($event)" accept=".jpg, .png, .jpeg, .gif, .bmp">
+
+  <ion-grid fixed>
+    <ion-row class="ion-justify-content-center" *ngIf="user != null">
+      <ion-col size="auto">
+        <img *ngIf="user.user?.image == null" src="assets/img/profile.png" alt="Profile" width="120px" height="120px" style="border-radius: 50%; border: solid 1px lightgray; cursor: pointer; object-fit: cover;" (click)="editProfileImage()" />
+        <img *ngIf="user.user?.image != null" [src]="user.user.image" alt="Profile" width="120px" height="120px" style="border-radius: 50%; border: solid 1px lightgray; cursor: pointer; object-fit: cover;" (click)="editProfileImage()" />
+      </ion-col>
+    </ion-row>
+
+    <mat-tab-group mat-align-tabs="center" style="margin-top: 16px;">
+
+      <mat-tab label="Détails">
+        <form novalidate [formGroup]="profileForm" (ngSubmit)="update()" style="margin-top: 32px;">
+          <ion-row>
+            <ion-col>
+
+              <mat-form-field style="width: 100%;">
+                <mat-label>Nom</mat-label>
+                <input matInput formControlName="lastname" required>
+                <mat-error *ngIf="profileForm.controls['lastname'].hasError('required')">
+                  Veuillez entrer un <strong>nom</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field style="width: 100%; margin-top: 8px;">
+                <mat-label>Prénom</mat-label>
+                <input matInput formControlName="firstname" required>
+                <mat-error *ngIf="profileForm.controls['firstname'].hasError('required')">
+                  Veuillez entrer un <strong>prénom</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field style="width: 100%; margin-top: 8px;">
+                <mat-label>Adresse e-mail</mat-label>
+                <input type="email" matInput formControlName="email">
+                <!-- <mat-error *ngIf="profileForm.controls['email'].hasError('required')">
+                  Veuillez entrer un <strong>email</strong>
+                </mat-error>
+                <mat-error *ngIf="profileForm.controls['email'].hasError('email')">
+                  Email <strong>invalide</strong>
+                </mat-error> -->
+              </mat-form-field>
+
+              <mat-form-field style="width: 100%; margin-top: 8px;">
+                <mat-label>N° de téléphone</mat-label>
+                <input type="tel" matInput formControlName="phoneNumber">
+              </mat-form-field>
+
+            </ion-col>
+          </ion-row>
+
+          <ion-row style="margin-top: 16px;">
+            <ion-col>
+              <ion-button (click)="update()" expand="block" [disabled]="!profileForm.dirty && !userImgChanged">Mettre à jour</ion-button>
+            </ion-col>
+          </ion-row>
+        </form>
+      </mat-tab>
+
+      <mat-tab label="Présences">
+        <div style="padding-top: 16px;">
+
+          <!-- <mat-accordion *ngIf="this.dentistTimetables">
+
+            <mat-expansion-panel *ngFor="let day of days">
+              <mat-expansion-panel-header>
+                <mat-panel-title style="flex-grow: 0;">
+                  {{ day }}
+                </mat-panel-title>
+                <mat-panel-description *ngIf="getDayTimetable(day).length > 0">
+                  <div style="width: 360px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                    <span *ngFor="let range of getDayTimetable(day)" style="margin-right: 8px;">
+                      [{{ toTimeString(range['fromHour']) }}:{{ toTimeString(range['fromMinute']) }} -> {{ toTimeString(range['toHour']) }}:{{ toTimeString(range['toMinute']) }}]
+                    </span>
+                  </div>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <div *ngIf="getDayTimetable(day).length === 0">
+                Aucun horaire défini pour ce jour
+              </div>
+
+              <div *ngFor="let range of getDayTimetable(day); let i = index" style="display: flex; justify-content: space-around; align-items: center;">
+
+                <div>
+                  <mat-form-field style="width: 64px;">
+                    <mat-label>De</mat-label>
+                    <mat-select [(value)]="range['fromHour']">
+                      <mat-option *ngFor="let hour of hours" [value]="hour">
+                        {{ toTimeString(hour) }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  &nbsp;:&nbsp;
+                  <mat-form-field style="width: 64px;">
+                    <mat-select [(value)]="range['fromMinute']">
+                      <mat-option *ngFor="let minute of minutes" [value]="minute">
+                        {{ toTimeString(minute) }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div>
+                  <mat-form-field style="width: 64px;">
+                    <mat-label>A</mat-label>
+                    <mat-select [(value)]="range['toHour']">
+                      <mat-option *ngFor="let hour of hours" [value]="hour">
+                        {{ toTimeString(hour) }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  &nbsp;:&nbsp;
+                  <mat-form-field style="width: 64px;">
+                    <mat-select [(value)]="range['toMinute']">
+                      <mat-option *ngFor="let minute of minutes" [value]="minute">
+                        {{ toTimeString(minute) }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div>
+                  <ion-button (click)="removeTimetable(day, i)" fill="clear" color="danger">
+                    <ion-icon slot="icon-only" name="close-circle-outline"></ion-icon>
+                  </ion-button>
+                </div>
+
+              </div>
+
+              <div>
+                <button mat-raised-button color="primary" (click)="addTimetable(day)" style="margin-top: 16px;">Ajouter</button>
+              </div>
+            </mat-expansion-panel>
+
+          </mat-accordion> -->
+
+          <ion-row style="margin-top: 16px;">
+            <ion-col>
+              <ion-button (click)="updateTimetables()" expand="block">Mettre à jour</ion-button>
+            </ion-col>
+          </ion-row>
+
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+
+
+
+  </ion-grid>
+
+</ion-content>

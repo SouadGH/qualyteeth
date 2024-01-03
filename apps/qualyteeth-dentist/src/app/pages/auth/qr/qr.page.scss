@@ -1,0 +1,25 @@
+ion-grid {
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 64px;
+}
+
+ion-row {
+    // height: 640px;
+    // width: 640px;
+    // margin: 0 auto;
+}
+
+ion-col {
+    background-image: url(/assets/img/icon.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas {
+    border: solid 5px black;
+}

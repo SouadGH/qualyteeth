@@ -1,0 +1,33 @@
+// ::ng-deep .fc {
+//     max-height: 880px;
+// }
+
+ion-content {
+    --padding-top: 88px;
+    --padding-bottom: 32px;
+    --padding-start: 32px;
+    --padding-end: 32px;
+    position: fixed;
+}
+
+::ng-deep .fc-toolbar-title {
+    text-transform: capitalize !important;
+}
+
+::ng-deep .fc-button {
+    background-color: transparent !important;
+    color: black !important;
+    // font-weight: 200 !important;
+}
+
+::ng-deep .fc-button-active {
+    font-weight: 700 !important;
+}
+
+::ng-deep .fc-scrollgrid-sync-inner {
+    font-size: 0.8em;
+}
+
+::ng-deep .fc-license-message {
+    display: none;
+}

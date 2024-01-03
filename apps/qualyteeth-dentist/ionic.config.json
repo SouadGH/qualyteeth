@@ -1,0 +1,7 @@
+{
+  "name": "qualyteeth-dentist",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

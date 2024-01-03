@@ -1,0 +1,50 @@
+<ion-content [fullscreen]="true">
+
+  <ion-grid style="width: 100%; max-width: 540px; margin: 0 auto; margin-top: 64px;" class="ion-text-center">
+
+    <ion-row>
+      <ion-col>
+        <img src="/assets/img/icon.svg" alt="QualyTeeth" style="width: 120px;">
+        <h2>Log In</h2>
+        ou <a (click)="signin()" style="cursor: pointer;">Enregistrez-vous ici !</a>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="margin-top: 32px;">
+      <ion-col>
+        <form novalidate [formGroup]="loginForm" (ngSubmit)="login()">
+
+          <mat-form-field style="width: 100%;">
+            <mat-label>Adresse e-mail</mat-label>
+            <input matInput type="email" formControlName="email" required>
+            <mat-error *ngIf="loginForm.controls['email'].hasError('required')">
+              Veuillez entrer un <strong>email</strong>
+            </mat-error>
+            <mat-error *ngIf="loginForm.controls['email'].hasError('email')">
+              Email <strong>invalide</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field style="width: 100%; margin-top: 8px;">
+            <mat-label>Mot de passe</mat-label>
+            <input matInput type="password" formControlName="password" required>
+            <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+              Veuillez entrer un <strong>mot de passe</strong>
+            </mat-error>
+            <mat-error *ngIf="loginForm.controls['password'].hasError('minlength')">
+              8 caractères <strong>minimum</strong>
+            </mat-error>
+          </mat-form-field>
+          
+        </form>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="margin-top: 16px;">
+      <ion-col>
+        <ion-button (click)="login()" expand="block" [disabled]="!loginForm.valid">Log in</ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

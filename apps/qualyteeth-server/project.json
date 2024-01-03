@@ -1,0 +1,50 @@
+{
+    "root": "apps/qualyteeth-server",
+    "sourceRoot": "apps/qualyteeth-server/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/node:webpack",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/apps/qualyteeth-server",
+                "main": "apps/qualyteeth-server/src/main.ts",
+                "tsConfig": "apps/qualyteeth-server/tsconfig.app.json",
+                "assets": []
+            },
+            "configurations": {
+                "production": {
+                    "optimization": true,
+                    "extractLicenses": true,
+                    "inspect": false,
+                    "fileReplacements": [{
+                        "replace": "apps/qualyteeth-server/src/environments/environment.ts",
+                        "with": "apps/qualyteeth-server/src/environments/environment.prod.ts"
+                    }]
+                }
+            }
+        },
+        "serve": {
+            "executor": "@nrwl/node:node",
+            "options": {
+                "buildTarget": "qualyteeth-server:build"
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["apps/qualyteeth-server/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/apps/qualyteeth-server"],
+            "options": {
+                "jestConfig": "apps/qualyteeth-server/jest.config.js",
+                "passWithNoTests": true
+            }
+        }
+    },
+    "tags": []
+}

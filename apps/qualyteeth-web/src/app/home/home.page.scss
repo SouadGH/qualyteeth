@@ -1,0 +1,225 @@
+.banner-content {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  background-image: url("/assets/images/banner.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.banner-title {
+  font-size: 3em;
+  margin-top: 16px;
+  margin-bottom: 32px;
+}
+
+.banner-subtitle {
+  font-size: 1.5em;
+}
+
+.section-ash {
+  background: #f2f4fa;
+}
+
+.section-padding {
+  padding: 100px 0 75px;
+  overflow: hidden;
+}
+
+.section-title {
+  margin-top: 64px;
+  margin-bottom: 64px;
+}
+
+.section-about {
+  background: url("/assets/images/about.png") no-repeat 0 0;
+  background-size: cover;
+  background-position: 50%;
+  width: 100%;
+}
+
+.section-testimonials {
+  background: url("/assets/images/testimonials.png") no-repeat 0 0;
+  background-size: cover;
+  background-position: 50%;
+  background-attachment: fixed;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.testimonial-info {
+  margin: 0 auto;
+  overflow: hidden;
+  text-align: center;
+}
+
+.testimonial-client {
+  float: left;
+  width: 100%;
+  // margin: 14px 0 0;
+  color: #f2f4fa;
+}
+
+.blog-post-content {
+  margin: 15px auto;
+  overflow: hidden;
+}
+
+.qualyteeth-icon {
+  width: 64px;
+  max-width: 64px;
+  // height: 64px;
+}
+
+.footer-item {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-item p {
+  color: #ccc;
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+.footer-item ul {
+  list-style-type: none;
+  padding: 0;
+  overflow: hidden;
+}
+
+.footer-item ul li {
+  color: #ccc;
+  line-height: 32px;
+}
+
+.footer-item ul li i {
+  color: #fd6121;
+  font-size: 24px;
+}
+
+.footer-item ul li a {
+  color: #ccc;
+  font-size: 16px;
+}
+
+// .footer-item ul li a:before {
+//   color: #fd6121;
+//   content: "\eb79";
+//   font-family: Icofont;
+//   float: left;
+//   margin-right: 10px;
+// }
+
+ul.social li {
+  float: left;
+  margin: 0 8px 0 0;
+  background: #5e5c5c;
+  padding: 4px 8px;
+}
+
+ul.social li a {
+ display: flex;
+ align-items: center;
+}
+
+.footer-item h4 {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0;
+}
+
+.footer-item ul li a {
+  color: #ccc;
+  font-size: 15px;
+}
+
+.footer-bottom {
+  border-top: 1px solid #3d3d40;
+}
+
+.footer-bottom p {
+  color: #ccc;
+  margin: 30px 0;
+  text-align: center;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.member-img {
+  height: 215px;
+}
+
+.img-fluid,
+.img-thumbnail {
+  max-width: 100%;
+  // height: auto;
+}
+
+.container {
+  width: 100%;
+  padding-right: 16px;
+  padding-left: 16px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.service-content {
+  margin: 16px auto;
+  overflow: hidden;
+}
+
+.service-content .icon-content {
+  float: left;
+  width: 20%;
+}
+
+.service-content .text-content {
+  float: left;
+  width: 75%;
+}
+
+.text-white {
+  color: white;
+}
+
+.team-content {
+  margin: 15px auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}

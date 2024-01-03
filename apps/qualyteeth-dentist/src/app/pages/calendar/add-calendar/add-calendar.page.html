@@ -1,0 +1,331 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <toolbar-title></toolbar-title>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <mat-tab-group mat-align-tabs="center">
+
+    <mat-tab label="Détails">
+      <ion-grid fixed>
+
+        <ion-row>
+          <ion-col>
+
+            <form novalidate [formGroup]="calendarForm" (ngSubmit)="save()">
+
+              <mat-form-field style="width: 100%;">
+                <mat-label>Patient</mat-label>
+                <input type="text" matInput formControlName="patient" [matAutocomplete]="patientAuto">
+                <mat-autocomplete autoActiveFirstOption #patientAuto="matAutocomplete" [displayWith]="display">
+                  <mat-option *ngFor="let p of filteredPatients | async" [value]="p" style="padding: 0px;">
+                    <ion-item>
+                      <ion-avatar slot="start" style="width: 24px; height: 24px; display: flex;">
+                        <img *ngIf="p.image == null" src="/assets/img/profile.png">
+                        <img *ngIf="p.image != null" [src]="p.image">
+                      </ion-avatar>
+                      <ion-label>
+                        <h3>{{ p.firstname }} {{ p.lastname }}</h3>
+                      </ion-label>
+                    </ion-item>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+
+              <mat-form-field style="width: 100%;">
+                <mat-label>Dentiste</mat-label>
+                <input type="text" matInput formControlName="dentist" [matAutocomplete]="dentistAuto">
+                <mat-autocomplete autoActiveFirstOption #dentistAuto="matAutocomplete" [displayWith]="display" (closed)="dentistSelected()">
+                  <mat-option *ngFor="let d of filteredDentists | async" [value]="d" style="padding: 0px;">
+                    <ion-item>
+                      <ion-avatar slot="start" style="width: 24px; height: 24px; display: flex;">
+                        <img *ngIf="d.image == null" src="/assets/img/profile.png">
+                        <img *ngIf="d.image != null" [src]="d.image">
+                      </ion-avatar>
+                      <ion-label>
+                        <h3>{{ d.firstname }} {{ d.lastname }}</h3>
+                      </ion-label>
+                    </ion-item>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+
+              <mat-form-field style="width: 100%;">
+                <mat-label>Prestation</mat-label>
+                <input type="text" matInput formControlName="service" [matAutocomplete]="serviceAuto">
+                <mat-error *ngIf="calendarForm.controls['service'].hasError('overlap')">
+                  Attention, ce rendez-vous déborde sur le rendez-vous suivant
+                </mat-error>
+                <mat-autocomplete autoActiveFirstOption #serviceAuto="matAutocomplete" [displayWith]="displayService" (closed)="serviceSelected()">
+                  <mat-option *ngFor="let s of filteredServices| async" [value]="s" style="padding: 0px;">
+                    <ion-item>
+                      <ion-label>
+                        <p>{{ s.category }}</p>
+                      </ion-label>
+                    </ion-item>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+
+              <h6>Commentaire</h6>
+              <ion-textarea formControlName="comment" autoGrow="true" rows="3" class="comment-textarea"></ion-textarea>
+
+            </form>
+
+          </ion-col>
+        </ion-row>
+
+        <ion-row style="margin-top: 8px">
+          <ion-col style="margin-right: 16px;">
+            <h6>Du</h6>
+            <mat-form-field style="width: 100%;">
+              <input matInput [matDatepicker]="fromPicker" [(ngModel)]="fromDate" required (click)="openDatePicker('fromDate')">
+              <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+              <mat-datepicker #fromPicker></mat-datepicker>
+            </mat-form-field>
+          </ion-col>
+          <ion-col>
+            <h6>Heure</h6>
+            <mat-form-field>
+              <input matInput [(ngModel)]="fromDateTime" [ngxMatTimepicker]="fromDateTimePicker" [format]="24" readonly />
+              <mat-icon matSuffix (click)="fromDateTimePicker.open()"> schedule </mat-icon>
+            </mat-form-field>
+            <ngx-mat-timepicker #fromDateTimePicker></ngx-mat-timepicker>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col style="margin-right: 16px;">
+            <h6>Au</h6>
+            <mat-form-field style="width: 100%;">
+              <input matInput [matDatepicker]="toPicker" [(ngModel)]="toDate" required (click)="openDatePicker('toDate')">
+              <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+              <mat-datepicker #toPicker></mat-datepicker>
+            </mat-form-field>
+          </ion-col>
+          <ion-col>
+            <h6>Heure</h6>
+            <mat-form-field>
+              <input matInput [(ngModel)]="toDateTime" [ngxMatTimepicker]="toDateTimePicker" [format]="24" readonly />
+              <mat-icon matSuffix (click)="toDateTimePicker.open()"> schedule </mat-icon>
+            </mat-form-field>
+            <ngx-mat-timepicker #toDateTimePicker></ngx-mat-timepicker>
+          </ion-col>
+        </ion-row>
+
+        <ion-row style="margin-top: 16px;">
+          <ion-col>
+            <ion-button (click)="save()" expand="block" [disabled]="!calendarForm.valid || fromDate == null || toDate == null">
+              {{ newEvent ? 'Ajouter' : 'Mettre à jour' }}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+
+      </ion-grid>
+    </mat-tab>
+
+
+    <mat-tab label="Répétition" *ngIf="fromDate != null">
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col>
+            <mat-form-field style="width: 100%;">
+              <mat-label>Répétition</mat-label>
+              <mat-select [(value)]="repetitionFrequency">
+                <mat-option value="none">Aucune</mat-option>
+                <mat-option value="daily">Tous les jours</mat-option>
+                <mat-option value="weekly">Toutes les semaines</mat-option>
+                <mat-option value="monthly">Tous les mois</mat-option>
+                <mat-option value="yearly">Tous les ans</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-col>
+
+          <ion-col style="display: flex; justify-content: flex-start; align-items: center;" *ngIf="repetitionFrequency === 'daily'">
+            <mat-form-field style="margin-left: 16px; margin-right: 16px;">
+              <mat-label>Chaque</mat-label>
+              <input matInput type="number" [(ngModel)]="dayInterval">
+            </mat-form-field>
+            <div>Jour(s)</div>
+          </ion-col>
+
+          <ion-col style="display: flex; justify-content: flex-start; align-items: center;" *ngIf="repetitionFrequency === 'weekly'">
+            <mat-form-field style="margin-left: 16px; margin-right: 16px;">
+              <mat-label>Chaque</mat-label>
+              <input matInput type="number" [(ngModel)]="weekInterval">
+            </mat-form-field>
+            <div>Semaine(s)</div>
+          </ion-col>
+
+          <ion-col style="display: flex; justify-content: flex-start; align-items: center;" *ngIf="repetitionFrequency === 'monthly'">
+            <mat-form-field style="margin-left: 16px; margin-right: 16px;">
+              <mat-label>Chaque</mat-label>
+              <input matInput type="number" [(ngModel)]="monthInterval">
+            </mat-form-field>
+            <div>Mois</div>
+          </ion-col>
+
+        </ion-row>
+
+        <ion-row *ngIf="repetitionFrequency === 'weekly'">
+          <mat-button-toggle-group multiple [(value)]="weekByDay">
+            <mat-button-toggle value="MO">Lun</mat-button-toggle>
+            <mat-button-toggle value="TU">Mar</mat-button-toggle>
+            <mat-button-toggle value="WE">Mer</mat-button-toggle>
+            <mat-button-toggle value="TH">Jeu</mat-button-toggle>
+            <mat-button-toggle value="FR">Ven</mat-button-toggle>
+            <mat-button-toggle value="SA">Sam</mat-button-toggle>
+            <mat-button-toggle value="SU">Dim</mat-button-toggle>
+          </mat-button-toggle-group>
+        </ion-row>
+
+        <ion-row *ngIf="repetitionFrequency === 'monthly'">
+          <mat-radio-group [(ngModel)]="monthRepetitionType" style="display: flex; flex-direction: column; margin: 15px 0;">
+            <mat-radio-button value="onDay" style="margin: 5px;" color="primary">
+              <mat-form-field style="margin-left: 16px; margin-right: 16px;">
+                <mat-label>Le jour du mois</mat-label>
+                <mat-select [(value)]="monthByMonthDay">
+                  <mat-option [value]="m" *ngFor="let m of monthDays">{{ m }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-radio-button>
+            <mat-radio-button value="onDate" style="margin: 5px;" color="primary">
+              <mat-form-field style="margin-left: 16px; margin-right: 16px; width: 120px;">
+                <mat-label>Le</mat-label>
+                <mat-select [(value)]="monthBySetPos">
+                  <mat-option value="1">Premier</mat-option>
+                  <mat-option value="2">Second</mat-option>
+                  <mat-option value="3">Troisième</mat-option>
+                  <mat-option value="4">Quatrième</mat-option>
+                  <mat-option value="-1">Dernier</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field style="margin-left: 16px; margin-right: 16px;">
+                <mat-label>Jour de la semaine</mat-label>
+                <mat-select [(value)]="monthByDay">
+                  <mat-option value="MO">Lundi</mat-option>
+                  <mat-option value="TU">Mardi</mat-option>
+                  <mat-option value="WE">Mercredi</mat-option>
+                  <mat-option value="TH">Jeudi</mat-option>
+                  <mat-option value="FR">Vendredi</mat-option>
+                  <mat-option value="SA">Samedi</mat-option>
+                  <mat-option value="SU">Dimanche</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-radio-button>
+          </mat-radio-group>
+        </ion-row>
+
+        <ion-row *ngIf="repetitionFrequency === 'yearly'">
+          <mat-radio-group [(ngModel)]="yearRepetitionType" style="display: flex; flex-direction: column; margin: 15px 0;">
+            <mat-radio-button value="onDay" style="margin: 5px;" color="primary">
+              <mat-form-field style="margin-left: 16px; margin-right: 16px;">
+                <mat-label>Mois</mat-label>
+                <mat-select [(value)]="yearByMonth">
+                  <mat-option value="1">Janvier</mat-option>
+                  <mat-option value="2">Février</mat-option>
+                  <mat-option value="3">Mars</mat-option>
+                  <mat-option value="4">Avril</mat-option>
+                  <mat-option value="5">Mai</mat-option>
+                  <mat-option value="6">Juin</mat-option>
+                  <mat-option value="7">Juillet</mat-option>
+                  <mat-option value="8">Août</mat-option>
+                  <mat-option value="9">Septembre</mat-option>
+                  <mat-option value="10">Octobre</mat-option>
+                  <mat-option value="11">Novembre</mat-option>
+                  <mat-option value="12">Décembre</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field style="margin-left: 16px; margin-right: 16px;">
+                <mat-label>Jour</mat-label>
+                <mat-select [(value)]="yearByMonthDay">
+                  <mat-option [value]="m" *ngFor="let m of monthDays">{{ m }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-radio-button>
+            <mat-radio-button value="onDate" style="margin: 5px;" color="primary">
+              <mat-form-field style="margin-left: 16px; margin-right: 16px; width: 120px;">
+                <mat-label>Le</mat-label>
+                <mat-select [(value)]="yearBySetPos">
+                  <mat-option value="1">Premier</mat-option>
+                  <mat-option value="2">Second</mat-option>
+                  <mat-option value="3">Troisième</mat-option>
+                  <mat-option value="4">Quatrième</mat-option>
+                  <mat-option value="-1">Dernier</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field style="margin-left: 16px; margin-right: 16px;">
+                <mat-label>Jour de la semaine</mat-label>
+                <mat-select [(value)]="yearByDay">
+                  <mat-option value="MO">Lundi</mat-option>
+                  <mat-option value="TU">Mardi</mat-option>
+                  <mat-option value="WE">Mercredi</mat-option>
+                  <mat-option value="TH">Jeudi</mat-option>
+                  <mat-option value="FR">Vendredi</mat-option>
+                  <mat-option value="SA">Samedi</mat-option>
+                  <mat-option value="SU">Dimanche</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field style="margin-left: 16px; margin-right: 16px;">
+                <mat-label>Du mois de</mat-label>
+                <mat-select [(value)]="yearByMonth2">
+                  <mat-option value="1">Janvier</mat-option>
+                  <mat-option value="2">Février</mat-option>
+                  <mat-option value="3">Mars</mat-option>
+                  <mat-option value="4">Avril</mat-option>
+                  <mat-option value="5">Mai</mat-option>
+                  <mat-option value="6">Juin</mat-option>
+                  <mat-option value="7">Juillet</mat-option>
+                  <mat-option value="8">Août</mat-option>
+                  <mat-option value="9">Septembre</mat-option>
+                  <mat-option value="10">Octobre</mat-option>
+                  <mat-option value="11">Novembre</mat-option>
+                  <mat-option value="12">Décembre</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-radio-button>
+          </mat-radio-group>
+        </ion-row>
+
+        <ion-row *ngIf="repetitionFrequency !== 'none'" style="border-top: solid 1px lightgrey; margin-top: 32px;">
+          <ion-col style="margin-top: 16px;">
+            <mat-form-field style="width: 100%;">
+              <mat-label>Fin de répétition</mat-label>
+              <mat-select [(value)]="endRepetition">
+                <mat-option value="never">Jamais</mat-option>
+                <mat-option value="count">Après</mat-option>
+                <mat-option value="until">Le</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-col>
+
+          <ion-col *ngIf="endRepetition === 'count'" style="margin-top: 16px;">
+            <mat-form-field style="margin-left: 16px; margin-right: 16px;">
+              <mat-label>Nombre de répétitions</mat-label>
+              <input matInput type="number" [(ngModel)]="endCount" min="1">
+            </mat-form-field>
+          </ion-col>
+
+          <ion-col *ngIf="endRepetition === 'until'" style="margin-top: 16px;">
+            <mat-form-field style="margin-left: 16px; margin-right: 16px;">
+              <mat-label>Date de fin</mat-label>
+              <input matInput type="date" [(ngModel)]="endUntil">
+            </mat-form-field>
+          </ion-col>
+        </ion-row>
+
+      </ion-grid>
+    </mat-tab>
+
+  </mat-tab-group>
+
+</ion-content> -->

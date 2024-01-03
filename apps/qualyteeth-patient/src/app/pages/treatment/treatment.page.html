@@ -1,0 +1,82 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <toolbar-title></toolbar-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-fab vertical="bottom" horizontal="end" edge="true" slot="fixed" style="bottom: 16px;" (click)="newDocument()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <input type="file" hidden #imgChooser (change)="onImageChosen($event)">
+
+  <div *ngIf="progressInfo != null">
+    <mat-progress-bar mode="determinate" [value]="progressInfo.value"></mat-progress-bar>
+  </div>
+
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <ion-list-header>
+            Détails
+          </ion-list-header>
+          <ion-item>
+            <!-- <ion-label>Dent: {{ treatment.toothFdiNumber }}</ion-label> -->
+            <ion-label>Dent: </ion-label> 
+          </ion-item>
+          <ion-item>
+            <ion-label>Date du traîtement: {{ treatment.startDate | date : "dd.MM.yyyy" }}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label *ngIf="dentist != null">Dentiste: {{ dentist.firstname }} {{ dentist.lastname }}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <h2>Commentaire</h2>
+              <p>{{ treatment.comment || 'N/A' }}</p>
+            </ion-label>
+          </ion-item>
+
+          <ion-list-header style="margin-top: 32px;">
+            Statut de la dent:
+          </ion-list-header>
+          <!-- <ion-item *ngIf="treatment.toothTreatments.length === 0" lines="none" style="padding-left: 16px;">
+            <ion-label>
+              <h3>Aucun statut</h3>
+            </ion-label>
+          </ion-item> -->
+          <!-- <ion-item *ngFor="let tt of treatment.toothTreatments" style="height: 32px; padding-left: 16px;">
+            <ion-label style="font-size: 0.85em;">{{ tt.status }}</ion-label>
+          </ion-item> -->
+
+          <ion-list-header style="margin-top: 32px;">
+            Documents associés:
+          </ion-list-header>
+          <ion-item *ngIf="documents.length === 0" lines="none" style="padding-left: 16px;">
+            <ion-label>
+              <h3>Aucun document associé à ce traîtement</h3>
+            </ion-label>
+          </ion-item>
+          <ion-item button *ngFor="let doc of documents" (click)="download(doc)">
+            <ion-icon [name]="doc.icon" slot="start"></ion-icon>
+            <ion-label>
+              <h3>{{ doc.filename }}</h3>
+              <p>{{ doc.uploadTime | date: 'dd.MM.yyyy' }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

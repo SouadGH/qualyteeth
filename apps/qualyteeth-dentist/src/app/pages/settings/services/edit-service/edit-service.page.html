@@ -1,0 +1,114 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>Service - Définition</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" style="position: relative;">
+
+  <button mat-fab color="primary" (click)="save()" style="position: absolute; right: 16px; bottom: 32px;">
+    <mat-icon>done</mat-icon>
+  </button>
+
+  <ion-grid fixed>
+
+    <ion-row>
+      <ion-col>
+        <mat-form-field *ngIf="surgeries != null" style="margin-top: 16px; margin-bottom: 16px; width: 50%">
+          <mat-label>Cabinet</mat-label>
+          <mat-select [(value)]="activeSurgery" (selectionChange)="loadData()">
+            <mat-option value="">Mes services</mat-option>
+            <mat-option [value]="s" *ngFor="let s of surgeries">{{ s.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <h4>{{ isNew ? 'Ajouter' : 'Modifier' }} un service</h4>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12" size-sm>
+
+        <form novalidate [formGroup]="addServiceForm" (ngSubmit)="save()">
+
+          <mat-form-field style="width: 100%;">
+            <mat-label>Categorie</mat-label>
+            <input type="text" matInput formControlName="category" [matAutocomplete]="categoryAuto">
+            <mat-autocomplete autoActiveFirstOption #categoryAuto="matAutocomplete">
+              <mat-option *ngFor="let c of filteredCategories | async" [value]="c">
+                {{ c }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field style="width: 100%;">
+            <mat-label>Nom du service</mat-label>
+            <input matInput formControlName="name" required>
+            <mat-error *ngIf="addServiceForm.controls['name']['errors']['required']">Veuillez entrer un nom pour ce service</mat-error>
+          </mat-form-field>
+
+        </form>
+
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col style="position: relative;">
+
+        <button mat-mini-fab color="primary" (click)="addLink($event)" style="position: absolute; right: 16px;">
+          <mat-icon>add</mat-icon>
+        </button>
+
+        <h5>Liens</h5>
+
+        <table #linksTable mat-table [dataSource]="links" class="mat-elevation-z1" *ngIf="links.length > 0">
+
+          <ng-container matColumnDef="dentist">
+            <th mat-header-cell *matHeaderCellDef> Dentiste </th>
+            <td mat-cell *matCellDef="let element" style="padding-right: 16px;">
+              <mat-form-field style="width: 100%;">
+                <mat-select [(value)]="element.dentistId">
+                  <mat-option *ngFor="let d of dentists" [value]="d.id">{{ element.dentistId | dentist | async }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="timing">
+            <th mat-header-cell *matHeaderCellDef> Durée (min) </th>
+            <td mat-cell *matCellDef="let element"> 
+              <mat-form-field style="width: 100%;">
+                <input matInput type="number" step="15" min="0" [(ngModel)]="element.timing">
+              </mat-form-field>  
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef> &nbsp; </th>
+            <td mat-cell *matCellDef="let element; let i=index" style="text-align: right;">
+              <button mat-icon-button (click)="deleteLink(i)">
+                <mat-icon style="color: red;">cancel</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columns"></tr>
+          <tr mat-row *matRowDef="let row; columns: columns; let i = index"></tr>
+        </table>
+
+        <div *ngIf="links.length === 0" style="margin-top: 32px;">
+          Aucun dentiste utilise ce service
+        </div>
+
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content> -->

@@ -1,0 +1,21 @@
+.status-requested {
+    color: var(--ion-color-warning);
+}
+
+.status-validated {
+    color: var(--ion-color-primary);
+}
+
+.status-rejected {
+    color: var(--ion-color-danger);
+}
+
+.meetings-list {
+    border: solid 1px lightgrey;
+    border-radius: 8px;
+    background-color: white;
+}
+
+.meetings-list-item {
+    --background: white;
+}

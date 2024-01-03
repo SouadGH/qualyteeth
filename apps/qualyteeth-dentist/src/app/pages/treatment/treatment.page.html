@@ -1,0 +1,113 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Traitement
+      <button mat-icon-button (click)="startSpeechRecognition()" style="margin-left: 16px; border: solid 1px lightgrey;">
+        <mat-icon [ngClass]="speechRecognitionStarted ? 'speech-icon-started': 'speech-icon-ended'">mic</mat-icon>
+      </button>
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <div style="position: relative; width: 100%; max-width: 980px; margin: 0 auto;">
+
+    <button mat-fab color="primary" (click)="save()" style="position: absolute; right: 32px; bottom: 8px; z-index: 999;">
+      <mat-icon>done</mat-icon>
+    </button>
+
+    <ion-grid fixed style="padding-bottom: 64px;">
+
+      <ion-row>
+        <ion-col size-xs="12" size-md="4" style="padding: 8px;">
+          <h6>Date du traitement</h6>
+          <mat-form-field style="width: 100%;">
+            <input matInput [matDatepicker]="datePicker" [(ngModel)]="date" required (click)="openDatePicker()">
+            <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-datepicker #datePicker></mat-datepicker>
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col size-xs="12" size-md="4" style="padding: 8px;">
+          <h6 [ngClass]="speechTreatmentStarted ? 'speech-section-text-active' : 'speech-section-text-inactive'">Traitement</h6>
+          <mat-form-field style="width: 100%;">
+            <mat-select [formControl]="treatmentsControl">
+              <mat-option *ngFor="let d of treatmentsList" [value]="d">{{ d.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col size-xs="12" size-md="4" style="padding: 8px;">
+          <h6 [ngClass]="speechCommentStarted ? 'speech-section-text-active' : 'speech-section-text-inactive'">Commentaire</h6>
+          <ion-textarea [(ngModel)]="comment" autoGrow="true" rows="3" class="treatment-textarea"></ion-textarea>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <h6 [ngClass]="speechSelectionStarted ? 'speech-section-text-active' : 'speech-section-text-inactive'">Sélection</h6>
+          <app-odontogram #odontogram [patientId]="patientId" [teeth]="teeth" [editable]="true" *ngIf="teeth != null"></app-odontogram>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <h6>Traitements</h6>
+          <table mat-table [dataSource]="treatments" class="mat-elevation-z1" style="width: 100%">
+
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef> Date </th>
+              <td mat-cell *matCellDef="let element"> {{ element.startDate | date : "dd.MM.yyyy" }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="dentist">
+              <th mat-header-cell *matHeaderCellDef> Dentiste </th>
+              <td mat-cell *matCellDef="let element"> {{ element.dentistId | dentist | async }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="teeth">
+              <th mat-header-cell *matHeaderCellDef> Dents </th>
+              <td mat-cell *matCellDef="let element">
+                <mat-chip-list>
+                  <mat-chip *ngFor="let t of element.teeth">{{ t.toothFdiNumber }}</mat-chip>
+                </mat-chip-list>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="treatment">
+              <th mat-header-cell *matHeaderCellDef> Diagnostique </th>
+              <td mat-cell *matCellDef="let element"> {{ element.status }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="comment">
+              <th mat-header-cell *matHeaderCellDef> Commentaire </th>
+              <td mat-cell *matCellDef="let element" class="truncate"> {{ element.comment }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let element">
+                <mat-slide-toggle [checked]="element.endDate == null" color="primary"></mat-slide-toggle>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="treatmentsColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: treatmentsColumns;"></tr>
+
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="6">Aucun traitement</td>
+            </tr>
+          </table>
+
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+
+  </div>
+
+</ion-content> -->

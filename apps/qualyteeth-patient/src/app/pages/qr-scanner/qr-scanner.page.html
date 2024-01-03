@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <toolbar-title></toolbar-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-grid fixed>
+    <ion-row class="ion-align-items-center ion-justify-content-center" class="ion-text-center">
+      <ion-col>
+        <h3>Veuillez scanner le QR Code</h3>
+        <zxing-scanner [formats]="formatsEnabled" [tryHarder]="true" (scanSuccess)="scanSuccess($event)" scanError="scanError($event)" scanFailure="scanFailure($event)"></zxing-scanner>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center" class="ion-text-center">
+      <ion-col>
+        Scanning result
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
