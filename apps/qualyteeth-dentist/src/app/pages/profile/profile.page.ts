@@ -7,7 +7,10 @@ import * as loadImage from 'blueimp-load-image';
 import { UserDto } from 'libs/shared/src/lib/dto/user.dto';
 import { AuthService } from '../../services/auth.service';
 import { LoginPage } from '../auth/login/login.page';
+<<<<<<< HEAD
 import { PractitionerDto } from 'libs/shared/src/lib/dto/practitioner.dto';
+=======
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 
 // interface OpeningHours {
@@ -25,13 +28,21 @@ export class ProfilePage implements OnInit {
 
   @ViewChild('imgChooser', { static: false }) imgChooser: ElementRef;
 
+<<<<<<< HEAD
   user: PractitionerDto;
+=======
+  user: UserDto;
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
   profileForm: FormGroup;
   isSubmitted = false;
   userImgChanged = false;
 
+<<<<<<< HEAD
   //dentistTimetables: Array<DentistTimetable>;
   dentistTimetables: Array<any>;
+=======
+  // dentistTimetables: Array<DentistTimetable>;
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
   hours: Array<number> = new Array<number>();
   minutes: Array<number> = new Array<number>();
@@ -79,18 +90,26 @@ export class ProfilePage implements OnInit {
    *
    */
   async ionViewWillEnter() {
+<<<<<<< HEAD
     //practitionerId = await this.storageSvc.get('useridQD');  
     
     
     this.user = await this.dentistSvc.getPractitioner();
    
         
+=======
+    this.user = (await this.dentistSvc.getPractitioner()).user;
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     this.profileForm.get('firstname').setValue(this.user.firstname);
     this.profileForm.get('lastname').setValue(this.user.lastname);
     this.profileForm.get('phoneNumber').setValue(this.user.phoneNumber);
     this.profileForm.get('email').setValue(this.user.email);
 
+<<<<<<< HEAD
      this.dentistTimetables = await this.dentistSvc.getTimetable();
+=======
+    // this.dentistTimetables = await this.dentistSvc.getTimetable();
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
   }
 
   /**
@@ -147,7 +166,11 @@ export class ProfilePage implements OnInit {
 
     //   this.user.password = this.profileForm.get('newPassword').value;
     // }
+<<<<<<< HEAD
     console.log("dentiste avant update.ts :"+ JSON.stringify(this.user));
+=======
+
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     await this.dentistSvc.update(this.user);
 
     // this.profileForm.get('password').reset();
@@ -221,7 +244,11 @@ export class ProfilePage implements OnInit {
     // if (this.practitioner.user.image == null) {
     //   this.practitioner.user.image = ''
     // }
+<<<<<<< HEAD
     this.user.user.image = c.toDataURL();
+=======
+    this.user.image = c.toDataURL();
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     this.userImgChanged = true;
 
     // console.log(this.userImgChanged);
@@ -230,9 +257,15 @@ export class ProfilePage implements OnInit {
   /**
    *
    */
+<<<<<<< HEAD
   /*async getDayTimetable(day: string): Array<DentistTimetable> | null {
      return this.dentistTimetables.filter(dtt => dtt.day === this.days.indexOf(day) + 1);
    }*/
+=======
+  // getDayTimetable(day: string): Array<DentistTimetable> | null {
+  //   return this.dentistTimetables.filter(dtt => dtt.day === this.days.indexOf(day) + 1);
+  // }
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
   /**
    *

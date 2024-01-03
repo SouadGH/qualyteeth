@@ -33,12 +33,16 @@ export class PractitionerService {
    */
   public async getPractitioner(practitionerId?: string): Promise<PractitionerDto> {
     const accessToken = await this.storageSvc.get('accessTokenQD');
+<<<<<<< HEAD
     
+=======
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${accessToken}`
     })
+<<<<<<< HEAD
     practitionerId = await this.storageSvc.get('useridQD');    
    
     if (practitionerId == null) {
@@ -50,6 +54,15 @@ export class PractitionerService {
 
   
 
+=======
+
+    if (practitionerId == null) {
+      practitionerId = await this.storageSvc.getUserid(accessToken);
+    }
+    return await this.httpClient.get<PractitionerDto>(`${API_ENDPOINT}/practitioner/${practitionerId}`, { headers: headers }).toPromise();
+  }
+
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
   /**
    *
    */
@@ -78,8 +91,13 @@ export class PractitionerService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${accessToken}`
     })
+<<<<<<< HEAD
     console.log("dentiste devant service update :"+ practitioner);
     await this.httpClient.post(`${API_ENDPOINT}/practitioner/update`, { practitioner: practitioner }, { headers: headers }).toPromise();
+=======
+
+    await this.httpClient.post(`${API_ENDPOINT}/PractitionerDto/update`, { practitioner: practitioner }, { headers: headers }).toPromise();
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
   }
 
   /**
@@ -102,6 +120,7 @@ export class PractitionerService {
   // /**
   //  *
   //  */
+<<<<<<< HEAD
    public async getTimetable(PractitionerId?: string): Promise<Array<any>> {
      const accessToken = await this.storageSvc.get('accessTokenQD');
 
@@ -116,6 +135,22 @@ export class PractitionerService {
 
      return await this.httpClient.get<Array<any>>(`${API_ENDPOINT}/practitioner/${PractitionerId}/timetable`, { headers: headers }).toPromise();
    }
+=======
+  // public async getTimetable(PractitionerId?: number): Promise<Array<PractitionerTimetable>> {
+  //   const accessToken = await this.storageSvc.get('accessTokenQD');
+
+  //   const headers = new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     'Authorization': `Bearer ${accessToken}`
+  //   })
+
+  //   if (PractitionerId == null) {
+  //     PractitionerId = await this.storageSvc.getUserid(accessToken);
+  //   }
+
+  //   return await this.httpClient.get<Array<PractitionerTimetable>>(`${API_ENDPOINT}/PractitionerDto/${PractitionerId}/timetable`, { headers: headers }).toPromise();
+  // }
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
   // /**
   //  *

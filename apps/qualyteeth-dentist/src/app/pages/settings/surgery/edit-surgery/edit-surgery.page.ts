@@ -4,7 +4,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SurgeryService } from 'apps/qualyteeth-dentist/src/app/services/surgery.service';
 import { ActivatedRoute } from '@angular/router';
 import { PractitionerService } from 'apps/qualyteeth-dentist/src/app/services/practitioner.service';
+<<<<<<< HEAD
 import { Surgery } from 'apps/qualyteeth-server/src/core/surgery/surgery.entity';
+=======
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 @Component({
   selector: 'app-edit-surgery',
@@ -13,8 +16,13 @@ import { Surgery } from 'apps/qualyteeth-server/src/core/surgery/surgery.entity'
 })
 export class EditSurgeryPage implements OnInit {
 
+<<<<<<< HEAD
   isNew: any;
    surgery: Surgery;
+=======
+  isNew: boolean;
+  // surgery: Surgery;
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
   surgeryForm: FormGroup;
 
@@ -44,6 +52,7 @@ export class EditSurgeryPage implements OnInit {
   ngOnInit() {}
 
   async ionViewWillEnter(): Promise<void> {
+<<<<<<< HEAD
     const surgeryId = this.activtedRoute.snapshot.paramMap.get('surgery_id');
     this.isNew = surgeryId == null || surgeryId;
     if (!this.isNew  ) {
@@ -72,6 +81,34 @@ export class EditSurgeryPage implements OnInit {
     this.surgeryForm.controls['addressLine2'].setValue(this.surgery.addressLine2);
     this.surgeryForm.controls['postalCode'].setValue(this.surgery.postalCode);
     this.surgeryForm.controls['city'].setValue(this.surgery.city);
+=======
+    const surgeryId = parseInt(this.activtedRoute.snapshot.paramMap.get('surgery_id'));
+    this.isNew = surgeryId == null || Number.isNaN(surgeryId);
+
+    // if (this.isNew) {
+
+    //   const dentistId = await this.dentistSvc.getDentistId();
+
+    //   this.surgery = {
+    //     id: null,
+    //     name: null,
+    //     city: null,
+    //     postalCode: null,
+    //     createdBy: dentistId,
+    //     createdOn: null,
+    //     active: false,
+    //     deleted: false,
+    //   };
+    // } else {
+    //   this.surgery = await this.surgerySvc.getSurgery(surgeryId);
+    // }
+
+    // this.surgeryForm.controls['name'].setValue(this.surgery.name);
+    // this.surgeryForm.controls['addressLine1'].setValue(this.surgery.addressLine1);
+    // this.surgeryForm.controls['addressLine2'].setValue(this.surgery.addressLine2);
+    // this.surgeryForm.controls['postalCode'].setValue(this.surgery.postalCode);
+    // this.surgeryForm.controls['city'].setValue(this.surgery.city);
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
   }
 
   /**
@@ -89,6 +126,7 @@ export class EditSurgeryPage implements OnInit {
     const postalCode: string = this.surgeryForm.controls['postalCode'].value;
     const city: string = this.surgeryForm.controls['city'].value.trim();
 
+<<<<<<< HEAD
     
     this.surgery.name = name;
     this.surgery.addressLine1 = addressLine1;
@@ -108,6 +146,23 @@ export class EditSurgeryPage implements OnInit {
       await this.surgerySvc.update(this.surgery);
       message = 'Cabinet modifié!';
     }
+=======
+    // this.surgery.name = name;
+    // this.surgery.addressLine1 = addressLine1;
+    // this.surgery.addressLine2 = addressLine2;
+    // this.surgery.city = city;
+    // this.surgery.postalCode = postalCode;
+
+    let message: string = '';
+    // if (this.isNew) {
+    //   this.surgery.id = await this.surgerySvc.save(this.surgery);
+    //   await this.surgerySvc.link(this.surgery);
+    //   message = 'Cabinet enregistré!';
+    // } else {
+    //   await this.surgerySvc.update(this.surgery);
+    //   message = 'Cabinet modifié!';
+    // }
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
     const toast = await this.toastCtrl.create({
       message: message,

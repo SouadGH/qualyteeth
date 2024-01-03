@@ -2,9 +2,12 @@ import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Intervention } from './intervention.entity';
+<<<<<<< HEAD
 import { Patient } from '../patient/patient.entity';
 import { User } from '../user/user.entity';
 import { Practitioner } from '../practitioner/practitioner.entity';
+=======
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 
 @Injectable()
@@ -16,6 +19,7 @@ export class InterventionService {
      */
     constructor(
         @InjectRepository(Intervention) private interventionRepo: Repository<Intervention>,
+<<<<<<< HEAD
        // @InjectRepository(Patient) private patientRepo: Repository<Patient>,
        // @InjectRepository(User) private userRepo: Repository<User>,
     ) {
@@ -35,12 +39,23 @@ export class InterventionService {
 
         //throw new PostNotFoundException(id);
        /* let qb = this.interventionRepo.createQueryBuilder('t');
+=======
+    ) {
+    }
+
+    /**
+     *
+     */
+    async getById(id: string): Promise<Intervention> {
+        let qb = this.interventionRepo.createQueryBuilder('t');
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
         qb = qb.where('t.id = :id', { id: id });
 
         const t = await qb.getOne();
         if (t) {
             return t;
         }
+<<<<<<< HEAD
         throw new HttpException('Intervention with this id does not exist', HttpStatus.NOT_FOUND);*/
     }
 
@@ -69,6 +84,16 @@ export class InterventionService {
 
         const newT = this.interventionRepo.create({ ...data, });
        
+=======
+        throw new HttpException('Intervention with this id does not exist', HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     *
+     */
+    async save(data: Intervention): Promise<Intervention> {
+        const newT = this.interventionRepo.create({ ...data, });
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
         await this.interventionRepo.save(newT);
         return newT;
     }
@@ -84,6 +109,7 @@ export class InterventionService {
         return newT;
     }
 
+<<<<<<< HEAD
      /**
      *Delete intervention according to his id: softdelete
      */
@@ -109,4 +135,6 @@ export class InterventionService {
         }
     }
 
+=======
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 }

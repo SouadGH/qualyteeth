@@ -9,12 +9,19 @@ import { OdontogramComponent } from 'apps/qualyteeth-dentist/src/app/components/
 import { DiagnosticService } from 'apps/qualyteeth-dentist/src/app/services/diagnostic.service';
 import { SpeechRecognitionService } from 'apps/qualyteeth-dentist/src/app/services/speech-recognition.service';
 import { StorageService } from 'apps/qualyteeth-dentist/src/app/services/storage.service';
+<<<<<<< HEAD
 import { PredicamentDto, PredicamentType } from 'libs/shared/src/lib/dto/predicament.dto';
+=======
+import { PredicamentDto } from 'libs/shared/src/lib/dto/predicament.dto';
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 import { ToothDto } from 'libs/shared/src/lib/dto/tooth.dto';
 import { Subscription } from 'rxjs';
 import { ToothService } from '../../services/tooth.service';
 import { TreatmentService } from '../../services/treatment.service';
+<<<<<<< HEAD
 import { PredicamentService } from '../../services/predicament.service';
+=======
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 @Component({
   selector: 'page-odontogram',
@@ -69,13 +76,21 @@ export class OdontogramPage implements OnInit {
     private storageSvc: StorageService,
     private toothSvc: ToothService,
     private speechSvc: SpeechRecognitionService,
+<<<<<<< HEAD
     private activtedRoute: ActivatedRoute,
     private predicamentSvc: PredicamentService,
+=======
+    private activtedRoute: ActivatedRoute
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
   ) {
     this.adapter.setLocale('fr-CH');
 
     this.patientId = this.activtedRoute.snapshot.paramMap.get('patient_id');
+<<<<<<< HEAD
     alert(this.patientId);
+=======
+
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     this.dataSource = new MatTableDataSource<ToothDto & { selectedParts: Array<string> }>();
 
     this.toothSvc.toothSelectedParts.subscribe(
@@ -101,6 +116,7 @@ export class OdontogramPage implements OnInit {
   /**
    *
    */
+<<<<<<< HEAD
   async ionViewWillEnter(){//: Promise<void> {
     const examId = this.activtedRoute.snapshot.paramMap.get('examination_id');
     
@@ -110,6 +126,15 @@ export class OdontogramPage implements OnInit {
     if (examId != null) {
       
        //await this.diagnosticSvc.getById(examId);
+=======
+  async ionViewWillEnter(): Promise<void> {
+
+    this.teeth = <any>await this.toothSvc.getAll();
+
+    const examId = parseInt(this.activtedRoute.snapshot.paramMap.get('examination_id'));
+    if (examId != null) {
+      // this.diagnostic = await this.diagnosticSvc.getById(examId);
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
       // this.treatment = await this.treatmentSvc.getById(examId);
 
       console.log(this.diagnostic)
@@ -123,10 +148,17 @@ export class OdontogramPage implements OnInit {
     });
     await toast.present();
 
+<<<<<<< HEAD
      this.diagnosticsList = await this.predicamentSvc.getDefinition(PredicamentType.DIAGNOSTIC);//await this.diagnosticSvc.getDefinitionsForDentist();
     // this.diagnostics = await this.diagnosticSvc.getForPatientAndDentist(this.patientId);
 
      this.treatmentsList = await this.predicamentSvc.getDefinition(PredicamentType.TREATMENT);//await this.treatmentSvc.getDefinitionsForDentist();
+=======
+    // this.diagnosticsList = await this.diagnosticSvc.getDefinitionsForDentist();
+    // this.diagnostics = await this.diagnosticSvc.getForPatientAndDentist(this.patientId);
+
+    // this.treatmentsList = await this.treatmentSvc.getDefinitionsForDentist();
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     // this.treatments = await this.treatmentSvc.getForPatientAndDentist(this.patientId);
 
     console.log(this.diagnostics)

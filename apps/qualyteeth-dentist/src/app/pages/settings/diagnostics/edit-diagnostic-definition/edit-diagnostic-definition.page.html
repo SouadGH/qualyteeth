@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <ion-header>
+=======
+<!-- <ion-header>
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
   <ion-toolbar>
     <ion-title>Diagnostique - Définition</ion-title>
     <ion-buttons slot="start">
@@ -15,12 +19,20 @@
 
   <ion-grid fixed>
 
+<<<<<<< HEAD
     <ion-row *ngIf="predicament != null">
+=======
+    <ion-row *ngIf="d != null">
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
       <ion-col>
         <form>
           <mat-form-field style="width: 100%;">
             <mat-label>Nom</mat-label>
+<<<<<<< HEAD
             <input type="text" matInput [formControl]="nameCtrl" (change)="predicament.name = nameCtrl.value">
+=======
+            <input type="text" matInput [formControl]="nameCtrl" (change)="d.name = nameCtrl.value">
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
             <mat-error *ngIf="nameCtrl.hasError('required')">
               Le nom est <strong>requis</strong>
             </mat-error>
@@ -31,4 +43,8 @@
 
   </ion-grid>
 
+<<<<<<< HEAD
 </ion-content> 
+=======
+</ion-content> -->
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617

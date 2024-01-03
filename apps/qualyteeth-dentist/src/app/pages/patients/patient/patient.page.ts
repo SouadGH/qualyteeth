@@ -18,10 +18,13 @@ import { ToothDto } from 'libs/shared/src/lib/dto/tooth.dto';
 import { Subscription } from 'rxjs';
 import { PatientService } from '../../../services/patient.service';
 import { AudioService } from '../../../services/audio.service';
+<<<<<<< HEAD
 import { GenderType } from 'libs/shared/src/lib/dto/user.dto';
 import { PredicamentPlanService } from '../../../services/predicament-plan.service copy';
 import { PredicamentPlanDto } from 'libs/shared/src/lib/dto/predicament-plan.dto';
 import { InterventionDto } from 'libs/shared/src/lib/dto/intervention.dto';
+=======
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 @Component({
   selector: 'app-patient',
@@ -60,6 +63,7 @@ export class PatientPage implements OnInit {
   diagnosticsOrTraitements: Array<PredicamentDto & { type: 'DIAGNOSTIC' | 'TREATMENT' }>;
   diagnosticsOrTraitementsColumns = ['date', 'dentist', 'teeth', 'diagnosticTreatment', 'comment', 'status', 'more']
 
+<<<<<<< HEAD
   //PredicamentsPlan: Array<PredicamentPlanDto & { type: 'DIAGNOSTIC' | 'TREATMENT' }>;
   PredicamentsPlanColumns = ['date', 'dentist', "totalInterventions",  'name'];
   InterventionsColumns = ['date',  'predicament', 'teeth', 'materials', 'comment', ]
@@ -74,6 +78,13 @@ export class PatientPage implements OnInit {
    predicamentsPlan: Array<PredicamentPlanDto >;
    interventions: Array<InterventionDto & { type: 'DIAGNOSTIC' | 'TREATMENT' }>;
    documentsColumns: string[] = ['date', 'name', 'download'];
+=======
+  // calendarEvents: Array<CalendarEvent>;
+  // calendarEventsColumns: string[] = ['date', 'hour', 'dentist', 'service', 'duration', 'reminder'];
+
+  // documents: Array<CalendarEvent>;
+  // documentsColumns: string[] = ['date', 'name', 'download'];
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
   bills: any[] = [];
   billsColumns: string[] = ['date', 'treatment', 'download'];
@@ -99,7 +110,10 @@ export class PatientPage implements OnInit {
     private storageSvc: StorageService,
     // private dentistSvc: PractitionerService,
     private patientSvc: PatientService,
+<<<<<<< HEAD
     private predicamentPlanSvc: PredicamentPlanService,
+=======
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     private nav: NavController,
     private treatmentSvc: TreatmentService,
     private documentSvc: DocumentService,
@@ -141,6 +155,7 @@ export class PatientPage implements OnInit {
    *
    */
   async ionViewWillEnter() {
+<<<<<<< HEAD
     const patientId = this.activtedRoute.snapshot.paramMap.get('patient_id');  
     console.log("patientId :"+patientId);  
     this.patient = await this.patientSvc.getPatient(patientId);
@@ -153,6 +168,13 @@ export class PatientPage implements OnInit {
     this.patientForm.controls['gender'].setValue(this.patient.user.gender);
     //( this.patientForm.controls['gender'].value);
     const genderList = GenderType;
+=======
+    const patientId = this.activtedRoute.snapshot.paramMap.get('patient_id');
+    this.patient = await this.patientSvc.getPatient(patientId);
+
+    console.log(this.patient)
+
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     // const userId = await this.storageSvc.getUserid();
     // this.treatments = await this.treatmentSvc.getTreatmentsForPatientAndDentist(patientId, userId);
 
@@ -162,6 +184,7 @@ export class PatientPage implements OnInit {
     await this.loadDiagnosticsAndTreatments();
     await this.loadCalendar();
     await this.loadDocuments();
+<<<<<<< HEAD
     await this.loadPredicamentsPlan();
 
     ;
@@ -174,6 +197,16 @@ async loadPredicamentsPlan(): Promise<void> {
   this.predicamentsPlan = await this.predicamentPlanSvc.getPredicamentsPlanForPatient(this.patient.id);
 console.log("Predicaments plan for patient x: "+JSON.stringify(this.predicamentsPlan));
 }
+=======
+
+    this.patientForm.controls['lastname'].setValue(this.patient.lastname);
+    this.patientForm.controls['firstname'].setValue(this.patient.firstname);
+    this.patientForm.controls['email'].setValue(this.patient.email);
+    this.patientForm.controls['phoneNumber'].setValue(this.patient.phoneNumber);
+    // this.initTeeth();
+  }
+
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
   /**
    *
    */
@@ -186,7 +219,11 @@ console.log("Predicaments plan for patient x: "+JSON.stringify(this.predicaments
    *
    */
   async loadDocuments(): Promise<void> {
+<<<<<<< HEAD
      this.documents = await this.documentSvc.getDocuments(this.patient.id);
+=======
+    // this.documents = await this.documentSvc.getDocuments(this.patient.id);
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
     // if (this.filteredBy === 'image') {
     //   this.documents = this.documents.filter(d => this.imageSuffixes.some(s => d.filename.toLowerCase().endsWith(s)))
@@ -231,11 +268,19 @@ console.log("Predicaments plan for patient x: "+JSON.stringify(this.predicaments
   /**
    *
    */
+<<<<<<< HEAD
   /* private initTeeth(): void {
 
      if (this.mapElement.nativeElement.children.length >= 1) {
        return;
      }*/
+=======
+  // private initTeeth(): void {
+
+  //   if (this.mapElement.nativeElement.children.length >= 1) {
+  //     return;
+  //   }
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
   //   const paper = Raphael(this.mapElement.nativeElement, 294, 500);
 
@@ -439,7 +484,11 @@ console.log("Predicaments plan for patient x: "+JSON.stringify(this.predicaments
     if (this.speechRecognitionStarted && this.speechSubscription != null) {
       this.speechSubscription.unsubscribe();
     }
+<<<<<<< HEAD
 //alert(this.patient.id);
+=======
+
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     this.nav.navigateForward(`/odontogram/${this.patient.id}`);
   }
 
@@ -602,8 +651,11 @@ console.log("Predicaments plan for patient x: "+JSON.stringify(this.predicaments
     const accessToken = await this.storageSvc.get('accessTokenQD');
     const userid = await this.storageSvc.getUserid(accessToken);
 
+<<<<<<< HEAD
 console.log("this.patient.id :"+this.patient.id);
 console.log("userid :"+userid);
+=======
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     this.documentSvc.upload(accessToken, file, this.patient.id, userid).subscribe(
       async event => {
         // console.log(event);
@@ -688,6 +740,7 @@ console.log("userid :"+userid);
   async toothDetails(t: any): Promise<void> {
     this.nav.navigateForward(`patients/${this.patient.id}/tooth/${t.toothFdiNumber}`);
   }
+<<<<<<< HEAD
   /**
    *
    */
@@ -697,6 +750,9 @@ console.log("userid :"+userid);
     //this.nav.navigateForward(`patients/${this.patient.id}/tooth/${t.toothFdiNumber}`);
   }
   
+=======
+
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
   /**
    *
    */

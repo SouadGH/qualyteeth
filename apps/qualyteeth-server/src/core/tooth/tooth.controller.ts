@@ -24,7 +24,11 @@ export class ToothController {
     /**
      *
      */
+<<<<<<< HEAD
     //@UseGuards(JwtAuthGuard)
+=======
+    @UseGuards(JwtAuthGuard)
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     @UseInterceptors(SnakeToCameInterceptor)
     @Get('')
     async getAll() {

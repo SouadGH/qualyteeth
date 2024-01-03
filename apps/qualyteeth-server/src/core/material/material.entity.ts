@@ -14,6 +14,11 @@ export class Material extends Base {
     @JoinTable()
     interventions: Intervention[];
 
+<<<<<<< HEAD
    /* @ManyToMany(() => Act, a => a.categories, { nullable: true })
     acts: Act[];*/
+=======
+    @ManyToMany(() => Act, a => a.categories, { nullable: true })
+    acts: Act[];
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 }

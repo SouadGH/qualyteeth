@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController, PopoverController, ToastController } from '@ionic/angular';
 import { TreatmentService } from 'apps/qualyteeth-dentist/src/app/services/treatment.service';
+<<<<<<< HEAD
 import { PredicamentDto, PredicamentType } from 'libs/shared/src/lib/dto/predicament.dto';
 import { PredicamentService } from '../../../services/predicament.service';
+=======
+import { PredicamentDto } from 'libs/shared/src/lib/dto/predicament.dto';
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 @Component({
   selector: 'app-treatments',
@@ -20,7 +24,10 @@ export class TreatmentsPage implements OnInit {
    *
    */
   constructor(
+<<<<<<< HEAD
     private predicamentSvc: PredicamentService,
+=======
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     private treatmentSvc: TreatmentService,
     private nav: NavController,
     private alertCtrl: AlertController,
@@ -45,8 +52,11 @@ export class TreatmentsPage implements OnInit {
    */
   async loadData(): Promise<void> {
     this.loading = true;
+<<<<<<< HEAD
     this.treatments = await this.predicamentSvc.getDefinition(PredicamentType.TREATMENT);
    
+=======
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     // this.treatments = await this.treatmentSvc.getDefinitionsForDentist();
     this.loading = false;
     console.log(this.treatments)

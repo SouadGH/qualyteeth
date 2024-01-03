@@ -1,11 +1,15 @@
 import { Column, Entity, ManyToMany, OneToMany } from "typeorm";
 import { Intervention } from "../intervention/intervention.entity";
 import { Base } from "../_base.entity";
+<<<<<<< HEAD
 import { ToothGroupe, ToothPosition } from "libs/shared/src/lib/dto/tooth.dto";
+=======
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 @Entity()
 export class Tooth extends Base {
 
+<<<<<<< HEAD
     @Column({ nullable: true })
     fdiNumber!: number;
 
@@ -22,6 +26,12 @@ export class Tooth extends Base {
     position?: ToothPosition; 
 
     @Column({ nullable: true })
+=======
+    @Column({ nullable: false })
+    fdiNumber!: number;
+
+    @Column({ nullable: true })
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     svg?: string;
 
     @Column({ nullable: false })
@@ -31,5 +41,9 @@ export class Tooth extends Base {
     description?: string;
 
     @ManyToMany(() => Intervention, intervention => intervention.tooth)
+<<<<<<< HEAD
     interventions?: Intervention[];
+=======
+    interventions: Intervention[];
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 }

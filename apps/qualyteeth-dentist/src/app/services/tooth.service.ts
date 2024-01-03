@@ -44,6 +44,10 @@ export class ToothService {
       'Authorization': `Bearer ${accessToken}`
     })
 
+<<<<<<< HEAD
     return await this.httpClient.get<Array<ToothDto>>(`${API_ENDPOINT}/teeth`, { headers: headers }).toPromise();
+=======
+    return await this.httpClient.get<Array<ToothDto>>(`${API_ENDPOINT}/tooth`, { headers: headers }).toPromise();
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
   }
 }

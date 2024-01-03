@@ -3,10 +3,13 @@ import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Document } from './document.entity';
+<<<<<<< HEAD
 import { Patient } from '../patient/patient.entity';
 import { PatientDto } from 'libs/shared/src/lib/dto/patient.dto';
 import { User } from '../user/user.entity';
 import { Practitioner } from '../practitioner/practitioner.entity';
+=======
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 @Injectable()
 export class DocumentService {
@@ -17,8 +20,11 @@ export class DocumentService {
      */
     constructor(
         @InjectRepository(Document) private docRepo: Repository<Document>,
+<<<<<<< HEAD
         @InjectRepository(Patient) private patientRepo: Repository<Patient>,
         @InjectRepository(User) private userRepo: Repository<User>,
+=======
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     ) { }
 
 
@@ -44,12 +50,16 @@ export class DocumentService {
             file: file,
             filename: file.originalname
         }
+<<<<<<< HEAD
         //collecte the patient 
         const patient :Patient = await this.patientRepo.findOne({where :{id: body['patientId']}});
         data.patient = patient;
         //Collecte the practitioner
         const practitioner :Practitioner =  (await this.userRepo.findOne({ where: { id:body['userId'] },relations :['practitioners'] })).practitioners[0];
         data.practitioner = practitioner;
+=======
+
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
         const newT = this.docRepo.create({ ...data, });
         return await this.docRepo.save(newT);
 

@@ -1,7 +1,12 @@
 
+<<<<<<< HEAD
 import { Controller, Delete, Get, Param, Post,Put,Request } from '@nestjs/common';
 import { InterventionService } from './intervention.service';
 import { Intervention } from './intervention.entity';
+=======
+import { Controller } from '@nestjs/common';
+import { InterventionService } from './intervention.service';
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 @Controller('interventions')
 export class InterventionController {
@@ -12,6 +17,7 @@ export class InterventionController {
     constructor(
         private interventionSvc: InterventionService) { }
 
+<<<<<<< HEAD
     /**
     * Collects all comments
     */
@@ -90,4 +96,6 @@ export class InterventionController {
     }
 
 
+=======
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 }

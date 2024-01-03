@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+<<<<<<< HEAD
 import { AlertController, NavController, NavParams, PopoverController, ToastController } from '@ionic/angular';
 import { SurgeryService } from 'apps/qualyteeth-dentist/src/app/services/surgery.service';
 import { Surgery } from 'apps/qualyteeth-server/src/core/surgery/surgery.entity';
+=======
+import { AlertController, NavController, ToastController } from '@ionic/angular';
+import { SurgeryService } from 'apps/qualyteeth-dentist/src/app/services/surgery.service';
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 @Component({
   selector: 'app-join-surgery',
@@ -9,6 +14,7 @@ import { Surgery } from 'apps/qualyteeth-server/src/core/surgery/surgery.entity'
   styleUrls: ['./join-surgery.page.scss'],
 })
 export class JoinSurgeryPage implements OnInit {
+<<<<<<< HEAD
   loading: boolean = true;
   surgeries: Array<Surgery> = new Array<Surgery>();
   surgeriesJoined: Array<Surgery> = new Array<Surgery>();
@@ -16,12 +22,20 @@ export class JoinSurgeryPage implements OnInit {
   surgeryCode: string;
   columns = [ 'name','city', 'default','edit'];
  isJoined :boolean;
+=======
+
+  surgeryCode: number;
+
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
   /**
    *
    */
   constructor(
+<<<<<<< HEAD
     private popoverCtrl: PopoverController,
     private popoverCtrl1: PopoverController,
+=======
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     private surgerySvc: SurgeryService,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
@@ -32,6 +46,7 @@ export class JoinSurgeryPage implements OnInit {
    *
    */
   ngOnInit() { }
+<<<<<<< HEAD
 /**
    *
    */
@@ -96,11 +111,18 @@ async ionViewWillEnter(): Promise<void> {
   }else{alert(idx);this.isJoined = true ;}
   return this.isJoined;
   }*/
+=======
+
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
   /**
    *
    */
   async join(): Promise<void> {
+<<<<<<< HEAD
   alert("this.surgeryCode :"+this.surgeryCode);
+=======
+
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     if (this.surgeryCode == null) {
       const alert = await this.alertCtrl.create({
         header: 'Erreur',
@@ -111,6 +133,7 @@ async ionViewWillEnter(): Promise<void> {
       return;
     }
 
+<<<<<<< HEAD
      const s: Surgery = await this.surgerySvc.getSurgery(this.surgeryCode);
 
     if (s == null) {
@@ -137,6 +160,33 @@ async ionViewWillEnter(): Promise<void> {
     }
 
      await this.surgerySvc.link(s);
+=======
+    // const s: Surgery = await this.surgerySvc.getSurgery(this.surgeryCode);
+
+    // if (s == null) {
+    //   const alert = await this.alertCtrl.create({
+    //     header: 'Erreur',
+    //     message: 'Impossible de trouver un cabinet pour ce code',
+    //     buttons: ['OK']
+    //   });
+    //   await alert.present();
+    //   return;
+    // }
+
+    // const surgeries: Array<Surgery> = await this.surgerySvc.getSurgeriesForDentist();
+    // const idx = surgeries.findIndex(sg => sg.id === s.id);
+    // if (idx > -1) {
+    //   const alert = await this.alertCtrl.create({
+    //     header: 'Erreur',
+    //     message: 'Dentiste déjà connecté à ce cabinet',
+    //     buttons: ['OK']
+    //   });
+    //   await alert.present();
+    //   return;
+    // }
+
+    // await this.surgerySvc.link(s);
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
     const toast = await this.toastCtrl.create({
       message: 'Cabinet rejoint avec succès!',
@@ -147,6 +197,7 @@ async ionViewWillEnter(): Promise<void> {
     this.nav.pop();
   }
 
+<<<<<<< HEAD
 
   async more(ev: Event, s: Surgery): Promise<void> {
     //verif isJoin 
@@ -245,4 +296,6 @@ export class JoinSurgeryPopover {
   ) {
     this.isJoin = this.navParams.get('isJoin');
   }
+=======
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 }

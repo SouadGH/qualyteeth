@@ -45,6 +45,7 @@ export class DiagnosticService {
   // /**
   //  *
   //  */
+<<<<<<< HEAD
   /* public async getDefinitionsForDentist(dentistId?: number): Promise<Array<DiagnosticDefinition>> {
      const accessToken = await this.storageSvc.get('accessTokenQD');
 
@@ -59,6 +60,22 @@ export class DiagnosticService {
 
      return await this.httpClient.get<Array<DiagnosticDefinition>>(`${API_ENDPOINT}/diagnostic/definition/dentist/${dentistId}`, { headers: headers }).toPromise();
    }*/
+=======
+  // public async getDefinitionsForDentist(dentistId?: number): Promise<Array<DiagnosticDefinition>> {
+  //   const accessToken = await this.storageSvc.get('accessTokenQD');
+
+  //   const headers = new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     'Authorization': `Bearer ${accessToken}`
+  //   });
+
+  //   if (dentistId == null) {
+  //     dentistId = await this.storageSvc.getUserid(accessToken);
+  //   }
+
+  //   return await this.httpClient.get<Array<DiagnosticDefinition>>(`${API_ENDPOINT}/diagnostic/definition/dentist/${dentistId}`, { headers: headers }).toPromise();
+  // }
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
   // /**
   //  *

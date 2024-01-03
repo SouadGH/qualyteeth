@@ -13,7 +13,11 @@ import { UserDto, UserType } from 'libs/shared/src/lib/dto/user.dto';
 export class AuthService {
 
   public isAuthenticated: boolean;
+<<<<<<< HEAD
    public canActivate: boolean;
+=======
+  // public canActivate: boolean;
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
   // public signinData: any;
 
   /**
@@ -29,6 +33,7 @@ export class AuthService {
       this.authenticate()
         .then(isAuthenticated => {
 
+<<<<<<< HEAD
            this.activate()
              .then(canActivate => { })
              .catch(err => console.error(err));
@@ -36,6 +41,15 @@ export class AuthService {
         .catch(err => console.error(err));
     })
     
+=======
+          // this.activate()
+          //   .then(canActivate => { })
+          //   .catch(err => console.error(err));
+        })
+        .catch(err => console.error(err));
+    })
+
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
   }
 
   /**
@@ -43,7 +57,10 @@ export class AuthService {
    */
   private async authenticate(): Promise<boolean> {
     const accessToken = await this.storageSvc.get('accessTokenQD');
+<<<<<<< HEAD
    
+=======
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     this.isAuthenticated = !this.jwtHelper.isTokenExpired(accessToken);
     return this.isAuthenticated;
   }
@@ -51,6 +68,7 @@ export class AuthService {
   /**
    *
    */
+<<<<<<< HEAD
    public async activate(): Promise<boolean> {
      if (!this.isAuthenticated) {
        return false;
@@ -59,6 +77,16 @@ export class AuthService {
   //   this.canActivate = surgery != null;
      return this.canActivate
    }
+=======
+  // public async activate(): Promise<boolean> {
+  //   if (!this.isAuthenticated) {
+  //     return false;
+  //   }
+  //   const surgery: Surgery = await this.surgerySvc.getActiveSurgeryForDentist();
+  //   this.canActivate = surgery != null;
+  //   return this.canActivate
+  // }
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
   // /**
   //  *
@@ -89,18 +117,31 @@ export class AuthService {
   /**
    *
    */
+<<<<<<< HEAD
   public async login(username: string, password: string): Promise<any> {
+=======
+  public async login(username: string, password: string): Promise<void> {
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     const body = {
       email: username.toLowerCase(),
       password: password,
     };
+<<<<<<< HEAD
     const headers = new HttpHeaders({
       'content-type': 'application/json',
     });
+=======
+
+    const headers = new HttpHeaders({
+      'content-type': 'application/json',
+    });
+
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
     const data = await lastValueFrom(this.httpClient.post(`${API_ENDPOINT}/auth/login`, body, {
       headers: headers,
       withCredentials: true,
     }));
+<<<<<<< HEAD
   
     await this.storageSvc.set('accessTokenQD', data['access_token']);
      await this.storageSvc.set('useridQD', data['userid']);
@@ -109,6 +150,13 @@ export class AuthService {
     this.isAuthenticated = true;
      this.canActivate = await this.activate();
     return data;
+=======
+    await this.storageSvc.set('accessTokenQD', data['access_token']);
+    // await this.storageSvc.set('useridQD', data['userid']);
+
+    this.isAuthenticated = true;
+    // this.canActivate = await this.activate();
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
   }
 
   /**

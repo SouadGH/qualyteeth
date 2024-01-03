@@ -13,12 +13,19 @@ import { Intervention } from '../intervention/intervention.entity';
 import { Material } from '../material/material.entity';
 import { Patient } from '../patient/patient.entity';
 import { Practitioner } from '../practitioner/practitioner.entity';
+<<<<<<< HEAD
 import { PredicamentPlan } from '../predicamentplan/predicament-plan.entity';
+=======
+import { PredicamentPlan } from '../predicament/predicament-plan.entity';
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 import { Predicament } from '../predicament/predicament.entity';
 import { ToothPart } from '../tooth/tooth-part.entity';
 import { Tooth } from '../tooth/tooth.entity';
 import { DatabaseLogger } from './databaseLogger';
+<<<<<<< HEAD
 import { Surgery } from '../surgery/surgery.entity';
+=======
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 
 @Module({
@@ -34,9 +41,15 @@ import { Surgery } from '../surgery/surgery.entity';
         username: configService.get('POSTGRES_USER'),
         password: configService.get('POSTGRES_PASSWORD'),
         database: configService.get('POSTGRES_DB'),
+<<<<<<< HEAD
     // entities: [
           // __dirname + '../../**/*.entity{.ts,.js}',
          //],
+=======
+        // entities: [
+        //   __dirname + '/../**/*.entity{.ts,.js}',
+        // ],
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
         entities: [
           Act,
           Category,
@@ -49,7 +62,10 @@ import { Surgery } from '../surgery/surgery.entity';
           Practitioner,
           Predicament,
           PredicamentPlan,
+<<<<<<< HEAD
           Surgery,
+=======
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
           Tooth,
           ToothPart,
           User,

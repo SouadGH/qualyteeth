@@ -19,11 +19,19 @@ const routes: Routes = [
     loadChildren: () => import('./add-patient/add-patient.module').then(m => m.AddPatientPageModule),
     canActivate: [AuthGuard]
   },
+<<<<<<< HEAD
    {
      path: 'patient/:patient_id/visit',
      loadChildren: () => import('./patient/visit/visit.module').then( m => m.VisitPageModule),
      canActivate: [AuthGuard]
    }
+=======
+  // {
+  //   path: 'patient/:patient_id/visit',
+  //   loadChildren: () => import('./patient/visit/visit.module').then( m => m.VisitPageModule),
+  //   canActivate: [AuthGuard]
+  // }
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 ];
 
 @NgModule({

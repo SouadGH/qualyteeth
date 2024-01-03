@@ -1,9 +1,14 @@
 
+<<<<<<< HEAD
 import { Body, Controller, Delete, Get, Param, Post, Put, Request, UseGuards } from '@nestjs/common';
 import { PredicamentService } from './predicament.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { PredicamentDto, PredicamentType } from 'libs/shared/src/lib/dto/predicament.dto';
 import { Predicament } from './predicament.entity';
+=======
+import { Controller } from '@nestjs/common';
+import { PredicamentService } from './predicament.service';
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 
 @Controller('predicaments')
 export class PredicamentController {
@@ -14,6 +19,7 @@ export class PredicamentController {
     constructor(
         private predicamentSvc: PredicamentService) { }
 
+<<<<<<< HEAD
     /**
     *Collects all predicaments
     */
@@ -112,4 +118,6 @@ export class PredicamentController {
         return predicament;
     }
 
+=======
+>>>>>>> c6740c8dc4e6e69e5f3be7ef55127ed511d52617
 }
