@@ -1,4 +1,4 @@
-# Create monorepo
+# Create monorepo 
 npx create-nx-workspace<br/>
 cd qualyteeth
 
@@ -29,3 +29,4 @@ cp <code>.env</code> file to <i>dist</i> folder
 ## Qualyteeth-dentist / qualyteeth-patient
 nx build qualyteeth-dentist<br>
 nx build qualyteeth-patient<br>
+# qualyteeth
